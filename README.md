@@ -4,7 +4,7 @@
 
 ## 게임 컨셉
 
-<img src=/PlanImages/sampleImage.png" width="300px" height="200px"></img>
+<img src="/PlanImages/sampleImage.png" width="300px" height="200px"></img>
 
 타일맵 기반의 타워 디펜스
 
@@ -36,7 +36,7 @@
 
 * 인게임 UI 기획도
 
-<img src=/PlanImages/ui.png" width="300px" height="200px"></img>
+<img src="/PlanImages/ui.png" width="300px" height="200px"></img>
  
 타워와 관련 있는 UI는 하단에 배치
 
@@ -48,7 +48,7 @@
 
 ##  게임 흐름 
 
-<img src=/PlanImages/gameFlow.png" width="300px" height="200px"></img>
+<img src="/PlanImages/gameFlow.png" width="300px" height="200px"></img>
 
 게임은 크게 세 가지 액티비티로 분류할 수 있습니다.
 
@@ -57,4 +57,4 @@
 디펜스 과정에서 게임 오버가 되거나 스테이지를 클리어 할 시 다시 메인 메뉴로 돌아오는 구조입니다.
 
 ## 개발 일정
-<img src=/PlanImages/schedule.png" width="300px" height="200px"></img>
+<img src="/PlanImages/schedule.png" width="300px" height="200px"></img>
