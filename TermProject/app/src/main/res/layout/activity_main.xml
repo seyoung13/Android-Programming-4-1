@@ -15,7 +15,7 @@
         />
 
     <FrameLayout
-        android:id="@+id/frameSettings"
+        android:id="@+id/frameOption"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginVertical="60dp"
@@ -71,7 +71,7 @@
             />
 
         <Button
-            android:id="@+id/btnSettings"
+            android:id="@+id/btnOption"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
@@ -80,10 +80,10 @@
             android:layout_marginLeft="400dp"
             android:layout_marginRight="100dp"
 
-            android:text="Settings"
+            android:text="Option"
             android:textSize="30dp"
 
-            android:onClick="onBtnSettings"
+            android:onClick="onBtnOption"
             />
 
     </FrameLayout>

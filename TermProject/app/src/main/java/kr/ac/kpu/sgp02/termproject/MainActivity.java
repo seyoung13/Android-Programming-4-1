@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
     FrameLayout frameTitle, frameSettings;
@@ -17,24 +16,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         frameTitle = findViewById(R.id.frameTitle);
-        frameSettings = findViewById(R.id.frameSettings);
+        frameSettings = findViewById(R.id.frameOption);
 
-        frameTitle.setVisibility(View.VISIBLE);
-        frameSettings.setVisibility(View.INVISIBLE);
+        hideOptions();
     }
 
     public void onBtnStart(View view){
         startActivity(new Intent(MainActivity.this, StageSelectionActivity.class));
     }
 
-    public void onBtnSettings(View view){
+    private void showOptions() {
         frameTitle.setVisibility(View.INVISIBLE);
         frameSettings.setVisibility(View.VISIBLE);
     }
 
-    public void onBtnCloseSettings(View view){
+    private void hideOptions() {
         frameTitle.setVisibility(View.VISIBLE);
         frameSettings.setVisibility(View.INVISIBLE);
     }
 
+    public void onBtnOption(View view){
+        showOptions();
+    }
+
+    public void onBtnCloseSettings(View view){
+        hideOptions();
+    }
 }
