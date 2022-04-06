@@ -12,6 +12,9 @@ public class StageSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_selection);
+
+        //빠른 실행
+        startActivity(new Intent(StageSelectionActivity.this, DefenseActivity.class));
     }
 
     public void onBtnStageSelect(View veiw){

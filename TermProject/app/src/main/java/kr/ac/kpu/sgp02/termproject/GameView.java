@@ -23,6 +23,17 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private long prevTimeNanoSecond;
     private long framePerSecond;
 
+    private final int[][] tileBlueprint =
+            {
+                    {0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 1, 1, 1, 1, 1, 3},
+                    {0, 1, 1, 0, 0, 0, 0, 0},
+                    {0, 1, 0, 0, 0, 0, 0, 0},
+                    {2, 1, 0, 0, 0, 0, 0, 0}
+            };
+
+    TileMap tileMap;
+
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
@@ -32,7 +43,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private void initView() {
         view = this;
 
-        Resources resources = this.getResources();
+        tileMap = new TileMap(tileBlueprint);
+
+        objects.add(tileMap);
 
         Choreographer.getInstance().postFrameCallback(this);
     }
@@ -65,7 +78,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int action =event.getAction();
+        int action = event.getAction();
 
         return false;
     }

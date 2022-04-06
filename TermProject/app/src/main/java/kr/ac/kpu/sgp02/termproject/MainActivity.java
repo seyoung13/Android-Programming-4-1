@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
         frameSettings = findViewById(R.id.frameOption);
 
         hideOptions();
+
+        //빠른 실행
+        startActivity(new Intent(MainActivity.this, StageSelectionActivity.class));
     }
 
     public void onBtnStart(View view){
