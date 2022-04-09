@@ -19,6 +19,8 @@ public class Tile implements GameObject {
     private static Bitmap pathBitmap, deployableBitmap, startBitmap, endBitmap, errorBitmap;
     private static Rect srcRect = new Rect();
     private Rect dstRect = new Rect();
+
+    //만들어진 비트맵 중 타일타입에 맞는 비트맵의 복사본
     private Bitmap bitmap;
 
     //타일맵 배열 내의 인덱스
@@ -31,7 +33,7 @@ public class Tile implements GameObject {
         setSize(size);
 
         loadBitmapResources();
-        setTileImage(type);
+        selectBitmapByType(type);
         setDstRectSize();
     }
 
@@ -53,7 +55,7 @@ public class Tile implements GameObject {
         errorBitmap = BitmapFactory.decodeResource(resources, R.mipmap.error_tile);
     }
 
-    private void setTileImage(TileType type) {
+    private void selectBitmapByType(TileType type) {
         switch (type){
             case PATH:
                 bitmap = pathBitmap;

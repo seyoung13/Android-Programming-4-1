@@ -10,19 +10,29 @@ import android.graphics.Rect;
 
 import java.util.ArrayList;
 
-public class TileMap implements GameObject {
-    private static Bitmap bitmap;
-    private static Rect srcRect = new Rect();
+public class TileMap implements GameObject{
     private ArrayList<ArrayList<Rect>> grid = new ArrayList<ArrayList<Rect>>();
     private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
+    
+    private Paint gridPaint = new Paint();
+
     private int cellSize = 250;
-    private Paint blackStrokePaint = new Paint();
 
     public TileMap(int[][] blueprint){
-        Resources resources = GameView.view.getResources();
-        bitmap = BitmapFactory.decodeResource(resources, R.mipmap.grid);
-        srcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        setGridPaint();
 
+        buildGridByArray(blueprint);
+
+        buildTilesByArray(blueprint);
+    }
+
+    private void setGridPaint() {
+        gridPaint.setColor(Color.BLACK);
+        gridPaint.setStyle(Paint.Style.STROKE);
+        gridPaint.setStrokeWidth(8);
+    }
+
+    private void buildGridByArray(int[][] blueprint) {
         for(int i = 0; i < blueprint.length; ++i) {
             ArrayList<Rect> row = new ArrayList<Rect>();
             for(int j = 0; j < blueprint[i].length; ++j) {
@@ -33,7 +43,9 @@ public class TileMap implements GameObject {
             }
             grid.add(row);
         }
+    }
 
+    private void buildTilesByArray(int[][] blueprint) {
         for(int i = 0; i < blueprint.length; ++i) {
             ArrayList<Tile> row = new ArrayList<Tile>();
             for(int j = 0; j < blueprint[i].length; ++j) {
@@ -55,15 +67,12 @@ public class TileMap implements GameObject {
                         type = TileType.ERROR;
                         break;
                 }
+
                 Tile tile = new Tile(j, i, cellSize, type);
                 row.add(tile);
             }
             tiles.add(row);
         }
-
-        blackStrokePaint.setColor(Color.BLACK);
-        blackStrokePaint.setStyle(Paint.Style.STROKE);
-        blackStrokePaint.setStrokeWidth(8);
     }
 
     @Override
@@ -85,7 +94,7 @@ public class TileMap implements GameObject {
 
         for(ArrayList<Rect> row : grid) {
             for(Rect cell : row) {
-                canvas.drawRect(cell, blackStrokePaint);
+                canvas.drawRect(cell, gridPaint);
             }
         }
     }

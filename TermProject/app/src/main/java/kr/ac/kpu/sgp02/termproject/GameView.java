@@ -26,10 +26,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private final int[][] tileBlueprint =
             {
                     {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 1, 1, 1, 1, 1, 3},
-                    {0, 1, 1, 0, 0, 0, 0, 0},
-                    {0, 1, 0, 0, 0, 0, 0, 0},
-                    {2, 1, 0, 0, 0, 0, 0, 0}
+                    {0, 1, 1, 1, 1, 1, 1, 3},
+                    {0, 1, 0, 0, 0, 1, 0, 0},
+                    {0, 1, 1, 1, 1, 1, 0, 0},
+                    {2, 1, 0, 0, 0, 0, 0, 0},
             };
 
     TileMap tileMap;
