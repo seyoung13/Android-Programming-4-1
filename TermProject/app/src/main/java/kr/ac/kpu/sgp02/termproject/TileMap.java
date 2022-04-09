@@ -13,8 +13,9 @@ import java.util.ArrayList;
 public class TileMap implements GameObject {
     private static Bitmap bitmap;
     private static Rect srcRect = new Rect();
-    private ArrayList<ArrayList<Rect>> dstRects = new ArrayList<ArrayList<Rect>>();
-    private int tileSize = 250;
+    private ArrayList<ArrayList<Rect>> grid = new ArrayList<ArrayList<Rect>>();
+    private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
+    private int cellSize = 250;
     private Paint blackStrokePaint = new Paint();
 
     public TileMap(int[][] blueprint){
@@ -25,29 +26,66 @@ public class TileMap implements GameObject {
         for(int i = 0; i < blueprint.length; ++i) {
             ArrayList<Rect> row = new ArrayList<Rect>();
             for(int j = 0; j < blueprint[i].length; ++j) {
-                Rect grid = new Rect();
-                grid.set(j * tileSize, i * tileSize,
-                        j * tileSize + tileSize, i * tileSize + tileSize);
-                row.add(grid);
+                Rect cell = new Rect();
+                cell.set(j * cellSize, i * cellSize,
+                        j * cellSize + cellSize, i * cellSize + cellSize);
+                row.add(cell);
             }
-            dstRects.add(row);
+            grid.add(row);
+        }
+
+        for(int i = 0; i < blueprint.length; ++i) {
+            ArrayList<Tile> row = new ArrayList<Tile>();
+            for(int j = 0; j < blueprint[i].length; ++j) {
+                TileType type;
+                switch (blueprint[i][j]){
+                    case 0:
+                        type = TileType.DEPLOYABLE;
+                        break;
+                    case 1:
+                        type = TileType.PATH;
+                        break;
+                    case 2:
+                        type = TileType.START;
+                        break;
+                    case 3:
+                        type = TileType.END;
+                        break;
+                    default:
+                        type = TileType.ERROR;
+                        break;
+                }
+                Tile tile = new Tile(j, i, cellSize, type);
+                row.add(tile);
+            }
+            tiles.add(row);
         }
 
         blackStrokePaint.setColor(Color.BLACK);
         blackStrokePaint.setStyle(Paint.Style.STROKE);
-        blackStrokePaint.setStrokeWidth(10);
+        blackStrokePaint.setStrokeWidth(8);
     }
 
     @Override
     public void update() {
-
+        for(ArrayList<Tile> row : tiles) {
+            for(Tile tile : row) {
+                tile.update();
+            }
+        }
     }
 
     @Override
     public void draw(Canvas canvas) {
-        for(ArrayList<Rect> row : dstRects) {
-            for(Rect grid : row) {
-                canvas.drawRect(grid, blackStrokePaint);
+        for(ArrayList<Tile> row : tiles) {
+            for(Tile tile : row) {
+                tile.draw(canvas);
+            }
+        }
+
+        for(ArrayList<Rect> row : grid) {
+            for(Rect cell : row) {
+                canvas.drawRect(cell, blackStrokePaint);
             }
         }
     }

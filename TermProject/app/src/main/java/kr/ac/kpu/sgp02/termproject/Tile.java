@@ -11,62 +11,75 @@ enum TileType{
     DEPLOYABLE,
     START,
     END,
+    DEPLOYED,
+    ERROR,
 }
 
 public class Tile implements GameObject {
-    private static Bitmap bitmap;
+    private static Bitmap pathBitmap, deployableBitmap, startBitmap, endBitmap, errorBitmap;
     private static Rect srcRect = new Rect();
     private Rect dstRect = new Rect();
+    private Bitmap bitmap;
 
     //타일맵 배열 내의 인덱스
     private int x, y;
     private int size = 50;
 
-    Tile(int x,int y, TileType type) {
+    Tile(int x,int y, int size, TileType type) {
         this.x = x;
         this.y = y;
+        setSize(size);
 
-        buildBitmapResource(type);
+        loadBitmapResources();
+        setTileImage(type);
         setDstRectSize();
     }
 
     public void setSize(int size) {
-        this.size = Math.max(size, 10);
+        this.size = Math.max(size, 50);
         setDstRectSize();
     }
 
-    private void buildBitmapResource(TileType type) {
-        if(bitmap != null)
+    private void loadBitmapResources() {
+        if(pathBitmap != null)
             return;
 
         Resources resources = GameView.view.getResources();
-        int id;
+
+        pathBitmap = BitmapFactory.decodeResource(resources, R.mipmap.path_tile);
+        deployableBitmap = BitmapFactory.decodeResource(resources, R.mipmap.deployable_tile);
+        startBitmap = BitmapFactory.decodeResource(resources, R.mipmap.start_tile);
+        endBitmap = BitmapFactory.decodeResource(resources, R.mipmap.end_tile);
+        errorBitmap = BitmapFactory.decodeResource(resources, R.mipmap.error_tile);
+    }
+
+    private void setTileImage(TileType type) {
         switch (type){
             case PATH:
-                id = R.mipmap.path_tile;
+                bitmap = pathBitmap;
                 break;
             case DEPLOYABLE:
-                id = R.mipmap.deployable_tile;
+                bitmap = deployableBitmap;
                 break;
             case START:
-                id = R.mipmap.start_tile;
+                bitmap = startBitmap;
                 break;
             case END:
-                id = R.mipmap.end_tile;
+                bitmap = endBitmap;
                 break;
+            case ERROR:
             default:
-                id = R.mipmap.error_tile;
+                bitmap = errorBitmap;
+                break;
         }
-
-        bitmap = BitmapFactory.decodeResource(resources, id);
 
         srcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
     }
 
     private void setDstRectSize() {
-        dstRect.set( x * size - size / 2, y * size - size / 2,
-                x * size + size / 2, y * size + size / 2);
-    }
+        dstRect.set( x * size, y * size,
+                x * size + size, y * size + size);
+     }
 
     @Override
     public void update() {
