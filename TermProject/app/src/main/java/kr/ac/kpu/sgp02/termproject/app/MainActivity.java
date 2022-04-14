@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject;
+package kr.ac.kpu.sgp02.termproject.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import kr.ac.kpu.sgp02.termproject.R;
 
 public class MainActivity extends AppCompatActivity {
     FrameLayout frameTitle, frameSettings;

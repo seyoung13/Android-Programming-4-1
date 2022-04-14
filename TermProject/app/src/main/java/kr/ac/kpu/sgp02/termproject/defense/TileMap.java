@@ -1,8 +1,5 @@
-package kr.ac.kpu.sgp02.termproject;
+package kr.ac.kpu.sgp02.termproject.defense;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,10 +7,12 @@ import android.graphics.Rect;
 
 import java.util.ArrayList;
 
-public class TileMap implements GameObject{
+import kr.ac.kpu.sgp02.termproject.framework.GameObject;
+
+public class TileMap implements GameObject {
     private ArrayList<ArrayList<Rect>> grid = new ArrayList<ArrayList<Rect>>();
     private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
-    
+
     private Paint gridPaint = new Paint();
 
     private int cellSize = 250;
@@ -76,10 +75,10 @@ public class TileMap implements GameObject{
     }
 
     @Override
-    public void update() {
+    public void update(float deltaSecond) {
         for(ArrayList<Tile> row : tiles) {
             for(Tile tile : row) {
-                tile.update();
+                tile.update(deltaSecond);
             }
         }
     }

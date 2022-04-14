@@ -1,10 +1,12 @@
-package kr.ac.kpu.sgp02.termproject;
+package kr.ac.kpu.sgp02.termproject.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import kr.ac.kpu.sgp02.termproject.R;
 
 public class StageSelectionActivity extends AppCompatActivity {
 

@@ -1,10 +1,14 @@
-package kr.ac.kpu.sgp02.termproject;
+package kr.ac.kpu.sgp02.termproject.defense;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+
+import kr.ac.kpu.sgp02.termproject.GameView;
+import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 
 enum TileType{
     PATH,
@@ -84,7 +88,7 @@ public class Tile implements GameObject {
      }
 
     @Override
-    public void update() {
+    public void update(float deltaSecond) {
 
     }
 

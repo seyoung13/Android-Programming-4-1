@@ -10,17 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TermProject" >
         <activity
-            android:name=".DefenseActivity"
+            android:name=".app.DefenseActivity"
             android:exported="false"
             android:screenOrientation="landscape"
             />
         <activity
-            android:name=".StageSelectionActivity"
+            android:name=".app.StageSelectionActivity"
             android:exported="false"
             android:screenOrientation="landscape"
             />
         <activity
-            android:name=".MainActivity"
+            android:name=".app.MainActivity"
             android:exported="true"
             android:screenOrientation="landscape" >
             <intent-filter>
