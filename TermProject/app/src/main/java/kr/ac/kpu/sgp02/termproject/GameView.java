@@ -83,4 +83,22 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
         return false;
     }
+
+    public void add(GameObject object) {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                objects.add(object);
+            }
+        });
+    }
+
+    public void remove(GameObject object) {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                objects.remove(object);
+            }
+        });
+    }
 }

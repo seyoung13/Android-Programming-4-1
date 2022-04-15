@@ -1,12 +1,13 @@
 package kr.ac.kpu.sgp02.termproject.defense;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 
 public class Projectile implements GameObject {
     private float damage;
-    //private Monster target;
+    private Monster target;
 
     @Override
     public void update(float deltaSecond) {

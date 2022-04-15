@@ -7,7 +7,9 @@ import android.graphics.Rect;
 
 import java.util.ArrayList;
 
+import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 
 public class TileMap implements GameObject {
     private ArrayList<ArrayList<Rect>> grid = new ArrayList<ArrayList<Rect>>();
@@ -15,7 +17,7 @@ public class TileMap implements GameObject {
 
     private Paint gridPaint = new Paint();
 
-    private int cellSize = 250;
+    private int cellSize = (int)Metrics.size(R.dimen.cell_size);
 
     public TileMap(int[][] blueprint){
         setGridPaint();
