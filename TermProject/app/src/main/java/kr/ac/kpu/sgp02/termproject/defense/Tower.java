@@ -9,6 +9,7 @@ import android.graphics.RectF;
 
 import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
@@ -16,7 +17,7 @@ import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 public class Tower implements GameObject {
 
     protected float range;
-    protected float maxDelay = 20.0f;
+    protected float maxDelay = Metrics.floatValue(R.dimen.fire_delay);
     protected float currDelay = 0.0f;
     protected Projectile projectile;
     private Bitmap bitmap;
@@ -31,14 +32,12 @@ public class Tower implements GameObject {
         this.x = x;
         this.y = y;
 
-        Resources res = GameView.view.getResources();
-        bitmap = BitmapFactory.decodeResource(res, R.mipmap.tower_sample);
-        srcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        bitmap = BitmapPool.getBitmap(R.mipmap.tower_sample);
     }
 
     protected void fire(Monster target) {
-        Projectile p = new Projectile();
-        p.fire(target);
+        //Projectile p = new Projectile();
+        //p.fire(target);
     }
 
     protected void setTarget(Monster target) {
@@ -48,19 +47,21 @@ public class Tower implements GameObject {
     @Override
     public void update(float deltaSecond) {
 
+        float cellSize = Metrics.size(R.dimen.cell_size);
 
         currDelay -= deltaSecond;
         if(currDelay <= 0) {
-            fire(monster);
+            Projectile p = new Projectile(x*cellSize, y*cellSize);
+            GameView.view.add(p);
             currDelay += maxDelay;
         }
 
-        float cellSize = Metrics.size(R.dimen.cell_size);
-        dstRect.set(x*cellSize -50, y*cellSize-50, x*cellSize+50, y*cellSize+50);
+        dstRect.set(x*cellSize -100, y*cellSize-100, x*cellSize+100, y*cellSize+100);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+        canvas.drawBitmap(bitmap, null, dstRect, null);
     }
+
 }

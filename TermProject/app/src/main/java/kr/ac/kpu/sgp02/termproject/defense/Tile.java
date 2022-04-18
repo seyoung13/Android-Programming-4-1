@@ -8,6 +8,7 @@ import android.graphics.Rect;
 
 import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 
 enum TileType{
@@ -21,7 +22,6 @@ enum TileType{
 
 public class Tile implements GameObject {
     private static Bitmap pathBitmap, deployableBitmap, startBitmap, endBitmap, errorBitmap;
-    private static Rect srcRect = new Rect();
     private Rect dstRect = new Rect();
 
     //만들어진 비트맵 중 타일타입에 맞는 비트맵의 복사본
@@ -47,16 +47,11 @@ public class Tile implements GameObject {
     }
 
     private void loadBitmapResources() {
-        if(pathBitmap != null)
-            return;
-
-        Resources resources = GameView.view.getResources();
-
-        pathBitmap = BitmapFactory.decodeResource(resources, R.mipmap.path_tile);
-        deployableBitmap = BitmapFactory.decodeResource(resources, R.mipmap.deployable_tile);
-        startBitmap = BitmapFactory.decodeResource(resources, R.mipmap.start_tile);
-        endBitmap = BitmapFactory.decodeResource(resources, R.mipmap.end_tile);
-        errorBitmap = BitmapFactory.decodeResource(resources, R.mipmap.error_tile);
+        pathBitmap = BitmapPool.getBitmap(R.mipmap.path_tile);
+        deployableBitmap = BitmapPool.getBitmap(R.mipmap.deployable_tile);
+        startBitmap = BitmapPool.getBitmap(R.mipmap.start_tile);
+        endBitmap = BitmapPool.getBitmap(R.mipmap.end_tile);
+        errorBitmap = BitmapPool.getBitmap(R.mipmap.error_tile);
     }
 
     private void selectBitmapByType(TileType type) {
@@ -78,8 +73,6 @@ public class Tile implements GameObject {
                 bitmap = errorBitmap;
                 break;
         }
-
-        srcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
     }
 
     private void setDstRectSize() {
@@ -94,6 +87,7 @@ public class Tile implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+        canvas.drawBitmap(bitmap, null, dstRect, null);
     }
+
 }

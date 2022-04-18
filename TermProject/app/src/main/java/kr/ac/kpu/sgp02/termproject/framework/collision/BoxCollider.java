@@ -1,5 +1,6 @@
 package kr.ac.kpu.sgp02.termproject.framework.collision;
 
+import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
 
@@ -9,31 +10,63 @@ public class BoxCollider extends Collider {
     public PointF extents;
     public float left, top, right, bottom;
 
-    BoxCollider(PointF center, PointF extents) {
+    // --------------- 생성자 ---------------
+
+    public BoxCollider(Point center, PointF extents) {
         super(center);
-        this.extents = extents;
-        computeVertices();
+        initialize(extents.x, extents.y);
     }
 
-    BoxCollider(PointF center, float ex, float ey) {
+    public BoxCollider(Point center, float extentsX, float extentsY) {
         super(center);
-        extents.x = ex;
-        extents.y = ey;
-        computeVertices();
+        initialize(extentsX, extentsY);
     }
 
-    BoxCollider(float x, float y, PointF extents) {
-        super(x, y);
-        this.extents = extents;
-        computeVertices();
+    public BoxCollider(PointF center, PointF extents) {
+        super(center);
+        initialize(extents.x, extents.y);
     }
 
-    BoxCollider(float x, float y, float ex, float ey) {
-        super(x, y);
-        extents.x = ex;
-        extents.y = ey;
-        computeVertices();
+    public BoxCollider(PointF center, float extentsX, float extentsY) {
+        super(center);
+       initialize(extentsX, extentsY);
     }
+
+    public BoxCollider(float x, float y, PointF extents) {
+        super(x, y);
+        initialize(extents.x, extents.y);
+    }
+
+    public BoxCollider(float x, float y, float extentsX, float extentsY) {
+        super(x, y);
+        initialize(extentsX, extentsY);
+    }
+
+    // --------------- 메소드 ---------------
+
+    protected void initialize(float extentsX, float extentsY) {
+        extents = new PointF(extentsX, extentsY);
+
+        setVertices();
+    }
+
+    protected void setVertices() {
+        left = center.x - extents.x;
+        top = center.y - extents.y;
+        right = center.x + extents.x;
+        bottom = center.y + extents.y;
+    }
+
+    @Override
+    public void offset(float dx, float dy) {
+        super.offset(dx, dy);
+        left += dx;
+        top += dy;
+        right += dx;
+        bottom += dy;
+    }
+
+    // --------------- 인터페이스 ---------------
 
     @Override
     public boolean contains(Point point) {
@@ -87,10 +120,15 @@ public class BoxCollider extends Collider {
         return distance <= circle.radiusSquared;
     }
 
-    private void computeVertices() {
-        left = center.x - extents.x;
-        top = center.y - extents.y;
-        right = center.x + extents.x;
-        bottom = center.y + extents.y;
+    @Override
+    public void update(float deltaSecond) {
+
     }
+
+    @Override
+    public void draw(Canvas canvas) {
+        if(isVisible)
+            canvas.drawRect(left, top, right, bottom, paint);
+    }
+
 }

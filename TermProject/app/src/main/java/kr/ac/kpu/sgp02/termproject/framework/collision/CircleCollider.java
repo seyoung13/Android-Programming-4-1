@@ -1,5 +1,6 @@
 package kr.ac.kpu.sgp02.termproject.framework.collision;
 
+import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
 
@@ -9,17 +10,36 @@ public class CircleCollider extends Collider {
     public float radius;
     public float radiusSquared;
 
-    CircleCollider(PointF center, float radius) {
+    // --------------- 생성자 ---------------
+
+    public CircleCollider(Point center, float radius) {
         super(center);
-        this.radius = radius;
-        computeRadiusSquared();
+        initialize(radius);
     }
 
-    CircleCollider(float x, float y, float radius) {
-        super(x, y);
-        this.radius = radius;
-        computeRadiusSquared();
+    public CircleCollider(PointF center, float radius) {
+        super(center);
+        initialize(radius);
     }
+
+    public CircleCollider(float x, float y, float radius) {
+        super(x, y);
+        initialize(radius);
+    }
+
+    // --------------- 메소드 ---------------
+
+    protected void initialize(float radius) {
+        this.radius = radius;
+        radiusSquared = radius * radius;
+    }
+
+    @Override
+    public void offset(float dx, float dy) {
+        super.offset(dx, dy);
+    }
+
+    // --------------- 인터페이스 ---------------
 
     @Override
     public boolean contains(Point point) {
@@ -41,7 +61,15 @@ public class CircleCollider extends Collider {
         return MathHelper.getDistanceSquared(center, circle.center) <= (radiusSquared + circle.radiusSquared);
     }
 
-    private void computeRadiusSquared() {
-        radiusSquared = radius * radius;
+    @Override
+    public void update(float deltaSecond) {
+
     }
+
+    @Override
+    public void draw(Canvas canvas) {
+        if(isVisible)
+            canvas.drawCircle(center.x, center.y, radius, paint);
+    }
+
 }

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="cell_size">250dp</dimen>
+    <dimen name="cell_size">75dp</dimen>
+    <dimen name="collider_line_width">3dp</dimen>
+    <item name="fire_delay" type="dimen" format="float">1.0</item>
 </resources>
