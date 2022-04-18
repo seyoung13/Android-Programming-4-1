@@ -12,8 +12,9 @@ import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
+import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 
-public class Monster implements GameObject {
+public class Monster implements GameObject, Collidable {
     protected int hp;
     protected float speed;
     private Bitmap bitmap;
@@ -37,4 +38,10 @@ public class Monster implements GameObject {
         collider.draw(canvas);
     }
 
+    @Override
+    public void onOverlap(GameObject overlappedObject) {
+        if(overlappedObject instanceof Projectile) {
+            hp -= 1;
+        }
+    }
 }

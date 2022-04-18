@@ -11,8 +11,9 @@ import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
+import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 
-public class Projectile implements GameObject {
+public class Projectile implements GameObject, Collidable {
     private float damage;
     private Monster target;
     public CircleCollider collider;
@@ -23,12 +24,13 @@ public class Projectile implements GameObject {
     public Projectile(float x, float y) {
         Resources res = GameView.view.getResources();
         collider = new CircleCollider(x, y, 30);
+        damage = 5;
     }
 
 
     @Override
     public void update(float deltaSecond) {
-        collider.offset(10, 0);
+        collider.offset(20, 0);
     }
 
     @Override
@@ -37,4 +39,10 @@ public class Projectile implements GameObject {
         collider.draw(canvas);
     }
 
+    @Override
+    public void onOverlap(GameObject overlappedObject) {
+        if(overlappedObject instanceof Monster) {
+            GameView.view.remove(this);
+        }
+    }
 }

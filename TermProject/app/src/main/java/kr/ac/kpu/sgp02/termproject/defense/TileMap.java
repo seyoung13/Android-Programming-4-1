@@ -35,7 +35,7 @@ public class TileMap implements GameObject {
 
     private void buildGridByArray(int[][] blueprint) {
         for(int i = 0; i < blueprint.length; ++i) {
-            ArrayList<Rect> row = new ArrayList<Rect>();
+            ArrayList<Rect> row = new ArrayList<>();
             for(int j = 0; j < blueprint[i].length; ++j) {
                 Rect cell = new Rect();
                 cell.set(j * cellSize, i * cellSize,
@@ -48,7 +48,7 @@ public class TileMap implements GameObject {
 
     private void buildTilesByArray(int[][] blueprint) {
         for(int i = 0; i < blueprint.length; ++i) {
-            ArrayList<Tile> row = new ArrayList<Tile>();
+            ArrayList<Tile> row = new ArrayList<>();
             for(int j = 0; j < blueprint[i].length; ++j) {
                 TileType type;
                 switch (blueprint[i][j]){

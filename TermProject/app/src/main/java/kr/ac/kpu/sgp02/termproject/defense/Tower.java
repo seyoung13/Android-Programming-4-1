@@ -16,13 +16,11 @@ import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 
 public class Tower implements GameObject {
 
-    protected float range;
+    protected float range = 200;
     protected float maxDelay = Metrics.floatValue(R.dimen.fire_delay);
     protected float currDelay = 0.0f;
-    protected Projectile projectile;
     private Bitmap bitmap;
     protected Monster target;
-    private static Rect srcRect = new Rect();
     private RectF dstRect = new RectF();
 
     //타일맵 배열내 인덱스

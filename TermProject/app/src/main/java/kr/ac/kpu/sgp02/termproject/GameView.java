@@ -101,8 +101,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
                 Projectile projectile = (Projectile) o2;
 
                 if (CollisionChecker.collides(monster.collider, projectile.collider)) {
-                    remove(monster);
-                    remove(projectile);
+                    monster.onOverlap(projectile);
+                    projectile.onOverlap(monster);
                     break;
                 }
             }
