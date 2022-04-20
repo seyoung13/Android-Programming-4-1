@@ -9,6 +9,7 @@ import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
 public class BoxCollider extends Collider {
     public PointF extents;
     public float left, top, right, bottom;
+    public boolean isOverlapped = false;
 
     // --------------- 생성자 ---------------
 

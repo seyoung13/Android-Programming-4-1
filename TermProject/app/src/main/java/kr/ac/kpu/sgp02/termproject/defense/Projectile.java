@@ -12,17 +12,16 @@ import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
+import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 
 public class Projectile implements GameObject, Collidable {
     private float damage;
     private Monster target;
     public CircleCollider collider;
     private Bitmap bitmap;
-    private static Rect srcRect = new Rect();
     private RectF dstRect = new RectF();
 
     public Projectile(float x, float y) {
-        Resources res = GameView.view.getResources();
         collider = new CircleCollider(x, y, 30);
         damage = 5;
     }
@@ -35,14 +34,23 @@ public class Projectile implements GameObject, Collidable {
 
     @Override
     public void draw(Canvas canvas) {
-
         collider.draw(canvas);
     }
 
     @Override
-    public void onOverlap(GameObject overlappedObject) {
-        if(overlappedObject instanceof Monster) {
+    public void onBeginOverlap(GameObject object) {
+        if(object instanceof Monster) {
             GameView.view.remove(this);
         }
+    }
+
+    @Override
+    public void onStayOverlap(GameObject object) {
+
+    }
+
+    @Override
+    public void onEndOverlap(GameObject object) {
+
     }
 }

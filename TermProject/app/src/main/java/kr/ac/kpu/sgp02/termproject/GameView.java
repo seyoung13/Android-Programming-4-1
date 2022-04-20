@@ -22,7 +22,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public static GameView view;
     private static final String DEBUG_TAG = GameView.class.getSimpleName();
 
-    ArrayList<GameObject> objects = new ArrayList<GameObject>();
+    ArrayList<GameObject> objects = new ArrayList<>();
 
     private long prevTimeNanoSecond;
     private long framePerSecond;
@@ -58,7 +58,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         monster = new Monster(2000, 400);
         objects.add(monster);
 
-        tower = new Tower(0, 1);
+        tower = new Tower(1, 1);
         objects.add(tower);
 
         Choreographer.getInstance().postFrameCallback(this);
@@ -100,10 +100,35 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
                 Projectile projectile = (Projectile) o2;
 
+                // 해쉬셋을 이용해 계속 충돌중이었는지 확인하는 작업
+                // 일반화할 필요가 있음
                 if (CollisionChecker.collides(monster.collider, projectile.collider)) {
-                    monster.onOverlap(projectile);
-                    projectile.onOverlap(monster);
-                    break;
+                    if(monster.collider.overlappedColliders.contains(projectile.collider)) {
+                        monster.onStayOverlap(projectile);
+                    }
+                    else {
+                        monster.collider.overlappedColliders.add(projectile.collider);
+                        monster.onBeginOverlap(projectile);
+                    }
+
+                    if(projectile.collider.overlappedColliders.contains(monster.collider)) {
+                        projectile.onStayOverlap(monster);
+                    }
+                    else {
+                        projectile.collider.overlappedColliders.add(monster.collider);
+                        projectile.onBeginOverlap(monster);
+                    }
+                }
+                else {
+                    if(monster.collider.overlappedColliders.contains(projectile.collider)) {
+                        monster.collider.overlappedColliders.remove(projectile.collider);
+                        monster.onEndOverlap(projectile);
+                    }
+
+                    if(projectile.collider.overlappedColliders.contains(monster.collider)) {
+                        projectile.collider.overlappedColliders.remove(monster.collider);
+                        projectile.onEndOverlap(monster);
+                    }
                 }
             }
         }

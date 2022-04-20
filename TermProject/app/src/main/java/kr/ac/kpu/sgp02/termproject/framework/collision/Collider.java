@@ -1,10 +1,11 @@
 package kr.ac.kpu.sgp02.termproject.framework.collision;
 
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
+
+import java.util.HashSet;
 
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
@@ -15,6 +16,7 @@ public abstract class Collider implements GameObject {
     public boolean isVisible = true;
 
     protected static Paint paint;
+    public HashSet<Collider> overlappedColliders;
 
     // --------------- 생성자 ---------------
 
@@ -39,7 +41,7 @@ public abstract class Collider implements GameObject {
 
     private void initialize(float x, float y) {
         center = new PointF(x, y);
-
+        overlappedColliders = new HashSet<>(32);
         setPaint();
     }
 

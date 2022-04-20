@@ -12,8 +12,8 @@ import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 
 public class TileMap implements GameObject {
-    private ArrayList<ArrayList<Rect>> grid = new ArrayList<ArrayList<Rect>>();
-    private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
+    private ArrayList<ArrayList<Rect>> grid = new ArrayList<>();
+    private ArrayList<ArrayList<Tile>> tiles = new ArrayList<>();
 
     private Paint gridPaint = new Paint();
 

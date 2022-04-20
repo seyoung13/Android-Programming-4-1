@@ -13,6 +13,7 @@ import kr.ac.kpu.sgp02.termproject.framework.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
+import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 
 public class Monster implements GameObject, Collidable {
     protected int hp;
@@ -26,6 +27,7 @@ public class Monster implements GameObject, Collidable {
         dstRect.set(x-150, y-150, x+150, y+150);
         bitmap = BitmapPool.getBitmap(R.mipmap.monster_sample);
         collider = new BoxCollider(x, y, 160, 160);
+        hp = 20;
     }
 
     @Override
@@ -39,9 +41,25 @@ public class Monster implements GameObject, Collidable {
     }
 
     @Override
-    public void onOverlap(GameObject overlappedObject) {
-        if(overlappedObject instanceof Projectile) {
+    public void onBeginOverlap(GameObject object) {
+        if(object instanceof Projectile) {
             hp -= 1;
         }
+    }
+
+    @Override
+    public void onStayOverlap(GameObject object) {
+
+    }
+
+    @Override
+    public void onEndOverlap(GameObject object) {
+
+    }
+
+    private void beDamaged(int damage) {
+        hp -= damage;
+        if(hp < 0)
+            GameView.view.remove(this);
     }
 }
