@@ -8,6 +8,8 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -28,8 +30,8 @@ public class Tower implements GameObject, Collidable {
     private Bitmap bitmap;
     protected Monster target;
     private RectF dstRect = new RectF();
-    protected CircleCollider range;
-    protected Queue<Monster> targetList = new LinkedList<>();
+    public CircleCollider range;
+    protected LinkedHashSet<Monster> targetList = new LinkedHashSet<>();
 
     //타일맵 배열내 인덱스
     private int x, y;
@@ -46,9 +48,12 @@ public class Tower implements GameObject, Collidable {
         bitmap = BitmapPool.getBitmap(R.mipmap.tower_sample);
     }
 
-    protected void fire(Monster target) {
-        //Projectile p = new Projectile();
-        //p.fire(target);
+    protected void fire() {
+         Projectile p = new Projectile(position.x, position.y);
+         GameView.view.add(p);
+
+         Monster monster = targetList.iterator().next();
+         p.setTarget(monster);
     }
 
     protected void setTarget(Monster target) {
@@ -56,7 +61,6 @@ public class Tower implements GameObject, Collidable {
     }
 
     protected void addTarget(Monster target){
-        targetList.offer(target);
     }
 
 
@@ -64,9 +68,13 @@ public class Tower implements GameObject, Collidable {
     public void update(float deltaSecond) {
         currDelay -= deltaSecond;
         if(currDelay <= 0) {
-            Projectile p = new Projectile(position.x, position.y);
-            GameView.view.add(p);
-            currDelay += maxDelay;
+            if(targetList.iterator().hasNext()) {
+                fire();
+                currDelay += maxDelay;
+            }
+            else {
+                currDelay = 0;
+            }
         }
 
         dstRect.set(position.x -100, position.y-100, position.x+100, position.y+100);
@@ -80,8 +88,10 @@ public class Tower implements GameObject, Collidable {
 
     @Override
     public void onBeginOverlap(GameObject object) {
-        if(object instanceof Monster)
-            addTarget((Monster) object);
+        if(!(object instanceof Monster))
+           return;
+
+        targetList.add((Monster) object);
     }
 
     @Override
@@ -91,6 +101,9 @@ public class Tower implements GameObject, Collidable {
 
     @Override
     public void onEndOverlap(GameObject object) {
+        if(!(object instanceof Monster))
+            return;
 
+        targetList.remove((Monster) object);
     }
 }

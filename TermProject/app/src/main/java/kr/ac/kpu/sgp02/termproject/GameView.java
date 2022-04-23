@@ -55,10 +55,19 @@ public class GameView extends View implements Choreographer.FrameCallback {
         tileMap = new TileMap(tileBlueprint);
         objects.add(tileMap);
 
-        monster = new Monster(2000, 400);
+        monster = new Monster(-300, 700);
         objects.add(monster);
 
-        tower = new Tower(1, 1);
+        monster = new Monster(-300, 900);
+        objects.add(monster);
+
+        monster = new Monster(400, 900);
+        objects.add(monster);
+
+        monster = new Monster(200, 700);
+        objects.add(monster);
+
+        tower = new Tower(5, 5);
         objects.add(tower);
 
         Choreographer.getInstance().postFrameCallback(this);
@@ -95,39 +104,66 @@ public class GameView extends View implements Choreographer.FrameCallback {
             Monster monster = (Monster) o1;
 
             for (GameObject o2 : objects) {
-                if (!(o2 instanceof Projectile))
-                    continue;
+                if (o2 instanceof Projectile) {
 
-                Projectile projectile = (Projectile) o2;
+                    Projectile projectile = (Projectile) o2;
 
-                // 해쉬셋을 이용해 계속 충돌중이었는지 확인하는 작업
-                // 일반화할 필요가 있음
-                if (CollisionChecker.collides(monster.collider, projectile.collider)) {
-                    if(monster.collider.overlappedColliders.contains(projectile.collider)) {
-                        monster.onStayOverlap(projectile);
-                    }
-                    else {
-                        monster.collider.overlappedColliders.add(projectile.collider);
-                        monster.onBeginOverlap(projectile);
-                    }
+                    // 해쉬셋을 이용해 계속 충돌중이었는지 확인하는 작업
+                    // 일반화할 필요가 있음
+                    if (CollisionChecker.collides(monster.collider, projectile.collider)) {
+                        if (monster.collider.overlappedColliders.contains(projectile.collider)) {
+                            monster.onStayOverlap(projectile);
+                        } else {
+                            monster.collider.overlappedColliders.add(projectile.collider);
+                            monster.onBeginOverlap(projectile);
+                        }
 
-                    if(projectile.collider.overlappedColliders.contains(monster.collider)) {
-                        projectile.onStayOverlap(monster);
-                    }
-                    else {
-                        projectile.collider.overlappedColliders.add(monster.collider);
-                        projectile.onBeginOverlap(monster);
+                        if (projectile.collider.overlappedColliders.contains(monster.collider)) {
+                            projectile.onStayOverlap(monster);
+                        } else {
+                            projectile.collider.overlappedColliders.add(monster.collider);
+                            projectile.onBeginOverlap(monster);
+                        }
+                    } else {
+                        if (monster.collider.overlappedColliders.contains(projectile.collider)) {
+                            monster.collider.overlappedColliders.remove(projectile.collider);
+                            monster.onEndOverlap(projectile);
+                        }
+
+                        if (projectile.collider.overlappedColliders.contains(monster.collider)) {
+                            projectile.collider.overlappedColliders.remove(monster.collider);
+                            projectile.onEndOverlap(monster);
+                        }
                     }
                 }
-                else {
-                    if(monster.collider.overlappedColliders.contains(projectile.collider)) {
-                        monster.collider.overlappedColliders.remove(projectile.collider);
-                        monster.onEndOverlap(projectile);
-                    }
 
-                    if(projectile.collider.overlappedColliders.contains(monster.collider)) {
-                        projectile.collider.overlappedColliders.remove(monster.collider);
-                        projectile.onEndOverlap(monster);
+                if (o2 instanceof Tower) {
+                    Tower tower = (Tower) o2;
+
+                    if (CollisionChecker.collides(monster.collider, tower.range)) {
+                        if (monster.collider.overlappedColliders.contains(tower.range)) {
+                            monster.onStayOverlap(tower);
+                        } else {
+                            monster.collider.overlappedColliders.add(tower.range);
+                            monster.onBeginOverlap(tower);
+                        }
+
+                        if (tower.range.overlappedColliders.contains(monster.collider)) {
+                            tower.onStayOverlap(monster);
+                        } else {
+                            tower.range.overlappedColliders.add(monster.collider);
+                            tower.onBeginOverlap(monster);
+                        }
+                    } else {
+                        if (monster.collider.overlappedColliders.contains(tower.range)) {
+                            monster.collider.overlappedColliders.remove(tower.range);
+                            monster.onEndOverlap(tower);
+                        }
+
+                        if (tower.range.overlappedColliders.contains(monster.collider)) {
+                            tower.range.overlappedColliders.remove(monster.collider);
+                            tower.onEndOverlap(monster);
+                        }
                     }
                 }
             }

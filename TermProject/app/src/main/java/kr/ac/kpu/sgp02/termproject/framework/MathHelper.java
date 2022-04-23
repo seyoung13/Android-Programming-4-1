@@ -48,4 +48,28 @@ public class MathHelper {
         return (float)Math.sqrt(dist);
     }
 
+    public static int add(int a, int b) {
+        return a + b;
+    }
+
+    public static float add(float a, float b) {
+        return a + b;
+    }
+
+    public static Point add(Point a, Point b) {
+        return new Point(add(a.x, b.x), add(a.y, b.y));
+    }
+
+    public static PointF add(PointF a, PointF b) {
+        return new PointF(add(a.x, b.x), add(a.y, b.y));
+    }
+
+    public static Point subtract(Point a, Point b) {
+        return new Point(add(a.x, -b.x), add(a.y, -b.y));
+    }
+
+    public static PointF subtract(PointF a, PointF b) {
+        return new PointF(add(a.x, -b.x), add(a.y, -b.y));
+    }
+
 }
