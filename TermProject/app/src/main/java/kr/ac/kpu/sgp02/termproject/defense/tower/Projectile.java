@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject.defense;
+package kr.ac.kpu.sgp02.termproject.defense.tower;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -10,6 +10,7 @@ import android.graphics.RectF;
 
 import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.defense.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;

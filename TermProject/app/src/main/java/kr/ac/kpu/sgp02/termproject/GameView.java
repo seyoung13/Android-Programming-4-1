@@ -12,10 +12,12 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 import kr.ac.kpu.sgp02.termproject.defense.Monster;
-import kr.ac.kpu.sgp02.termproject.defense.Projectile;
+import kr.ac.kpu.sgp02.termproject.defense.tower.CannonTower;
+import kr.ac.kpu.sgp02.termproject.defense.tower.Projectile;
 import kr.ac.kpu.sgp02.termproject.defense.TileMap;
-import kr.ac.kpu.sgp02.termproject.defense.Tower;
+import kr.ac.kpu.sgp02.termproject.defense.tower.Tower;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.MonsterGenerator;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CollisionChecker;
 
 public class GameView extends View implements Choreographer.FrameCallback {
@@ -55,20 +57,12 @@ public class GameView extends View implements Choreographer.FrameCallback {
         tileMap = new TileMap(tileBlueprint);
         objects.add(tileMap);
 
-        monster = new Monster(-300, 700);
-        objects.add(monster);
+        MonsterGenerator generator = new MonsterGenerator();
+        objects.add(generator);
 
-        monster = new Monster(-300, 900);
-        objects.add(monster);
+        objects.add(new CannonTower(5, 1));
 
-        monster = new Monster(400, 900);
-        objects.add(monster);
-
-        monster = new Monster(200, 700);
-        objects.add(monster);
-
-        tower = new Tower(5, 5);
-        objects.add(tower);
+        objects.add(new CannonTower(4, 5));
 
         Choreographer.getInstance().postFrameCallback(this);
     }

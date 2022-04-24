@@ -2,19 +2,17 @@ package kr.ac.kpu.sgp02.termproject.defense;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 
 import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.defense.tower.Projectile;
 import kr.ac.kpu.sgp02.termproject.framework.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
-import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 
 public class Monster implements GameObject, Collidable {
     protected int hp;
@@ -33,6 +31,7 @@ public class Monster implements GameObject, Collidable {
         hp = 20;
         position = new PointF(x, y);
         isDead = false;
+        speed = 10;
     }
 
     @Override
@@ -40,9 +39,9 @@ public class Monster implements GameObject, Collidable {
         if(isDead)
             return;
 
-        position.x += 5;
-        dstRect.offset(5, 0);
-        collider.offset(5, 0);
+        position.x += speed;
+        dstRect.offset(speed, 0);
+        collider.offset(speed, 0);
     }
 
     @Override

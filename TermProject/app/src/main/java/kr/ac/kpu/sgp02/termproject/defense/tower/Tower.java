@@ -1,31 +1,23 @@
-package kr.ac.kpu.sgp02.termproject.defense;
+package kr.ac.kpu.sgp02.termproject.defense.tower;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Build;
 
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.defense.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
-import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
-import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 
-public class Tower implements GameObject, Collidable {
+public abstract class Tower implements GameObject, Collidable {
 
     protected float maxDelay = Metrics.floatValue(R.dimen.fire_delay);
     protected float currDelay = 0.0f;
@@ -57,14 +49,6 @@ public class Tower implements GameObject, Collidable {
          Monster monster = targetList.iterator().next();
          p.setTarget(monster);
     }
-
-    protected void setTarget(Monster target) {
-        this.target = target;
-    }
-
-    protected void addTarget(Monster target){
-    }
-
 
     @Override
     public void update(float deltaSecond) {
