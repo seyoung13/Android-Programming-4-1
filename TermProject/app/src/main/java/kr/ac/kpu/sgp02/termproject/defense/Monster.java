@@ -23,6 +23,7 @@ public class Monster implements GameObject, Collidable {
     private RectF dstRect = new RectF();
     public BoxCollider collider;
     protected PointF position;
+    public boolean isDead;
 
     public Monster(float x, float y) {
         Resources res = GameView.view.getResources();
@@ -31,10 +32,14 @@ public class Monster implements GameObject, Collidable {
         collider = new BoxCollider(x, y, 105, 105);
         hp = 20;
         position = new PointF(x, y);
+        isDead = false;
     }
 
     @Override
     public void update(float deltaSecond) {
+        if(isDead)
+            return;
+
         position.x += 5;
         dstRect.offset(5, 0);
         collider.offset(5, 0);
@@ -42,6 +47,9 @@ public class Monster implements GameObject, Collidable {
 
     @Override
     public void draw(Canvas canvas) {
+        if(isDead)
+            return;
+
         canvas.drawBitmap(bitmap, null, dstRect, null);
         collider.draw(canvas);
     }
@@ -49,7 +57,7 @@ public class Monster implements GameObject, Collidable {
     @Override
     public void onBeginOverlap(GameObject object) {
         if(object instanceof Projectile) {
-            hp -= 1;
+            beDamaged(10);
         }
     }
 
@@ -65,8 +73,8 @@ public class Monster implements GameObject, Collidable {
 
     private void beDamaged(int damage) {
         hp -= damage;
-        if(hp < 0)
-            GameView.view.remove(this);
+        if(hp <= 0)
+            isDead = true;
     }
 
     public PointF getPosition() {

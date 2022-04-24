@@ -7,7 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Build;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -66,6 +68,8 @@ public class Tower implements GameObject, Collidable {
 
     @Override
     public void update(float deltaSecond) {
+        exceptDeadTarget();
+
         currDelay -= deltaSecond;
         if(currDelay <= 0) {
             if(targetList.iterator().hasNext()) {
@@ -78,6 +82,14 @@ public class Tower implements GameObject, Collidable {
         }
 
         dstRect.set(position.x -100, position.y-100, position.x+100, position.y+100);
+    }
+
+    private void exceptDeadTarget() {
+        Iterator<Monster> iterator = targetList.iterator();
+        while(iterator.hasNext()) {
+            if(iterator.next().isDead)
+                iterator.remove();
+        }
     }
 
     @Override
