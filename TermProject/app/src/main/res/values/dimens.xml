@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="cell_size">75dp</dimen>
-    <dimen name="range">200dp</dimen>
+    <dimen name="cell_size">50dp</dimen>
+
+    <item name="cannon_delay" type="dimen" format="float">1.5</item>
+    <item name="laser_delay" type="dimen" format="float">0.25</item>
+
+    <dimen name="cannon_range">150dp</dimen>
+    <dimen name="laser_range">200dp</dimen>
+
     <dimen name="collider_line_width">3dp</dimen>
-    <item name="fire_delay" type="dimen" format="float">2.0</item>
 </resources>

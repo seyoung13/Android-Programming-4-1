@@ -11,35 +11,46 @@ import java.util.LinkedHashSet;
 import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.defense.Monster;
-import kr.ac.kpu.sgp02.termproject.framework.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 
 public abstract class Tower implements GameObject, Collidable {
-
-    protected float maxDelay = Metrics.floatValue(R.dimen.fire_delay);
     protected float currDelay = 0.0f;
-    private Bitmap bitmap;
     protected Monster target;
-    private RectF dstRect = new RectF();
+
+    //생성 후 바뀌지 않는 멤버.
+    protected Bitmap bitmap;
+    protected float maxDelay = Metrics.floatValue(R.dimen.cannon_delay);
     public CircleCollider range;
+
     protected LinkedHashSet<Monster> targetList = new LinkedHashSet<>();
 
     //타일맵 배열내 인덱스
-    private int x, y;
-    private PointF position = new PointF();
+    protected int x, y;
+    protected PointF position = new PointF();
+    protected RectF dstRect = new RectF();
 
     public Tower(int x, int y) {
         this.x = x;
         this.y = y;
 
-        position.x = x * Metrics.size(R.dimen.cell_size);
-        position.y = y * Metrics.size(R.dimen.cell_size);
+        setPosition(x, y);
 
-        range = new CircleCollider(position.x, position.y, Metrics.size(R.dimen.range));
-        bitmap = BitmapPool.getBitmap(R.mipmap.tower_sample);
+        setSpecification();
+    }
+
+    protected abstract void setSpecification();
+
+    private void setPosition(int x, int y) {
+        float cellSize = Metrics.size(R.dimen.cell_size);
+
+        position.x = x * cellSize + cellSize / 2;
+        position.y = y * cellSize + cellSize / 2;
+
+        dstRect.set(position.x - cellSize/2, position.y- cellSize/2,
+                position.x + cellSize/2, position.y + cellSize/2);
     }
 
     protected void fire() {
@@ -64,8 +75,6 @@ public abstract class Tower implements GameObject, Collidable {
                 currDelay = 0;
             }
         }
-
-        dstRect.set(position.x -100, position.y-100, position.x+100, position.y+100);
     }
 
     private void exceptDeadTarget() {

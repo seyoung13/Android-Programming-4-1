@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import kr.ac.kpu.sgp02.termproject.defense.Monster;
 import kr.ac.kpu.sgp02.termproject.defense.tower.CannonTower;
+import kr.ac.kpu.sgp02.termproject.defense.tower.LaserTower;
 import kr.ac.kpu.sgp02.termproject.defense.tower.Projectile;
 import kr.ac.kpu.sgp02.termproject.defense.TileMap;
 import kr.ac.kpu.sgp02.termproject.defense.tower.Tower;
@@ -32,11 +33,14 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     private final int[][] tileBlueprint =
             {
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 1, 1, 1, 1, 1, 1, 3},
-                    {0, 1, 0, 0, 0, 1, 0, 0},
-                    {0, 1, 1, 1, 1, 1, 0, 0},
-                    {2, 1, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3},
+                    {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                    {0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             };
 
     TileMap tileMap;
@@ -60,9 +64,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
         MonsterGenerator generator = new MonsterGenerator();
         objects.add(generator);
 
-        objects.add(new CannonTower(5, 1));
+        objects.add(new CannonTower(5, 2));
 
-        objects.add(new CannonTower(4, 5));
+        objects.add(new LaserTower(4, 6));
 
         Choreographer.getInstance().postFrameCallback(this);
     }

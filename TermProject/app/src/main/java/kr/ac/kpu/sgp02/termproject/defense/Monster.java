@@ -28,7 +28,7 @@ public class Monster implements GameObject, Collidable {
         dstRect.set(x-100, y-100, x+100, y+100);
         bitmap = BitmapPool.getBitmap(R.mipmap.monster_sample);
         collider = new BoxCollider(x, y, 105, 105);
-        hp = 20;
+        hp = 100;
         position = new PointF(x, y);
         isDead = false;
         speed = 10;
@@ -56,7 +56,7 @@ public class Monster implements GameObject, Collidable {
     @Override
     public void onBeginOverlap(GameObject object) {
         if(object instanceof Projectile) {
-            beDamaged(10);
+            beDamaged(5);
         }
     }
 
