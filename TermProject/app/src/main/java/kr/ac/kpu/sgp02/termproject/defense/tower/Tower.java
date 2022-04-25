@@ -1,6 +1,5 @@
 package kr.ac.kpu.sgp02.termproject.defense.tower;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -13,6 +12,7 @@ import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.defense.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 
@@ -21,7 +21,7 @@ public abstract class Tower implements GameObject, Collidable {
     protected Monster target;
 
     //생성 후 바뀌지 않는 멤버.
-    protected Bitmap bitmap;
+    protected Sprite sprite;
     protected float maxDelay = Metrics.floatValue(R.dimen.cannon_delay);
     public CircleCollider range;
 
@@ -30,7 +30,6 @@ public abstract class Tower implements GameObject, Collidable {
     //타일맵 배열내 인덱스
     protected int x, y;
     protected PointF position = new PointF();
-    protected RectF dstRect = new RectF();
 
     public Tower(int x, int y) {
         this.x = x;
@@ -48,9 +47,6 @@ public abstract class Tower implements GameObject, Collidable {
 
         position.x = x * cellSize + cellSize / 2;
         position.y = y * cellSize + cellSize / 2;
-
-        dstRect.set(position.x - cellSize/2, position.y- cellSize/2,
-                position.x + cellSize/2, position.y + cellSize/2);
     }
 
     protected void fire() {
@@ -87,8 +83,8 @@ public abstract class Tower implements GameObject, Collidable {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, null, dstRect, null);
         range.draw(canvas);
+        sprite.draw(canvas);
     }
 
     @Override

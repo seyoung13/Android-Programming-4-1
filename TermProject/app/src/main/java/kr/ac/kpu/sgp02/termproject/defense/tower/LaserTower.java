@@ -3,6 +3,7 @@ package kr.ac.kpu.sgp02.termproject.defense.tower;
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 
 public class LaserTower extends Tower {
@@ -12,7 +13,8 @@ public class LaserTower extends Tower {
 
     @Override
     protected void setSpecification() {
-        bitmap = BitmapPool.getBitmap(R.mipmap.tower_sample);
+        sprite = new Sprite(position.x, position.y,
+                Metrics.size(R.dimen.cell_size), R.mipmap.tower_sample);
 
         range = new CircleCollider(position.x, position.y, Metrics.size(R.dimen.laser_range));
 

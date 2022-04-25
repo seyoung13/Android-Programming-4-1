@@ -35,8 +35,7 @@ public abstract class Collider implements GameObject {
     // --------------- 메소드 ---------------
 
     public void offset(float dx, float dy) {
-        center.x += dx;
-        center.y += dy;
+        center.offset(dx, dy);
     }
 
     private void initialize(float x, float y) {

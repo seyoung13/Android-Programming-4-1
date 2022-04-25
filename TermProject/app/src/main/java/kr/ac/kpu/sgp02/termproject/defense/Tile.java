@@ -1,15 +1,11 @@
 package kr.ac.kpu.sgp02.termproject.defense;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Rect;
+import android.graphics.PointF;
 
-import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.framework.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 
 enum TileType{
     PATH,
@@ -21,64 +17,46 @@ enum TileType{
 }
 
 public class Tile implements GameObject {
-    private static Bitmap pathBitmap, deployableBitmap, startBitmap, endBitmap, errorBitmap;
-    private Rect dstRect = new Rect();
-
     //만들어진 비트맵 중 타일타입에 맞는 비트맵의 복사본
-    private Bitmap bitmap;
+    private Sprite sprite;
 
     //타일맵 배열 내의 인덱스
     private int x, y;
+    private PointF position = new PointF();
     private int size = 50;
 
     Tile(int x,int y, int size, TileType type) {
         this.x = x;
         this.y = y;
-        setSize(size);
 
-        loadBitmapResources();
+        this.size = size;
+
+        position.x = x * size + size / 2;
+        position.y = y * size + size / 2;
+
         selectBitmapByType(type);
-        setDstRectSize();
-    }
-
-    public void setSize(int size) {
-        this.size = Math.max(size, 50);
-        setDstRectSize();
-    }
-
-    private void loadBitmapResources() {
-        pathBitmap = BitmapPool.getBitmap(R.mipmap.path_tile);
-        deployableBitmap = BitmapPool.getBitmap(R.mipmap.deployable_tile);
-        startBitmap = BitmapPool.getBitmap(R.mipmap.start_tile);
-        endBitmap = BitmapPool.getBitmap(R.mipmap.end_tile);
-        errorBitmap = BitmapPool.getBitmap(R.mipmap.error_tile);
     }
 
     private void selectBitmapByType(TileType type) {
         switch (type){
             case PATH:
-                bitmap = pathBitmap;
+                sprite = new Sprite(position.x, position.y, size, R.mipmap.path_tile);
                 break;
             case DEPLOYABLE:
-                bitmap = deployableBitmap;
+                sprite = new Sprite(position.x, position.y, size, R.mipmap.deployable_tile);
                 break;
             case START:
-                bitmap = startBitmap;
+                sprite = new Sprite(position.x, position.y, size, R.mipmap.start_tile);
                 break;
             case END:
-                bitmap = endBitmap;
+                sprite = new Sprite(position.x, position.y, size, R.mipmap.end_tile);
                 break;
             case ERROR:
             default:
-                bitmap = errorBitmap;
+                sprite = new Sprite(position.x, position.y, size, R.mipmap.error_tile);
                 break;
         }
     }
-
-    private void setDstRectSize() {
-        dstRect.set( x * size, y * size,
-                x * size + size, y * size + size);
-     }
 
     @Override
     public void update(float deltaSecond) {
@@ -87,7 +65,7 @@ public class Tile implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, null, dstRect, null);
+        sprite.draw(canvas);
     }
 
 }
