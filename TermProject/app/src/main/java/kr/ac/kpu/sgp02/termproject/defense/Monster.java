@@ -1,33 +1,32 @@
 package kr.ac.kpu.sgp02.termproject.defense;
 
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.RectF;
 
 import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.defense.tower.Projectile;
-import kr.ac.kpu.sgp02.termproject.framework.BitmapPool;
+import kr.ac.kpu.sgp02.termproject.defense.projectile.Projectile;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 
 public class Monster implements GameObject, Collidable {
     protected int hp;
     protected float speed;
-    private Bitmap bitmap;
-    private RectF dstRect = new RectF();
+    private Sprite sprite;
     public BoxCollider collider;
     protected PointF position;
     public boolean isDead;
 
     public Monster(float x, float y) {
         Resources res = GameView.view.getResources();
-        dstRect.set(x-100, y-100, x+100, y+100);
-        bitmap = BitmapPool.getBitmap(R.mipmap.monster_sample);
-        collider = new BoxCollider(x, y, 105, 105);
+        sprite = new Sprite(x, y, Metrics.size(R.dimen.cell_size) - 10, R.mipmap.monster_sample);
+        collider = new BoxCollider(x, y,
+                Metrics.size(R.dimen.cell_size)/2,
+                Metrics.size(R.dimen.cell_size)/2);
         hp = 100;
         position = new PointF(x, y);
         isDead = false;
@@ -39,8 +38,8 @@ public class Monster implements GameObject, Collidable {
         if(isDead)
             return;
 
-        position.x += speed;
-        dstRect.offset(speed, 0);
+        position.offset(speed, 0);
+        sprite.offset(speed, 0);
         collider.offset(speed, 0);
     }
 
@@ -49,7 +48,7 @@ public class Monster implements GameObject, Collidable {
         if(isDead)
             return;
 
-        canvas.drawBitmap(bitmap, null, dstRect, null);
+        sprite.draw(canvas);
         collider.draw(canvas);
     }
 

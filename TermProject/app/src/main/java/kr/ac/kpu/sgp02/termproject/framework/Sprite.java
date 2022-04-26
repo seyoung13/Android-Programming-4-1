@@ -6,21 +6,29 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 
 public class Sprite implements GameObject {
-    private RectF dstRect = new RectF();
-    private Bitmap bitmap;
+    public RectF dstRect = new RectF();
+    public Bitmap bitmap;
     private PointF position = new PointF();
-    private float size;
 
     public Sprite(float x, float y, float size, int bitmapResId) {
-        this.size = size;
-        setPosition(x, y);
+        setPosition(x, y, size, size);
         bitmap = BitmapPool.getBitmap(bitmapResId);
     }
 
-    public void setPosition(float x, float y) {
+    public Sprite(float x, float y, float width, float height, int bitmapResId) {
+        setPosition(x, y, width, height);
+        bitmap = BitmapPool.getBitmap(bitmapResId);
+    }
+
+    public void setPosition(float x, float y, float width, float height) {
         position.set(x, y);
-        dstRect.set(x - size / 2, y - size / 2,
-                x + size / 2, y + size / 2);
+        dstRect.set(x - width / 2, y - height / 2,
+                x + width / 2, y + height / 2);
+    }
+
+    public void setPositionLeftTop(float x, float y, float width, float height) {
+        position.set(x + width/2, y + height/2);
+        dstRect.set(x, y, x + width, y + height);
     }
 
     public void offset(float dx, float dy) {

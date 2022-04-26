@@ -1,5 +1,6 @@
 package kr.ac.kpu.sgp02.termproject.framework.collision;
 
+import android.gesture.OrientedBoundingBox;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -122,7 +123,6 @@ public class BoxCollider extends Collider {
 
     @Override
     public void update(float deltaSecond) {
-
     }
 
     @Override

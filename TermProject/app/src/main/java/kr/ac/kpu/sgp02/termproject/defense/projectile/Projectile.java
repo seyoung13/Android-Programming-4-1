@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject.defense.tower;
+package kr.ac.kpu.sgp02.termproject.defense.projectile;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -13,23 +13,25 @@ import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.defense.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
+import kr.ac.kpu.sgp02.termproject.framework.Sprite;
+import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 
 public class Projectile implements GameObject, Collidable {
     private float damage;
-    private Monster target;
-    public CircleCollider collider;
+    protected Monster target;
+    public BoxCollider collider;
+    protected Sprite sprite;
     protected PointF position;
-    private Bitmap bitmap;
-    private RectF dstRect = new RectF();
     protected PointF deltaPosition = new PointF();
     protected float speed = 3000;
 
     public Projectile(float x, float y) {
         position = new PointF(x, y);
-        collider = new CircleCollider(x, y, 30);
+        collider = new BoxCollider(x, y, 30, 30);
+        sprite = new Sprite(x, y, 30, R.mipmap.grid);
         damage = 5;
     }
 
@@ -44,9 +46,9 @@ public class Projectile implements GameObject, Collidable {
 
         PointF targetPosition = target.getPosition();
         deltaPosition = MathHelper.subtract(targetPosition, position);
-        double degree = Math.atan2(deltaPosition.y, deltaPosition.x);
-        float dx = (float) Math.cos(degree) * speed * deltaSecond;
-        float dy = (float) Math.sin(degree) * speed * deltaSecond;
+        double radian = Math.atan2(deltaPosition.y, deltaPosition.x);
+        float dx = (float) Math.cos(radian) * speed * deltaSecond;
+        float dy = (float) Math.sin(radian) * speed * deltaSecond;
 
         if(Math.abs(dx) > Math.abs(deltaPosition.x)) {
             dx = targetPosition.x - position.x;
@@ -55,12 +57,14 @@ public class Projectile implements GameObject, Collidable {
             dy = targetPosition.y - position.y;
         }
 
+        sprite.offset(dx, dy);
         position.offset(dx, dy);
         collider.offset(dx, dy);
     }
 
     @Override
     public void draw(Canvas canvas) {
+        sprite.draw(canvas);
         collider.draw(canvas);
     }
 

@@ -15,7 +15,7 @@ public class MonsterGenerator implements GameObject{
         delay -= deltaSecond;
 
         if(delay <= 0) {
-            GameView.view.add(new Monster(100, 800));
+            GameView.view.add(new Monster(100, 700));
             delay += maxDelay;
         }
     }

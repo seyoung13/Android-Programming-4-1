@@ -42,20 +42,14 @@ public abstract class Tower implements GameObject, Collidable {
 
     protected abstract void setSpecification();
 
-    private void setPosition(int x, int y) {
+    protected void setPosition(int x, int y) {
         float cellSize = Metrics.size(R.dimen.cell_size);
 
         position.x = x * cellSize + cellSize / 2;
         position.y = y * cellSize + cellSize / 2;
     }
 
-    protected void fire() {
-         Projectile p = new Projectile(position.x, position.y);
-         GameView.view.add(p);
-
-         Monster monster = targetList.iterator().next();
-         p.setTarget(monster);
-    }
+    protected abstract void fire();
 
     @Override
     public void update(float deltaSecond) {
