@@ -30,7 +30,7 @@ public class Monster implements GameObject, Collidable {
         hp = 100;
         position = new PointF(x, y);
         isDead = false;
-        speed = 10;
+        speed = 8;
     }
 
     @Override

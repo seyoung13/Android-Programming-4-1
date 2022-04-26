@@ -4,9 +4,13 @@
 
     <item name="cannon_delay" type="dimen" format="float">1.5</item>
     <item name="laser_delay" type="dimen" format="float">0.25</item>
+    <item name="plasma_delay" type="dimen" format="float">1.5</item>
+    <item name="siege_delay" type="dimen" format="float">2.5</item>
 
     <dimen name="cannon_range">150dp</dimen>
     <dimen name="laser_range">200dp</dimen>
+    <dimen name="plasma_range">200dp</dimen>
+    <dimen name="siege_range">300dp</dimen>
 
     <dimen name="collider_line_width">3dp</dimen>
 </resources>

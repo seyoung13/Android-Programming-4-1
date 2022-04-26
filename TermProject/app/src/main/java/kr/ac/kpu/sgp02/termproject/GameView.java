@@ -18,6 +18,7 @@ import kr.ac.kpu.sgp02.termproject.defense.tower.CannonTower;
 import kr.ac.kpu.sgp02.termproject.defense.tower.LaserTower;
 import kr.ac.kpu.sgp02.termproject.defense.projectile.Projectile;
 import kr.ac.kpu.sgp02.termproject.defense.TileMap;
+import kr.ac.kpu.sgp02.termproject.defense.tower.PlasmaTower;
 import kr.ac.kpu.sgp02.termproject.defense.tower.Tower;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MonsterGenerator;
@@ -66,9 +67,11 @@ public class GameView extends View implements Choreographer.FrameCallback {
         MonsterGenerator generator = new MonsterGenerator();
         objects.add(generator);
 
-        objects.add(new CannonTower(5, 2));
+        objects.add(new CannonTower(8, 2));
 
-        objects.add(new LaserTower(4, 6));
+        objects.add(new LaserTower(8, 6));
+
+        objects.add(new PlasmaTower(3, 3));
 
         Choreographer.getInstance().postFrameCallback(this);
     }
