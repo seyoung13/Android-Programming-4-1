@@ -6,8 +6,8 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 
 public class Sprite implements GameObject {
-    public RectF dstRect = new RectF();
-    public Bitmap bitmap;
+    private RectF dstRect = new RectF();
+    private Bitmap bitmap;
     private PointF position = new PointF();
 
     public Sprite(float x, float y, float size, int bitmapResId) {

@@ -8,7 +8,7 @@ import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
 
 public class LaserProjectile extends Projectile {
-    protected double radian;
+    protected float degree;
 
     public LaserProjectile(float x, float y) {
         super(x, y);
@@ -24,7 +24,8 @@ public class LaserProjectile extends Projectile {
 
         PointF targetPosition = target.getPosition();
         deltaPosition = MathHelper.subtract(targetPosition, position);
-        radian = Math.atan2(deltaPosition.y, deltaPosition.x);
+        double radian = Math.atan2(deltaPosition.y, deltaPosition.x);
+        degree = (float)Math.toDegrees(radian);
 
         float distance = (float)Math.sqrt(deltaPosition.x * deltaPosition.x +
                 deltaPosition.y * deltaPosition.y);
@@ -35,9 +36,8 @@ public class LaserProjectile extends Projectile {
 
     public void draw(Canvas canvas) {
         canvas.save();
-        canvas.rotate((float)Math.toDegrees(radian), position.x, position.y);
+        canvas.rotate(degree, position.x, position.y);
 
-        //Log.d("Degree", "Degree : " + (float)degree);
         sprite.draw(canvas);
         collider.draw(canvas);
 
