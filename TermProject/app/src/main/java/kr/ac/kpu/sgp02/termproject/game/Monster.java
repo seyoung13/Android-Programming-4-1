@@ -27,7 +27,7 @@ public class Monster implements GameObject, Collidable {
         collider = new BoxCollider(x, y,
                 Metrics.size(R.dimen.cell_size)/2,
                 Metrics.size(R.dimen.cell_size)/2);
-        hp = 100;
+        hp = 5;
         position = new PointF(x, y);
         isDead = false;
         speed = 8;
@@ -55,7 +55,7 @@ public class Monster implements GameObject, Collidable {
     @Override
     public void onBeginOverlap(GameObject object) {
         if(object instanceof Projectile) {
-            beDamaged(5);
+            //beDamaged(5);
         }
     }
 
@@ -69,7 +69,7 @@ public class Monster implements GameObject, Collidable {
 
     }
 
-    private void beDamaged(int damage) {
+    public void beDamaged(int damage) {
         hp -= damage;
         if(hp <= 0)
             isDead = true;

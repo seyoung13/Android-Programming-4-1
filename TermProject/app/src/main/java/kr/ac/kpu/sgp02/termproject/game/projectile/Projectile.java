@@ -13,7 +13,7 @@ import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 
 public class Projectile implements GameObject, Collidable {
-    private float damage;
+    private int damage;
     protected Monster target;
     public BoxCollider collider;
     protected Sprite sprite;
@@ -65,8 +65,10 @@ public class Projectile implements GameObject, Collidable {
     public void onBeginOverlap(GameObject object) {
         if(object instanceof Monster) {
             Monster monster = (Monster) object;
-            if(object == target)
+            if(monster == target) {
+                monster.beDamaged(damage);
                 DefenseGame.getInstance().remove(this);
+            }
         }
     }
 

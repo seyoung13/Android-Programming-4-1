@@ -7,12 +7,14 @@ import java.util.ArrayList;
 
 import kr.ac.kpu.sgp02.termproject.framework.GameView;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.MonsterGenerator;
+import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CollisionChecker;
 import kr.ac.kpu.sgp02.termproject.game.projectile.Projectile;
+import kr.ac.kpu.sgp02.termproject.game.projectile.SiegeSplash;
 import kr.ac.kpu.sgp02.termproject.game.tower.CannonTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.LaserTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.PlasmaTower;
+import kr.ac.kpu.sgp02.termproject.game.tower.SiegeTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.Tower;
 
 public class DefenseGame {
@@ -69,12 +71,13 @@ public class DefenseGame {
 
         add(new MonsterGenerator());
 
-        add(new CannonTower(8, 2));
+//        add(new CannonTower(8, 2));
+//
+//        add(new LaserTower(8, 6));
+//
+//        add(new PlasmaTower(3, 3));
 
-        add(new LaserTower(8, 6));
-
-        add(new PlasmaTower(3, 3));
-
+        add(new SiegeTower(5, 6));
     }
 
     private void initializeLayers() {
@@ -85,9 +88,9 @@ public class DefenseGame {
         }
     }
 
-    public void update(float deltaTime) {
+    public void update(float deltaSecond) {
         for(GameObject object : objects) {
-            object.update(deltaTime);
+            object.update(deltaSecond);
         }
 
         checkCollision();
@@ -134,6 +137,38 @@ public class DefenseGame {
                     }
                 }
 
+                // 스플래쉬 대미지
+                if (o2 instanceof SiegeSplash) {
+                    SiegeSplash splash = (SiegeSplash) o2;
+
+                    if (CollisionChecker.collides(monster.collider, splash.splash)) {
+                        if (monster.collider.overlappedColliders.contains(splash.splash)) {
+                            monster.onStayOverlap(splash);
+                        } else {
+                            monster.collider.overlappedColliders.add(splash.splash);
+                            monster.onBeginOverlap(splash);
+                        }
+
+                        if (splash.splash.overlappedColliders.contains(monster.collider)) {
+                            splash.onStayOverlap(monster);
+                        } else {
+                            splash.splash.overlappedColliders.add(monster.collider);
+                            splash.onBeginOverlap(monster);
+                        }
+                    } else {
+                        if (monster.collider.overlappedColliders.contains(splash.splash)) {
+                            monster.collider.overlappedColliders.remove(splash.splash);
+                            monster.onEndOverlap(splash);
+                        }
+
+                        if (splash.splash.overlappedColliders.contains(monster.collider)) {
+                            splash.splash.overlappedColliders.remove(monster.collider);
+                            splash.onEndOverlap(monster);
+                        }
+                    }
+                }
+
+                // 타워 사거리 내 몬스터가 있는지 확인
                 if (o2 instanceof Tower) {
                     Tower tower = (Tower) o2;
 
