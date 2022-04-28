@@ -1,23 +1,16 @@
-package kr.ac.kpu.sgp02.termproject.defense.projectile;
+package kr.ac.kpu.sgp02.termproject.game.projectile;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.Rect;
-import android.graphics.RectF;
 
-import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.defense.Monster;
+import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
+import kr.ac.kpu.sgp02.termproject.game.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
 import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
-import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
-import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 
 public class Projectile implements GameObject, Collidable {
     private float damage;
@@ -40,16 +33,16 @@ public class Projectile implements GameObject, Collidable {
     public void update(float deltaSecond) {
         if(target == null)
         {
-            GameView.view.remove(this);
+            DefenseGame.getInstance().remove(this);
             return;
         }
 
         PointF targetPosition = target.getPosition();
         deltaPosition = MathHelper.subtract(targetPosition, position);
         double radian = Math.atan2(deltaPosition.y, deltaPosition.x);
+
         float dx = (float) Math.cos(radian) * speed * deltaSecond;
         float dy = (float) Math.sin(radian) * speed * deltaSecond;
-
         if(Math.abs(dx) > Math.abs(deltaPosition.x)) {
             dx = targetPosition.x - position.x;
         }
@@ -73,7 +66,7 @@ public class Projectile implements GameObject, Collidable {
         if(object instanceof Monster) {
             Monster monster = (Monster) object;
             if(object == target)
-                GameView.view.remove(this);
+                DefenseGame.getInstance().remove(this);
         }
     }
 

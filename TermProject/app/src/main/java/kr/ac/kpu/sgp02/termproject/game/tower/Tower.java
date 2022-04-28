@@ -1,15 +1,13 @@
-package kr.ac.kpu.sgp02.termproject.defense.tower;
+package kr.ac.kpu.sgp02.termproject.game.tower;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.RectF;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.defense.Monster;
+import kr.ac.kpu.sgp02.termproject.game.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.Sprite;

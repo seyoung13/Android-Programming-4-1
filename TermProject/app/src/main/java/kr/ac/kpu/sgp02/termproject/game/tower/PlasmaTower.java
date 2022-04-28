@@ -1,13 +1,11 @@
-package kr.ac.kpu.sgp02.termproject.defense.tower;
+package kr.ac.kpu.sgp02.termproject.game.tower;
 
 import java.util.ArrayList;
 
-import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.defense.Monster;
-import kr.ac.kpu.sgp02.termproject.defense.projectile.LaserProjectile;
-import kr.ac.kpu.sgp02.termproject.defense.projectile.PlasmaProjectile;
-import kr.ac.kpu.sgp02.termproject.defense.projectile.Projectile;
+import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
+import kr.ac.kpu.sgp02.termproject.game.Monster;
+import kr.ac.kpu.sgp02.termproject.game.projectile.PlasmaProjectile;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
@@ -34,7 +32,7 @@ public class PlasmaTower extends Tower{
         for(Monster monster : targetList) {
             PlasmaProjectile plasma = new PlasmaProjectile(position.x, position.y);
             plasmaProjectiles.add(plasma);
-            GameView.view.add(plasma);
+            DefenseGame.getInstance().add(plasma);
 
             plasma.setTarget(monster);
         }

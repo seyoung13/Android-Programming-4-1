@@ -1,24 +1,29 @@
-package kr.ac.kpu.sgp02.termproject.defense.projectile;
+package kr.ac.kpu.sgp02.termproject.game.projectile;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
 
-import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
+import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 
-public class LaserProjectile extends Projectile {
+public class PlasmaProjectile extends Projectile{
     protected float degree;
+    protected float lifetime = 1.0f;
 
-    public LaserProjectile(float x, float y) {
+    public PlasmaProjectile(float x, float y) {
         super(x, y);
     }
 
     @Override
     public void update(float deltaSecond) {
+        lifetime -= deltaSecond;
+        if(lifetime < 0)
+            DefenseGame.getInstance().remove(this);
+
         if(target == null)
         {
-            GameView.view.remove(this);
+            DefenseGame.getInstance().remove(this);
             return;
         }
 
@@ -47,5 +52,4 @@ public class LaserProjectile extends Projectile {
     @Override
     public void onBeginOverlap(GameObject object) {
     }
-
 }

@@ -3,8 +3,8 @@ package kr.ac.kpu.sgp02.termproject.framework;
 import android.graphics.Canvas;
 
 
-import kr.ac.kpu.sgp02.termproject.GameView;
-import kr.ac.kpu.sgp02.termproject.defense.Monster;
+import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
+import kr.ac.kpu.sgp02.termproject.game.Monster;
 
 public class MonsterGenerator implements GameObject{
     private float delay = 0.0f;
@@ -15,7 +15,7 @@ public class MonsterGenerator implements GameObject{
         delay -= deltaSecond;
 
         if(delay <= 0) {
-            GameView.view.add(new Monster(100, 750));
+            DefenseGame.getInstance().add(new Monster(100, 750));
             delay += maxDelay;
         }
     }

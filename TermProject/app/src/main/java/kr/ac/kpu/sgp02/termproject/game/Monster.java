@@ -1,12 +1,12 @@
-package kr.ac.kpu.sgp02.termproject.defense;
+package kr.ac.kpu.sgp02.termproject.game;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 
-import kr.ac.kpu.sgp02.termproject.GameView;
+import kr.ac.kpu.sgp02.termproject.framework.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.defense.projectile.Projectile;
+import kr.ac.kpu.sgp02.termproject.game.projectile.Projectile;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.Sprite;

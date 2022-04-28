@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject.defense;
+package kr.ac.kpu.sgp02.termproject.game;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;

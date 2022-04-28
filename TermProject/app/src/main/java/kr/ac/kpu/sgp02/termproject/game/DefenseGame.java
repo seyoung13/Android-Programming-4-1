@@ -1,38 +1,30 @@
-package kr.ac.kpu.sgp02.termproject;
+package kr.ac.kpu.sgp02.termproject.game;
 
-import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.view.Choreographer;
 import android.view.MotionEvent;
-import android.view.View;
-
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-import kr.ac.kpu.sgp02.termproject.defense.Monster;
-import kr.ac.kpu.sgp02.termproject.defense.tower.CannonTower;
-import kr.ac.kpu.sgp02.termproject.defense.tower.LaserTower;
-import kr.ac.kpu.sgp02.termproject.defense.projectile.Projectile;
-import kr.ac.kpu.sgp02.termproject.defense.TileMap;
-import kr.ac.kpu.sgp02.termproject.defense.tower.PlasmaTower;
-import kr.ac.kpu.sgp02.termproject.defense.tower.Tower;
+import kr.ac.kpu.sgp02.termproject.framework.GameView;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MonsterGenerator;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CollisionChecker;
+import kr.ac.kpu.sgp02.termproject.game.projectile.Projectile;
+import kr.ac.kpu.sgp02.termproject.game.tower.CannonTower;
+import kr.ac.kpu.sgp02.termproject.game.tower.LaserTower;
+import kr.ac.kpu.sgp02.termproject.game.tower.PlasmaTower;
+import kr.ac.kpu.sgp02.termproject.game.tower.Tower;
 
-public class GameView extends View implements Choreographer.FrameCallback {
-    public static GameView view;
-    private static final String DEBUG_TAG = GameView.class.getSimpleName();
+public class DefenseGame {
 
-    ArrayList<GameObject> objects = new ArrayList<>();
-
-    private long prevTimeNanoSecond;
-    private long framePerSecond;
-
+    public enum Layer {
+        tower,
+        projectile,
+        monster,
+        collider,
+        ui,
+        COUNT,
+    }
 
     private final int[][] tileBlueprint =
             {
@@ -46,49 +38,51 @@ public class GameView extends View implements Choreographer.FrameCallback {
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             };
 
-    TileMap tileMap;
+    private static DefenseGame singleton;
+    private ArrayList<ArrayList<GameObject>> layers;
+    private ArrayList<GameObject> objects;
 
-    // 테스트
-    Monster monster;
-    Tower tower;
-
-    public GameView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-
-        initView();
+    // --------------- 생성자 ---------------
+    private DefenseGame() {
+        // 생성자를 private 으로 설정하여 getInstance()를
+        // 통해서만 싱글톤이 생성되게 한다.
     }
 
-    private void initView() {
-        view = this;
+    // --------------- 메소드 ---------------
 
-        tileMap = new TileMap(tileBlueprint);
-        objects.add(tileMap);
+    public static DefenseGame getInstance() {
+        if(singleton == null)
+            singleton = new DefenseGame();
 
-        MonsterGenerator generator = new MonsterGenerator();
-        objects.add(generator);
-
-        objects.add(new CannonTower(8, 2));
-
-        objects.add(new LaserTower(8, 6));
-
-        objects.add(new PlasmaTower(3, 3));
-
-        Choreographer.getInstance().postFrameCallback(this);
+        return singleton;
     }
 
-    @Override
-    public void doFrame(long currTimeNanoSecond) {
-        int elapsedTimeNanoSecond = (int)(currTimeNanoSecond - prevTimeNanoSecond);
+    public static void clear() {
+        singleton = null;
+    }
 
-        if(elapsedTimeNanoSecond != 0) {
-            framePerSecond = 1_000_000_000 / elapsedTimeNanoSecond;
-            prevTimeNanoSecond = currTimeNanoSecond;
+    public void initialize() {
+        initializeLayers();
+        objects = new ArrayList<>();
 
-            float deltaSecond = elapsedTimeNanoSecond * 1e-9f;
-            update(deltaSecond);
-            invalidate();
+        add(new TileMap(tileBlueprint));
+
+        add(new MonsterGenerator());
+
+        add(new CannonTower(8, 2));
+
+        add(new LaserTower(8, 6));
+
+        add(new PlasmaTower(3, 3));
+
+    }
+
+    private void initializeLayers() {
+        layers = new ArrayList<>();
+
+        for(int i = 0; i < Layer.COUNT.ordinal(); ++i) {
+            layers.add(new ArrayList<GameObject>());
         }
-        Choreographer.getInstance().postFrameCallback(this);
     }
 
     public void update(float deltaTime) {
@@ -173,14 +167,12 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas) {
         for(GameObject object : objects) {
             object.draw(canvas);
         }
     }
 
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 
@@ -188,7 +180,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     public void add(GameObject object) {
-        post(new Runnable() {
+        GameView.view.post(new Runnable() {
             @Override
             public void run() {
                 objects.add(object);
@@ -197,7 +189,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     public void remove(GameObject object) {
-        post(new Runnable() {
+        GameView.view.post(new Runnable() {
             @Override
             public void run() {
                 objects.remove(object);

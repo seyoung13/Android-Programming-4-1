@@ -1,10 +1,9 @@
-package kr.ac.kpu.sgp02.termproject.defense.tower;
+package kr.ac.kpu.sgp02.termproject.game.tower;
 
-import kr.ac.kpu.sgp02.termproject.GameView;
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.defense.Monster;
-import kr.ac.kpu.sgp02.termproject.defense.projectile.LaserProjectile;
-import kr.ac.kpu.sgp02.termproject.defense.projectile.Projectile;
+import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
+import kr.ac.kpu.sgp02.termproject.game.Monster;
+import kr.ac.kpu.sgp02.termproject.game.projectile.LaserProjectile;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.Sprite;
@@ -37,7 +36,7 @@ public class LaserTower extends Tower {
 
         isLaserFiring = true;
 
-        GameView.view.add(laser);
+        DefenseGame.getInstance().add(laser);
         target = targetList.iterator().next();
         laser.setTarget(target);
     }
@@ -50,7 +49,7 @@ public class LaserTower extends Tower {
         Monster monster = (Monster) object;
         if(monster == target) {
             isLaserFiring = false;
-            GameView.view.remove(laser);
+            DefenseGame.getInstance().remove(laser);
         }
 
         targetList.remove((Monster) object);

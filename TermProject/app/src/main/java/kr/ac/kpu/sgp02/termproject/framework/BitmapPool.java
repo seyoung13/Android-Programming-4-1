@@ -6,8 +6,6 @@ import android.graphics.BitmapFactory;
 
 import java.util.HashMap;
 
-import kr.ac.kpu.sgp02.termproject.GameView;
-
 public class BitmapPool {
     private static HashMap<Integer, Bitmap> bitmapPool = new HashMap<>();
 
