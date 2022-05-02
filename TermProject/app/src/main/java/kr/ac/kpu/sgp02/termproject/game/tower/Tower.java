@@ -2,11 +2,14 @@ package kr.ac.kpu.sgp02.termproject.game.tower;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.util.Log;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
 import kr.ac.kpu.sgp02.termproject.game.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
@@ -14,7 +17,7 @@ import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 
-public abstract class Tower implements GameObject, Collidable {
+public abstract class Tower implements GameObject, Collidable, Recyclable {
     protected float currDelay = 0.0f;
     protected Monster target;
 
@@ -29,7 +32,7 @@ public abstract class Tower implements GameObject, Collidable {
     protected int x, y;
     protected PointF position = new PointF();
 
-    public Tower(int x, int y) {
+    protected Tower(int x, int y) {
         this.x = x;
         this.y = y;
 
@@ -98,5 +101,15 @@ public abstract class Tower implements GameObject, Collidable {
             return;
 
         targetList.remove((Monster) object);
+    }
+
+    @Override
+    public void redeploy(float x, float y){
+        this.x = (int)x;
+        this.y = (int)y;
+
+        setPosition(this.x, this.y);
+
+        targetList.clear();
     }
 }

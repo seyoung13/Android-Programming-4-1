@@ -14,4 +14,7 @@
 
     <dimen name="collider_line_width">3dp</dimen>
     <dimen name="siege_splash">100dp</dimen>
+
+    <dimen name="hp_bar_width">40dp</dimen>
+    <dimen name="hp_bar_height">10dp</dimen>
 </resources>

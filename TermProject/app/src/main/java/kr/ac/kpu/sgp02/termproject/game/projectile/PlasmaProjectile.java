@@ -2,16 +2,31 @@ package kr.ac.kpu.sgp02.termproject.game.projectile;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.util.Log;
 
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
+import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
+import kr.ac.kpu.sgp02.termproject.game.Monster;
 
-public class PlasmaProjectile extends Projectile{
+public class PlasmaProjectile extends Projectile {
     protected float degree;
-    protected float lifetime = 1.0f;
+    protected float lifetime = 0.5f;
+    private int damage = 5;
 
-    public PlasmaProjectile(float x, float y) {
+    public static PlasmaProjectile get(float x, float y) {
+        PlasmaProjectile recyclable = (PlasmaProjectile) ObjectPool.get(PlasmaProjectile.class);
+
+        if(recyclable != null)
+            recyclable.redeploy(x, y);
+        else
+            recyclable = new PlasmaProjectile(x, y);
+
+        return recyclable;
+    }
+
+    protected PlasmaProjectile(float x, float y) {
         super(x, y);
     }
 
@@ -21,7 +36,7 @@ public class PlasmaProjectile extends Projectile{
         if(lifetime < 0)
             DefenseGame.getInstance().remove(this);
 
-        if(target == null)
+        if(target.isDead)
         {
             DefenseGame.getInstance().remove(this);
             return;
@@ -51,5 +66,17 @@ public class PlasmaProjectile extends Projectile{
 
     @Override
     public void onBeginOverlap(GameObject object) {
+    }
+
+    @Override
+    public void redeploy(float x, float y) {
+        super.redeploy(x, y);
+        lifetime = 1.0f;
+    }
+
+    @Override
+    public void setTarget(Monster monster) {
+        super.setTarget(monster);
+        monster.beDamaged(damage);
     }
 }

@@ -9,15 +9,28 @@ public class Sprite implements GameObject {
     private RectF dstRect = new RectF();
     private Bitmap bitmap;
     private PointF position = new PointF();
+    private float width, height;
 
     public Sprite(float x, float y, float size, int bitmapResId) {
         setPosition(x, y, size, size);
         bitmap = BitmapPool.getBitmap(bitmapResId);
+
+        width = size;
+        height = size;
     }
 
     public Sprite(float x, float y, float width, float height, int bitmapResId) {
+        this.width = width;
+        this.height = height;
+
         setPosition(x, y, width, height);
         bitmap = BitmapPool.getBitmap(bitmapResId);
+    }
+
+    public void setPosition(float x, float y) {
+        position.set(x, y);
+        dstRect.set(x - width / 2, y - height / 2,
+                x + width / 2, y + height / 2);
     }
 
     public void setPosition(float x, float y, float width, float height) {

@@ -2,8 +2,11 @@ package kr.ac.kpu.sgp02.termproject.game.projectile;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.util.Log;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
@@ -12,7 +15,7 @@ import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 
-public class Projectile implements GameObject, Collidable {
+public class Projectile implements GameObject, Collidable, Recyclable {
     private int damage;
     protected Monster target;
     public BoxCollider collider;
@@ -21,11 +24,27 @@ public class Projectile implements GameObject, Collidable {
     protected PointF deltaPosition = new PointF();
     protected float speed = 3000;
 
-    public Projectile(float x, float y) {
+    public static Projectile get(float x, float y) {
+        Projectile recyclable = (Projectile) ObjectPool.get(Projectile.class);
+
+        if(recyclable != null)
+            recyclable.redeploy(x, y);
+        else
+            recyclable = new Projectile(x, y);
+
+        return recyclable;
+    }
+
+    private void set(float x, float y) {
+        position.set(x, y);
+    }
+
+
+    protected Projectile(float x, float y) {
         position = new PointF(x, y);
         collider = new BoxCollider(x, y, 30, 30);
         sprite = new Sprite(x, y, 30, R.mipmap.grid);
-        damage = 5;
+        damage = 10;
     }
 
 
@@ -84,5 +103,12 @@ public class Projectile implements GameObject, Collidable {
 
     public void setTarget(Monster monster) {
         target = monster;
+    }
+
+    @Override
+    public void redeploy(float x, float y) {
+        position.set(x, y);
+        collider.set(x, y);
+        sprite.setPosition(x, y);
     }
 }

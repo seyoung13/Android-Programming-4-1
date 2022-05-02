@@ -67,6 +67,12 @@ public class BoxCollider extends Collider {
         bottom += dy;
     }
 
+    @Override
+    public void set(float x, float y) {
+        super.set(x, y);
+        setVertices();
+    }
+
     // --------------- 인터페이스 ---------------
 
     @Override

@@ -38,6 +38,11 @@ public abstract class Collider implements GameObject {
         center.offset(dx, dy);
     }
 
+    public void set(float x, float y) {
+        center.x = x;
+        center.y = y;
+    }
+
     private void initialize(float x, float y) {
         center = new PointF(x, y);
         overlappedColliders = new HashSet<>(32);
@@ -60,7 +65,6 @@ public abstract class Collider implements GameObject {
     public abstract boolean contains(PointF point);
     public abstract boolean intersects(BoxCollider box);
     public abstract boolean intersects(CircleCollider circle);
-
 }
 
 

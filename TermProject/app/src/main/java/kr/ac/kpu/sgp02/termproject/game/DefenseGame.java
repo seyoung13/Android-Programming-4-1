@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 import kr.ac.kpu.sgp02.termproject.framework.GameView;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
+import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CollisionChecker;
 import kr.ac.kpu.sgp02.termproject.game.projectile.Projectile;
 import kr.ac.kpu.sgp02.termproject.game.projectile.SiegeSplash;
@@ -20,10 +21,12 @@ import kr.ac.kpu.sgp02.termproject.game.tower.Tower;
 public class DefenseGame {
 
     public enum Layer {
+        background,
         tower,
-        projectile,
         monster,
-        collider,
+        damageCauser,
+        image,
+        controller,
         ui,
         COUNT,
     }
@@ -41,8 +44,8 @@ public class DefenseGame {
             };
 
     private static DefenseGame singleton;
-    private ArrayList<ArrayList<GameObject>> layers;
-    private ArrayList<GameObject> objects;
+    private ArrayList<ArrayList<GameObject>> layeredObjects;
+    //private ArrayList<GameObject> objects;
 
     // --------------- 생성자 ---------------
     private DefenseGame() {
@@ -65,47 +68,52 @@ public class DefenseGame {
 
     public void initialize() {
         initializeLayers();
-        objects = new ArrayList<>();
 
-        add(new TileMap(tileBlueprint));
+        add(new TileMap(tileBlueprint), Layer.background);
 
-        add(new MonsterGenerator());
+        add(new MonsterGenerator(), Layer.controller);
 
-//        add(new CannonTower(8, 2));
-//
-//        add(new LaserTower(8, 6));
-//
-//        add(new PlasmaTower(3, 3));
+        add(CannonTower.get(8, 2), Layer.tower);
 
-        add(new SiegeTower(5, 6));
+        add(LaserTower.get(8, 6), Layer.tower);
+
+        add(PlasmaTower.get(3, 3), Layer.tower);
+
+        add(SiegeTower.get(5, 6), Layer.tower);
     }
 
     private void initializeLayers() {
-        layers = new ArrayList<>();
+        layeredObjects = new ArrayList<>();
 
         for(int i = 0; i < Layer.COUNT.ordinal(); ++i) {
-            layers.add(new ArrayList<GameObject>());
+            layeredObjects.add(new ArrayList<>());
         }
     }
 
     public void update(float deltaSecond) {
-        for(GameObject object : objects) {
-            object.update(deltaSecond);
+        for(ArrayList<GameObject> objects : layeredObjects){
+            for(GameObject object : objects) {
+                object.update(deltaSecond);
+            }
         }
 
         checkCollision();
     }
 
+    public ArrayList<GameObject> getObjectsAt(Layer layer) {
+        return layeredObjects.get(layer.ordinal());
+    }
+
     private void checkCollision() {
-        for(GameObject o1 : objects) {
-            if (!(o1 instanceof Monster))
+        for (GameObject o1 : getObjectsAt(Layer.monster)) {
+            if(!(o1 instanceof Monster))
                 continue;
 
             Monster monster = (Monster) o1;
 
-            for (GameObject o2 : objects) {
-                if (o2 instanceof Projectile) {
+            for(GameObject o2 : getObjectsAt(Layer.damageCauser)) {
 
+                if(o2 instanceof Projectile){
                     Projectile projectile = (Projectile) o2;
 
                     // 해쉬셋을 이용해 계속 충돌중이었는지 확인하는 작업
@@ -137,74 +145,80 @@ public class DefenseGame {
                     }
                 }
 
-                // 스플래쉬 대미지
-                if (o2 instanceof SiegeSplash) {
+                if(o2 instanceof SiegeSplash) {
                     SiegeSplash splash = (SiegeSplash) o2;
 
-                    if (CollisionChecker.collides(monster.collider, splash.splash)) {
-                        if (monster.collider.overlappedColliders.contains(splash.splash)) {
+                    if (CollisionChecker.collides(monster.collider, splash.collider)) {
+                        if (monster.collider.overlappedColliders.contains(splash.collider)) {
                             monster.onStayOverlap(splash);
                         } else {
-                            monster.collider.overlappedColliders.add(splash.splash);
+                            monster.collider.overlappedColliders.add(splash.collider);
                             monster.onBeginOverlap(splash);
                         }
 
-                        if (splash.splash.overlappedColliders.contains(monster.collider)) {
+                        if (splash.collider.overlappedColliders.contains(monster.collider)) {
                             splash.onStayOverlap(monster);
                         } else {
-                            splash.splash.overlappedColliders.add(monster.collider);
+                            splash.collider.overlappedColliders.add(monster.collider);
                             splash.onBeginOverlap(monster);
                         }
                     } else {
-                        if (monster.collider.overlappedColliders.contains(splash.splash)) {
-                            monster.collider.overlappedColliders.remove(splash.splash);
+                        if (monster.collider.overlappedColliders.contains(splash.collider)) {
+                            monster.collider.overlappedColliders.remove(splash.collider);
                             monster.onEndOverlap(splash);
                         }
 
-                        if (splash.splash.overlappedColliders.contains(monster.collider)) {
-                            splash.splash.overlappedColliders.remove(monster.collider);
+                        if (splash.collider.overlappedColliders.contains(monster.collider)) {
+                            splash.collider.overlappedColliders.remove(monster.collider);
                             splash.onEndOverlap(monster);
                         }
                     }
                 }
+            }
 
-                // 타워 사거리 내 몬스터가 있는지 확인
-                if (o2 instanceof Tower) {
-                    Tower tower = (Tower) o2;
+            // 타워 사거리 내 몬스터가 있는지 확인
+            for(GameObject o2 : getObjectsAt(Layer.tower)) {
+                if(!(o2 instanceof Tower))
+                    continue;
 
-                    if (CollisionChecker.collides(monster.collider, tower.range)) {
-                        if (monster.collider.overlappedColliders.contains(tower.range)) {
-                            monster.onStayOverlap(tower);
-                        } else {
-                            monster.collider.overlappedColliders.add(tower.range);
-                            monster.onBeginOverlap(tower);
-                        }
+                Tower tower = (Tower) o2;
 
-                        if (tower.range.overlappedColliders.contains(monster.collider)) {
-                            tower.onStayOverlap(monster);
-                        } else {
-                            tower.range.overlappedColliders.add(monster.collider);
-                            tower.onBeginOverlap(monster);
-                        }
+                if (CollisionChecker.collides(monster.collider, tower.range)) {
+                    if (monster.collider.overlappedColliders.contains(tower.range)) {
+                        monster.onStayOverlap(tower);
                     } else {
-                        if (monster.collider.overlappedColliders.contains(tower.range)) {
-                            monster.collider.overlappedColliders.remove(tower.range);
-                            monster.onEndOverlap(tower);
-                        }
+                        monster.collider.overlappedColliders.add(tower.range);
+                        monster.onBeginOverlap(tower);
+                    }
 
-                        if (tower.range.overlappedColliders.contains(monster.collider)) {
-                            tower.range.overlappedColliders.remove(monster.collider);
-                            tower.onEndOverlap(monster);
-                        }
+                    if (tower.range.overlappedColliders.contains(monster.collider)) {
+                        tower.onStayOverlap(monster);
+                    } else {
+                        tower.range.overlappedColliders.add(monster.collider);
+                        tower.onBeginOverlap(monster);
+                    }
+                } else {
+                    if (monster.collider.overlappedColliders.contains(tower.range)) {
+                        monster.collider.overlappedColliders.remove(tower.range);
+                        monster.onEndOverlap(tower);
+                    }
+
+                    if (tower.range.overlappedColliders.contains(monster.collider)) {
+                        tower.range.overlappedColliders.remove(monster.collider);
+                        tower.onEndOverlap(monster);
                     }
                 }
             }
         }
+
     }
 
+
     public void onDraw(Canvas canvas) {
-        for(GameObject object : objects) {
-            object.draw(canvas);
+        for(ArrayList<GameObject> objects : layeredObjects) {
+            for(GameObject object : objects) {
+                object.draw(canvas);
+            }
         }
     }
 
@@ -214,10 +228,11 @@ public class DefenseGame {
         return false;
     }
 
-    public void add(GameObject object) {
+    public void add(GameObject object, Layer layer) {
         GameView.view.post(new Runnable() {
             @Override
             public void run() {
+                ArrayList<GameObject> objects = getObjectsAt(layer);
                 objects.add(object);
             }
         });
@@ -227,7 +242,16 @@ public class DefenseGame {
         GameView.view.post(new Runnable() {
             @Override
             public void run() {
-                objects.remove(object);
+                for(ArrayList<GameObject> objects : layeredObjects) {
+                    if(!objects.remove(object))
+                        continue;
+
+                    if(object instanceof Recyclable) {
+                        ObjectPool.add((Recyclable)object);
+                    }
+                    break;
+                }
+
             }
         });
     }

@@ -5,17 +5,31 @@ import android.graphics.Canvas;
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.Monster;
 
-public class SiegeSplash implements GameObject, Collidable {
-    public CircleCollider splash;
+public class SiegeSplash implements GameObject, Collidable, Recyclable {
+    public CircleCollider collider;
     public float lifetime = 0.5f;
+    private int damage = 20;
 
-    SiegeSplash(float x, float y) {
-        splash = new CircleCollider(x, y, Metrics.size(R.dimen.siege_splash));
+    public static SiegeSplash get(float x, float y) {
+        SiegeSplash recyclable = (SiegeSplash) ObjectPool.get(SiegeSplash.class);
+
+        if(recyclable != null)
+            recyclable.redeploy(x, y);
+        else
+            recyclable = new SiegeSplash(x, y);
+
+        return recyclable;
+    }
+
+    protected SiegeSplash(float x, float y) {
+        collider = new CircleCollider(x, y, Metrics.size(R.dimen.siege_splash));
     }
 
 
@@ -30,7 +44,7 @@ public class SiegeSplash implements GameObject, Collidable {
 
     @Override
     public void draw(Canvas canvas) {
-        splash.draw(canvas);
+        collider.draw(canvas);
     }
 
 
@@ -38,7 +52,7 @@ public class SiegeSplash implements GameObject, Collidable {
     public void onBeginOverlap(GameObject object) {
         if(object instanceof Monster) {
             Monster monster = (Monster) object;
-            monster.beDamaged(10);
+            monster.beDamaged(damage);
         }
     }
 
@@ -50,5 +64,10 @@ public class SiegeSplash implements GameObject, Collidable {
     @Override
     public void onEndOverlap(GameObject object) {
 
+    }
+
+    @Override
+    public void redeploy(float x, float y) {
+        collider.set(x, y);
     }
 }

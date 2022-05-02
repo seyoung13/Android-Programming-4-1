@@ -5,18 +5,39 @@ import android.graphics.PointF;
 
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
+import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 
 public class LaserProjectile extends Projectile {
     protected float degree;
+    protected float currDelay = 0.0f;
+    protected float maxDelay = 0.5f;
+    private int damage = 5;
 
-    public LaserProjectile(float x, float y) {
+    public static LaserProjectile get(float x, float y) {
+        LaserProjectile recyclable = (LaserProjectile) ObjectPool.get(LaserProjectile.class);
+
+        if(recyclable != null)
+            recyclable.redeploy(x, y);
+        else
+            recyclable = new LaserProjectile(x, y);
+
+        return recyclable;
+    }
+
+    protected LaserProjectile(float x, float y) {
         super(x, y);
     }
 
     @Override
     public void update(float deltaSecond) {
-        if(target == null)
+        currDelay -= deltaSecond;
+        if(currDelay < 0) {
+            target.beDamaged(damage);
+            currDelay += maxDelay;
+        }
+
+        if(target.isDead)
         {
             DefenseGame.getInstance().remove(this);
             return;

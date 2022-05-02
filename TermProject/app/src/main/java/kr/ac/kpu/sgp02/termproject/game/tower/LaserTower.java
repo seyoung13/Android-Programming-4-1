@@ -1,6 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.tower;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.Monster;
 import kr.ac.kpu.sgp02.termproject.game.projectile.LaserProjectile;
@@ -13,7 +14,18 @@ public class LaserTower extends Tower {
     public boolean isLaserFiring = false;
     public LaserProjectile laser;
 
-    public LaserTower(int x, int y) {
+    public static LaserTower get(int x, int y) {
+        LaserTower recyclable = (LaserTower) ObjectPool.get(LaserTower.class);
+
+        if(recyclable != null)
+            recyclable.redeploy(x, y);
+        else
+            recyclable = new LaserTower(x, y);
+
+        return recyclable;
+    }
+
+    protected LaserTower(int x, int y) {
         super(x, y);
     }
 
@@ -25,18 +37,16 @@ public class LaserTower extends Tower {
         range = new CircleCollider(position.x, position.y, Metrics.size(R.dimen.laser_range));
 
         maxDelay = Metrics.floatValue(R.dimen.laser_delay);
-
-        laser = new LaserProjectile(position.x, position.y);
     }
 
     @Override
     protected void fire() {
-        if(isLaserFiring)
-            return;
+//        if(isLaserFiring)
+//            return;
 
         isLaserFiring = true;
-
-        DefenseGame.getInstance().add(laser);
+        LaserProjectile laser = LaserProjectile.get(position.x, position.y);
+        DefenseGame.getInstance().add(laser, DefenseGame.Layer.image);
         target = targetList.iterator().next();
         laser.setTarget(target);
     }
@@ -53,5 +63,10 @@ public class LaserTower extends Tower {
         }
 
         targetList.remove((Monster) object);
+    }
+
+    @Override
+    public void redeploy(float x, float y) {
+
     }
 }

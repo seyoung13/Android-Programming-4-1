@@ -3,6 +3,7 @@ package kr.ac.kpu.sgp02.termproject.game.tower;
 import java.util.ArrayList;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.Monster;
 import kr.ac.kpu.sgp02.termproject.game.projectile.PlasmaProjectile;
@@ -13,7 +14,18 @@ import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 public class PlasmaTower extends Tower{
     ArrayList<PlasmaProjectile> plasmaProjectiles = new ArrayList<>();
 
-    public PlasmaTower(int x, int y) {
+    public static PlasmaTower get(int x, int y) {
+        PlasmaTower recyclable = (PlasmaTower) ObjectPool.get(PlasmaTower.class);
+
+        if(recyclable != null)
+            recyclable.redeploy(x, y);
+        else
+            recyclable = new PlasmaTower(x, y);
+
+        return recyclable;
+    }
+
+    protected PlasmaTower(int x, int y) {
         super(x, y);
     }
 
@@ -30,11 +42,16 @@ public class PlasmaTower extends Tower{
     @Override
     protected void fire() {
         for(Monster monster : targetList) {
-            PlasmaProjectile plasma = new PlasmaProjectile(position.x, position.y);
+            PlasmaProjectile plasma = PlasmaProjectile.get(position.x, position.y);
             plasmaProjectiles.add(plasma);
-            DefenseGame.getInstance().add(plasma);
+            DefenseGame.getInstance().add(plasma, DefenseGame.Layer.image);
 
             plasma.setTarget(monster);
         }
+    }
+
+    @Override
+    public void redeploy(float x, float y) {
+
     }
 }

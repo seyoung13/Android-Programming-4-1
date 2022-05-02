@@ -7,20 +7,20 @@ import java.util.HashMap;
 
 public class ObjectPool {
     private static final String LOG_TAG = "ObjectPool : ";
-    private static HashMap<Class, ArrayList<GameObject>> objectPool = new HashMap<>();
+    private static HashMap<Class, ArrayList<Recyclable>> objectPool = new HashMap<>();
 
     public static void clear() {
         objectPool.clear();
     }
 
     // 사용이 끝난 오브젝트를 오브젝트 풀에 집어넣는다.
-    public static void add(GameObject object) {
+    public static void add(Recyclable object) {
         Class clazz = object.getClass();
 
-        ArrayList<GameObject> objects = objectPool.get(clazz);
+        ArrayList<Recyclable> objects = objectPool.get(clazz);
 
         // 오브젝트 풀에 처음 들어온 클래스라면 해쉬맵에 추가한다.
-        if(object == null) {
+        if(objects == null) {
             objects = new ArrayList<>();
             objectPool.put(clazz, objects);
         }
@@ -31,14 +31,15 @@ public class ObjectPool {
             return;
         }
 
+        Log.d("ObjectPool", "add "+clazz.getSimpleName());
         objects.add(object);
     }
 
     // 오브젝트 풀에서 오브젝트를 재활용한다.
-    public static GameObject get(Class clazz) {
-        ArrayList<GameObject> objects = objectPool.get(clazz);
+    public static Recyclable get(Class clazz) {
+        ArrayList<Recyclable> objects = objectPool.get(clazz);
 
-        if(objects == null || objects.size() > 0){
+        if(objects == null || objects.size() <= 0) {
             Log.d(LOG_TAG, clazz.getSimpleName()+" list is null.");
             return null;
         }
