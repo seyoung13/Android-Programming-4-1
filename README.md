@@ -4,7 +4,7 @@
 
 ## 게임 컨셉
 
-<img src="/PlanImages/sampleImage.png" width="300px" height="200px"></img>
+<img src="/PlanImages/pt1/sampleImage.png" width="300px" height="200px"></img>
 
 타일맵 기반의 타워 디펜스
 
@@ -30,11 +30,11 @@
   - onEndOverlap(Collidable) 사거리를 벗어난 몬스터를 타겟리스트에서 제거
   
 * 발사체
-  - 타겟에게 충돌한 후 데미지를 주는 형태  
-<img src="/PlanImages/pt2/cannon_sample.png" width="300px" height="200px"></img>
 
-  - 충돌과는 상관 없이 바로 데미지를 주는 형태
+<img src="/PlanImages/pt2/cannon_sample.png" width="300px" height="200px"></img>
+타겟에게 충돌한 후 데미지를 주는 형태  
 <img src="/PlanImages/pt2/laser_sample.png" width="300px" height="200px"></img>
+충돌과는 상관 없이 바로 데미지를 주는 형태
 
 
 
