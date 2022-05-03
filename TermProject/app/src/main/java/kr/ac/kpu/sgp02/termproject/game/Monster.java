@@ -17,6 +17,7 @@ import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 
 public class Monster implements GameObject, Collidable, Recyclable {
     protected int hp;
+    protected int maxHp = 120;
     protected float speed;
     private Sprite sprite;
     public BoxCollider collider;
@@ -37,29 +38,31 @@ public class Monster implements GameObject, Collidable, Recyclable {
     }
 
     protected Monster(float x, float y) {
-        Resources res = GameView.view.getResources();
         sprite = new Sprite(x, y, size, R.mipmap.monster_sample);
         collider = new BoxCollider(x, y,
-                Metrics.size(R.dimen.cell_size)/2,
-                Metrics.size(R.dimen.cell_size)/2);
-        hp = 50;
+                Metrics.size(R.dimen.monster_size)/2,
+                Metrics.size(R.dimen.monster_size)/2);
+        hp = maxHp;
         position = new PointF(x, y);
         isDead = false;
-        speed = 8;
-
+        speed = Metrics.size(R.dimen.monster_speed);
         hpBar = new ProgressBar(position.x, position.y + size/2,
                 Metrics.size(R.dimen.hp_bar_width), Metrics.size(R.dimen.hp_bar_height), hp);
     }
 
     @Override
     public void update(float deltaSecond) {
-        if(isDead)
+        if(isDead || position.x > Metrics.width + size) {
+            DefenseGame.getInstance().remove(this);
             return;
+        }
 
-        position.offset(speed, 0);
-        sprite.offset(speed, 0);
-        collider.offset(speed, 0);
-        hpBar.offset(speed, 0);
+        float dist = speed * deltaSecond;
+
+        position.offset(dist, 0);
+        sprite.offset(dist, 0);
+        collider.offset(dist, 0);
+        hpBar.offset(dist, 0);
     }
 
     @Override
@@ -101,9 +104,10 @@ public class Monster implements GameObject, Collidable, Recyclable {
     @Override
     public void redeploy(float x, float y) {
         position.set(x, y);
+        sprite.setPosition(x, y);
         collider.set(x, y);
-        hp = 50;
+        hp = maxHp;
         isDead = false;
-        hpBar.redeploy(x, y);
+        hpBar.redeploy(x, y + size/2);
     }
 }

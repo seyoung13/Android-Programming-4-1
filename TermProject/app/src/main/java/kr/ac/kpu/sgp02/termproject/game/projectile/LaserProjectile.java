@@ -69,4 +69,9 @@ public class LaserProjectile extends Projectile {
     public void onBeginOverlap(GameObject object) {
     }
 
+
+    @Override
+    public void redeploy(float x, float y) {
+        super.redeploy(x, y);
+    }
 }

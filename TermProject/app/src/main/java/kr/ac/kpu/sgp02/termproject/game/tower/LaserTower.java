@@ -1,5 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.tower;
 
+import android.util.Log;
+
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
@@ -41,11 +43,11 @@ public class LaserTower extends Tower {
 
     @Override
     protected void fire() {
-//        if(isLaserFiring)
-//            return;
+        if(target != null)
+            return;
 
         isLaserFiring = true;
-        LaserProjectile laser = LaserProjectile.get(position.x, position.y);
+        laser = LaserProjectile.get(position.x, position.y);
         DefenseGame.getInstance().add(laser, DefenseGame.Layer.image);
         target = targetList.iterator().next();
         laser.setTarget(target);
@@ -58,8 +60,13 @@ public class LaserTower extends Tower {
 
         Monster monster = (Monster) object;
         if(monster == target) {
-            isLaserFiring = false;
             DefenseGame.getInstance().remove(laser);
+            laser.setTarget(null);
+            target = null;
+            if(target == null)
+                Log.d("Tower", "target set null");
+            else
+                Log.d("Tower", "target set not null");
         }
 
         targetList.remove((Monster) object);

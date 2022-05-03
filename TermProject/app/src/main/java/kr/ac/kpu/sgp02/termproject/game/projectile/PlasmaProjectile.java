@@ -71,7 +71,7 @@ public class PlasmaProjectile extends Projectile {
     @Override
     public void redeploy(float x, float y) {
         super.redeploy(x, y);
-        lifetime = 1.0f;
+        lifetime = 0.5f;
     }
 
     @Override

@@ -5,16 +5,18 @@
     <item name="cannon_delay" type="dimen" format="float">1.5</item>
     <item name="laser_delay" type="dimen" format="float">0.25</item>
     <item name="plasma_delay" type="dimen" format="float">1.5</item>
-    <item name="siege_delay" type="dimen" format="float">4.5</item>
+    <item name="siege_delay" type="dimen" format="float">3.0</item>
 
     <dimen name="cannon_range">150dp</dimen>
     <dimen name="laser_range">200dp</dimen>
-    <dimen name="plasma_range">200dp</dimen>
-    <dimen name="siege_range">300dp</dimen>
+    <dimen name="plasma_range">100dp</dimen>
+    <dimen name="siege_range">200dp</dimen>
 
     <dimen name="collider_line_width">3dp</dimen>
-    <dimen name="siege_splash">100dp</dimen>
+    <dimen name="siege_splash">50dp</dimen>
 
     <dimen name="hp_bar_width">40dp</dimen>
     <dimen name="hp_bar_height">10dp</dimen>
+    <dimen name="monster_speed">50dp</dimen>
+    <dimen name="monster_size">30dp</dimen>
 </resources>
