@@ -20,10 +20,7 @@ public class StageSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_selection);
 
-        //setStagesImageLevel();
-
-        ImageButton b = findViewById(R.id.level3);
-        b.setImageLevel(3);
+        setStagesImageLevel();
 
         //빠른 실행
         //startActivity(new Intent(StageSelectionActivity.this, DefenseActivity.class));
@@ -33,7 +30,7 @@ public class StageSelectionActivity extends AppCompatActivity {
         stageBoard = findViewById(R.id.stageBoard);
         for(int i=0; i<stageBoard.getChildCount(); ++i) {
             ImageButton button = (ImageButton) stageBoard.getChildAt(i);
-            button.setImageLevel(i);
+            button.getBackground().setLevel(i+1);
         }
     }
 
