@@ -73,13 +73,13 @@ public class DefenseGame {
 
         add(new MonsterGenerator(), Layer.controller);
 
-        //add(CannonTower.get(6, 6), Layer.tower);
+        add(CannonTower.get(4, 6), Layer.tower);
 
-        //add(LaserTower.get(6, 6), Layer.tower);
+        add(LaserTower.get(6, 6), Layer.tower);
 //
-        add(PlasmaTower.get(6, 5), Layer.tower);
+//        add(PlasmaTower.get(6, 5), Layer.tower);
 //
-        add(SiegeTower.get(6, 6), Layer.tower);
+//        add(SiegeTower.get(6, 6), Layer.tower);
     }
 
     private void initializeLayers() {
@@ -251,8 +251,9 @@ public class DefenseGame {
                     }
                     break;
                 }
-
             }
         });
     }
+
+
 }

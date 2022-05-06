@@ -3,6 +3,7 @@ package kr.ac.kpu.sgp02.termproject.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameView;
@@ -39,5 +40,9 @@ public class DefenseActivity extends AppCompatActivity {
         DefenseGame.clear();
 
         super.onDestroy();
+    }
+
+    protected void onCannonBtn(View view) {
+
     }
 }

@@ -56,20 +56,27 @@ public class MathHelper {
         return a + b;
     }
 
-    public static Point add(Point a, Point b) {
-        return new Point(add(a.x, b.x), add(a.y, b.y));
+    public static Point add(Point p1, Point p2) {
+        return new Point(add(p1.x, p2.x), add(p1.y, p2.y));
     }
 
-    public static PointF add(PointF a, PointF b) {
-        return new PointF(add(a.x, b.x), add(a.y, b.y));
+    public static PointF add(PointF p1, PointF p2) {
+        return new PointF(add(p1.x, p2.x), add(p1.y, p2.y));
     }
 
-    public static Point subtract(Point a, Point b) {
-        return new Point(add(a.x, -b.x), add(a.y, -b.y));
+    public static Point subtract(Point p1, Point p2) {
+        return new Point(add(p1.x, -p2.x), add(p1.y, -p2.y));
     }
 
-    public static PointF subtract(PointF a, PointF b) {
-        return new PointF(add(a.x, -b.x), add(a.y, -b.y));
+    public static PointF subtract(PointF p1, PointF p2) {
+        return new PointF(add(p1.x, -p2.x), add(p1.y, -p2.y));
+    }
+
+    public static double getDegreeBetween(PointF origin, PointF target){
+        PointF deltaPosition = subtract(target, origin);
+        double radian = Math.atan2(deltaPosition.y, deltaPosition.x);
+
+        return Math.toDegrees(radian);
     }
 
 }

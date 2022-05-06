@@ -63,10 +63,10 @@ public class Projectile implements GameObject, Collidable, Recyclable {
         float dx = (float) Math.cos(radian) * speed * deltaSecond;
         float dy = (float) Math.sin(radian) * speed * deltaSecond;
         if(Math.abs(dx) > Math.abs(deltaPosition.x)) {
-            dx = targetPosition.x - position.x;
+            dx = deltaPosition.x;
         }
         if(Math.abs(dy) > Math.abs(deltaPosition.y)) {
-            dy = targetPosition.y - position.y;
+            dy = deltaPosition.y;
         }
 
         sprite.offset(dx, dy);

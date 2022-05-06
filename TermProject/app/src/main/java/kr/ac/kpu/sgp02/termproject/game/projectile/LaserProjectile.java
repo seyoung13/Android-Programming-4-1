@@ -47,6 +47,7 @@ public class LaserProjectile extends Projectile {
         deltaPosition = MathHelper.subtract(targetPosition, position);
         double radian = Math.atan2(deltaPosition.y, deltaPosition.x);
         degree = (float)Math.toDegrees(radian);
+        degree = (float)MathHelper.getDegreeBetween(position, targetPosition);
 
         float distance = (float)Math.sqrt(deltaPosition.x * deltaPosition.x +
                 deltaPosition.y * deltaPosition.y);

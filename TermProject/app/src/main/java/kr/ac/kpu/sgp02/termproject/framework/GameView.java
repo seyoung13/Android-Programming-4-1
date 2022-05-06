@@ -15,9 +15,6 @@ import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 
 public class GameView extends View implements Choreographer.FrameCallback {
     public static GameView view;
-    private static final String DEBUG_TAG = GameView.class.getSimpleName();
-
-    ArrayList<GameObject> objects = new ArrayList<>();
 
     private long prevTimeNanos;
     private long framePerSecond;
@@ -102,5 +99,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return DefenseGame.getInstance().onTouchEvent(event);
+    }
+
+    public DefenseGame get()
+    {
+        return DefenseGame.getInstance();
     }
 }
