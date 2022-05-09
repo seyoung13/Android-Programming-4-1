@@ -39,9 +39,9 @@ public class Sprite implements GameObject {
                 x + width / 2, y + height / 2);
     }
 
-    public void setPositionLeftTop(float x, float y, float width, float height) {
-        position.set(x + width/2, y + height/2);
-        dstRect.set(x, y, x + width, y + height);
+    public void setPositionLeftTop(float left, float top, float width, float height) {
+        position.set(left + width/2, top + height/2);
+        dstRect.set(left, top, left + width, top + height);
     }
 
     public void offset(float dx, float dy) {

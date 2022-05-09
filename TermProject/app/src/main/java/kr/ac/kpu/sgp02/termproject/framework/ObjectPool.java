@@ -31,7 +31,6 @@ public class ObjectPool {
             return;
         }
 
-        Log.d("ObjectPool", "add "+clazz.getSimpleName());
         objects.add(object);
     }
 
@@ -40,7 +39,6 @@ public class ObjectPool {
         ArrayList<Recyclable> objects = objectPool.get(clazz);
 
         if(objects == null || objects.size() <= 0) {
-            Log.d(LOG_TAG, clazz.getSimpleName()+" list is null.");
             return null;
         }
 

@@ -8,12 +8,12 @@ import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 
 enum TileType{
-    PATH,
-    DEPLOYABLE,
-    START,
-    END,
-    DEPLOYED,
-    ERROR,
+    path,
+    deployable,
+    start,
+    end,
+    deployed,
+    error,
 }
 
 public class Tile implements GameObject {
@@ -39,19 +39,19 @@ public class Tile implements GameObject {
 
     private void selectBitmapByType(TileType type) {
         switch (type){
-            case PATH:
+            case path:
                 sprite = new Sprite(position.x, position.y, size, R.mipmap.path_tile);
                 break;
-            case DEPLOYABLE:
+            case deployable:
                 sprite = new Sprite(position.x, position.y, size, R.mipmap.deployable_tile);
                 break;
-            case START:
+            case start:
                 sprite = new Sprite(position.x, position.y, size, R.mipmap.start_tile);
                 break;
-            case END:
+            case end:
                 sprite = new Sprite(position.x, position.y, size, R.mipmap.end_tile);
                 break;
-            case ERROR:
+            case error:
             default:
                 sprite = new Sprite(position.x, position.y, size, R.mipmap.error_tile);
                 break;

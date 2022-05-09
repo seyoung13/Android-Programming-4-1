@@ -23,7 +23,7 @@ public class StageSelectionActivity extends AppCompatActivity {
         setStagesImageLevel();
 
         //빠른 실행
-        //startActivity(new Intent(StageSelectionActivity.this, DefenseActivity.class));
+        startActivity(new Intent(StageSelectionActivity.this, DefenseActivity.class));
     }
 
     private void setStagesImageLevel() {

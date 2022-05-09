@@ -31,8 +31,7 @@ public class SiegeTower extends Tower{
 
     @Override
     protected void setSpecification() {
-        sprite = new Sprite(position.x, position.y,
-                Metrics.size(R.dimen.cell_size), R.mipmap.tower_sample);
+        sprite = new Sprite(position.x, position.y, Metrics.size(R.dimen.cell_size), R.mipmap.tower_sample);
 
         range = new CircleCollider(position.x, position.y,  Metrics.size(R.dimen.siege_range));
 

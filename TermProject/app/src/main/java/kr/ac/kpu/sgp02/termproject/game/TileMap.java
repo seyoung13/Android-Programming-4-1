@@ -53,19 +53,19 @@ public class TileMap implements GameObject {
                 TileType type;
                 switch (blueprint[i][j]){
                     case 0:
-                        type = TileType.DEPLOYABLE;
+                        type = TileType.deployable;
                         break;
                     case 1:
-                        type = TileType.PATH;
+                        type = TileType.path;
                         break;
                     case 2:
-                        type = TileType.START;
+                        type = TileType.start;
                         break;
                     case 3:
-                        type = TileType.END;
+                        type = TileType.end;
                         break;
                     default:
-                        type = TileType.ERROR;
+                        type = TileType.error;
                         break;
                 }
 

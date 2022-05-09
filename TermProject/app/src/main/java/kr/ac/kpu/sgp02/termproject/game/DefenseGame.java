@@ -45,7 +45,7 @@ public class DefenseGame {
 
     private static DefenseGame singleton;
     private ArrayList<ArrayList<GameObject>> layeredObjects;
-    //private ArrayList<GameObject> objects;
+    private TowerDeployer towerDeployer;
 
     // --------------- 생성자 ---------------
     private DefenseGame() {
@@ -70,6 +70,9 @@ public class DefenseGame {
         initializeLayers();
 
         add(new TileMap(tileBlueprint), Layer.background);
+
+        towerDeployer = new TowerDeployer();
+        add(towerDeployer, Layer.controller);
 
         add(new MonsterGenerator(), Layer.controller);
 
@@ -223,9 +226,11 @@ public class DefenseGame {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
+        boolean eventResult;
 
-        return false;
+        eventResult = towerDeployer.onTouchEvent(event);
+
+        return eventResult;
     }
 
     public void add(GameObject object, Layer layer) {
