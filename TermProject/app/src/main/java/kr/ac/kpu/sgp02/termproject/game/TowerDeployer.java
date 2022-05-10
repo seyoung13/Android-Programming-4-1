@@ -31,13 +31,13 @@ public class TowerDeployer implements GameObject {
 
     public TowerDeployer() {
         previewImages.put(TowerType.cannon,
-                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.floatValue(R.dimen.cannon_range)));
+                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.cannon_range)));
         previewImages.put(TowerType.laser,
-                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.floatValue(R.dimen.laser_range)));
+                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.laser_range)));
         previewImages.put(TowerType.siege,
-                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.floatValue(R.dimen.siege_range)));
+                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.siege_range)));
         previewImages.put(TowerType.plasma,
-                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.floatValue(R.dimen.plasma_range)));
+                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.plasma_range)));
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -67,7 +67,10 @@ public class TowerDeployer implements GameObject {
     }
 
     private void onActionMove(float x, float y) {
+        if(!isActivated)
+            return;
 
+        selectedPreview.setPosition(x, y);
     }
 
     private void onActionUp(float x, float y) {

@@ -8,6 +8,7 @@ import android.view.View;
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameView;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
+import kr.ac.kpu.sgp02.termproject.game.TowerDeployer;
 
 public class DefenseActivity extends AppCompatActivity {
     @Override
@@ -42,7 +43,7 @@ public class DefenseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    protected void onCannonBtn(View view) {
-
+    public void onBtnCannon(View view) {
+        DefenseGame.getInstance().deployTower(TowerDeployer.TowerType.cannon);
     }
 }

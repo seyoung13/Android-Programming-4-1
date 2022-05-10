@@ -24,7 +24,9 @@
             android:id="@+id/btnCannon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/teal_200"/>
+            android:background="@color/teal_200"
+            android:onClick="onBtnCannon"
+            />
 
         <ImageButton
             android:id="@+id/btnLaser"

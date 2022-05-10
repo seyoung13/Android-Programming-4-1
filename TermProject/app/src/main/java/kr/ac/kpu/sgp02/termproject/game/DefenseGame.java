@@ -66,6 +66,10 @@ public class DefenseGame {
         singleton = null;
     }
 
+    public void deployTower(TowerDeployer.TowerType type) {
+        towerDeployer.activateDeployer(type);
+    }
+
     public void initialize() {
         initializeLayers();
 
