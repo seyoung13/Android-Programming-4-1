@@ -2,6 +2,7 @@ package kr.ac.kpu.sgp02.termproject.game;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class TowerDeployer implements GameObject {
                 onActionMove(x, y);
                 return true;
             case MotionEvent.ACTION_UP:
-                //onActionUp(x, y);
+                onActionUp(x, y);
                 return true;
             default:
                 break;
@@ -76,12 +77,14 @@ public class TowerDeployer implements GameObject {
     }
 
     private void onActionUp(float x, float y) {
-        //deploy(x, y);
+        deploy(x, y);
         selectedPreview.setLocationColor(Color.RED);
     }
 
     private void deploy(float x, float y) {
-        DefenseGame.getInstance().add(CannonTower.get(3,3), DefenseGame.Layer.tower);
+        Point index = Metrics.positionToTileIndex(x, y);
+
+        DefenseGame.getInstance().add(CannonTower.get(index.x, index.y), DefenseGame.Layer.tower);
         isActivated = false;
     }
 
