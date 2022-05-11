@@ -37,6 +37,9 @@ public class LaserProjectile extends Projectile {
             currDelay += maxDelay;
         }
 
+        if(target == null)
+            return;
+
         if(target.isDead)
         {
             DefenseGame.getInstance().remove(this);

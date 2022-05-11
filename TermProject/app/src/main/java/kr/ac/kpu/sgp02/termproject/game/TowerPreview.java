@@ -20,7 +20,7 @@ public class TowerPreview implements GameObject {
     protected static Paint paint;
 
     public TowerPreview(float x, float y, int bitmapResId, float radius) {
-        sprite = new Sprite(x, y, size-25, bitmapResId);
+        sprite = new Sprite(x, y, size-100, bitmapResId);
         location = new RectF(x - size/2, y - size/2, x + size/2, y + size/2);
         range = new CircleCollider(x, y, radius);
 
