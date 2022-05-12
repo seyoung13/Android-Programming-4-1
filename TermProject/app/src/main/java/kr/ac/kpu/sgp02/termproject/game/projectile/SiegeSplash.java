@@ -29,7 +29,7 @@ public class SiegeSplash implements GameObject, Collidable, Recyclable {
     }
 
     protected SiegeSplash(float x, float y) {
-        collider = new CircleCollider(x, y, Metrics.size(R.dimen.siege_splash));
+        collider = new CircleCollider(x, y, Metrics.size(R.dimen.missile_splash_range));
     }
 
 

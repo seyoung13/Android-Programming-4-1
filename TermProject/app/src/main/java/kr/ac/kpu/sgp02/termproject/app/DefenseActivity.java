@@ -43,7 +43,19 @@ public class DefenseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void onBtnCannon(View view) {
+    public void onBtnCannonTower(View view) {
         DefenseGame.getInstance().deployTower(TowerDeployer.TowerType.cannon);
+    }
+
+    public void onBtnLaserTower(View view) {
+        DefenseGame.getInstance().deployTower(TowerDeployer.TowerType.laser);
+    }
+
+    public void onBtnMissileTower(View view) {
+        DefenseGame.getInstance().deployTower(TowerDeployer.TowerType.missile);
+    }
+
+    public void onBtnPlasmaTower(View view) {
+        DefenseGame.getInstance().deployTower(TowerDeployer.TowerType.plasma);
     }
 }

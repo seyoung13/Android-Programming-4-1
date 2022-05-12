@@ -3,27 +3,24 @@ package kr.ac.kpu.sgp02.termproject.game;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
-import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
-import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 import kr.ac.kpu.sgp02.termproject.game.tower.CannonTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.LaserTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.PlasmaTower;
-import kr.ac.kpu.sgp02.termproject.game.tower.SiegeTower;
-import kr.ac.kpu.sgp02.termproject.game.tower.Tower;
+import kr.ac.kpu.sgp02.termproject.game.tower.MissileTower;
 
 public class TowerDeployer implements GameObject {
     public enum TowerType {
         cannon,
         laser,
-        siege,
+        missile,
         plasma,
     }
 
@@ -33,14 +30,18 @@ public class TowerDeployer implements GameObject {
     boolean isSelectedDeployed = false;
     HashMap<TowerType, TowerPreview> previewImages = new HashMap<>(4);
     TowerPreview selectedPreview;
+    TowerType selectedType = TowerType.cannon;
+
+    protected Point tileIndex = new Point();
+    protected PointF tileCenter = new PointF();
 
     public TowerDeployer() {
         previewImages.put(TowerType.cannon,
                 new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.cannon_range)));
         previewImages.put(TowerType.laser,
                 new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.laser_range)));
-        previewImages.put(TowerType.siege,
-                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.siege_range)));
+        previewImages.put(TowerType.missile,
+                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.missile_range)));
         previewImages.put(TowerType.plasma,
                 new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.plasma_range)));
     }
@@ -73,10 +74,15 @@ public class TowerDeployer implements GameObject {
         if(!isActivated)
             return;
 
-        selectedPreview.setPosition(x, y);
+        tileIndex = Metrics.positionToTileIndex(x, y);
+        tileCenter = Metrics.tileIndexToPosition(tileIndex.x, tileIndex.y);
+        selectedPreview.setPosition(tileCenter.x, tileCenter.y);
     }
 
     private void onActionUp(float x, float y) {
+        if(!isActivated)
+            return;
+
         deploy(x, y);
         selectedPreview.setLocationColor(Color.RED);
     }
@@ -84,13 +90,30 @@ public class TowerDeployer implements GameObject {
     private void deploy(float x, float y) {
         Point index = Metrics.positionToTileIndex(x, y);
 
-        DefenseGame.getInstance().add(CannonTower.get(index.x, index.y), DefenseGame.Layer.tower);
+        switch (selectedType) {
+            case cannon:
+                DefenseGame.getInstance().add(CannonTower.get(index.x, index.y), DefenseGame.Layer.tower);
+                break;
+            case laser:
+                DefenseGame.getInstance().add(LaserTower.get(index.x, index.y), DefenseGame.Layer.tower);
+                break;
+            case missile:
+                DefenseGame.getInstance().add(MissileTower.get(index.x, index.y), DefenseGame.Layer.tower);
+                break;
+            case plasma:
+                DefenseGame.getInstance().add(PlasmaTower.get(index.x, index.y), DefenseGame.Layer.tower);
+                break;
+            default:
+                break;
+        }
+
         isActivated = false;
     }
 
     public void activateDeployer(TowerType type) {
         isActivated = true;
         selectedPreview = previewImages.get(type);
+        selectedType = type;
     }
 
     @Override

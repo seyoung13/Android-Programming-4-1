@@ -3,6 +3,8 @@ package kr.ac.kpu.sgp02.termproject.game;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.RectF;
 
 import kr.ac.kpu.sgp02.termproject.R;

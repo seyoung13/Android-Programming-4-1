@@ -1,7 +1,5 @@
 package kr.ac.kpu.sgp02.termproject.game.tower;
 
-import android.util.Log;
-
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
@@ -9,23 +7,22 @@ import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.Monster;
-import kr.ac.kpu.sgp02.termproject.game.projectile.PlasmaProjectile;
-import kr.ac.kpu.sgp02.termproject.game.projectile.SiegeProjectile;
+import kr.ac.kpu.sgp02.termproject.game.projectile.MissileProjectile;
 
-public class SiegeTower extends Tower{
+public class MissileTower extends Tower{
 
-    public static SiegeTower get(int x, int y) {
-        SiegeTower recyclable = (SiegeTower) ObjectPool.get(SiegeTower.class);
+    public static MissileTower get(int x, int y) {
+        MissileTower recyclable = (MissileTower) ObjectPool.get(MissileTower.class);
 
         if(recyclable != null)
             recyclable.redeploy(x, y);
         else
-            recyclable = new SiegeTower(x, y);
+            recyclable = new MissileTower(x, y);
 
         return recyclable;
     }
 
-    protected SiegeTower(int x, int y) {
+    protected MissileTower(int x, int y) {
         super(x, y);
     }
 
@@ -33,18 +30,18 @@ public class SiegeTower extends Tower{
     protected void setSpecification() {
         sprite = new Sprite(position.x, position.y, Metrics.size(R.dimen.cell_size), R.mipmap.tower_sample);
 
-        range = new CircleCollider(position.x, position.y,  Metrics.size(R.dimen.siege_range));
+        range = new CircleCollider(position.x, position.y,  Metrics.size(R.dimen.missile_range));
 
-        maxDelay = Metrics.floatValue(R.dimen.siege_delay);
+        maxDelay = Metrics.floatValue(R.dimen.missile_delay);
     }
 
     @Override
     protected void fire() {
-        SiegeProjectile cannonball = SiegeProjectile.get(position.x, position.y);
-        DefenseGame.getInstance().add(cannonball, DefenseGame.Layer.damageCauser);
+        MissileProjectile missile = MissileProjectile.get(position.x, position.y);
+        DefenseGame.getInstance().add(missile, DefenseGame.Layer.damageCauser);
 
         Monster monster = targetList.iterator().next();
-        cannonball.setTarget(monster);
+        missile.setTarget(monster);
     }
 
     @Override

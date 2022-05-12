@@ -14,8 +14,6 @@ import kr.ac.kpu.sgp02.termproject.game.projectile.Projectile;
 import kr.ac.kpu.sgp02.termproject.game.projectile.SiegeSplash;
 import kr.ac.kpu.sgp02.termproject.game.tower.CannonTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.LaserTower;
-import kr.ac.kpu.sgp02.termproject.game.tower.PlasmaTower;
-import kr.ac.kpu.sgp02.termproject.game.tower.SiegeTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.Tower;
 
 public class DefenseGame {

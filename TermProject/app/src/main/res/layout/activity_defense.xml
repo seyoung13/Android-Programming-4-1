@@ -21,30 +21,36 @@
         android:gravity="center">
 
         <ImageButton
-            android:id="@+id/btnCannon"
+            android:id="@+id/btnCannonTower"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/teal_200"
-            android:onClick="onBtnCannon"
+            android:onClick="onBtnCannonTower"
             />
 
         <ImageButton
-            android:id="@+id/btnLaser"
+            android:id="@+id/btnLaserTower"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/teal_700"/>
+            android:background="@color/teal_700"
+            android:onClick="onBtnLaserTower"
+            />
 
         <ImageButton
-            android:id="@+id/btnSiege"
+            android:id="@+id/btnMissileTower"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/teal_200"/>
+            android:background="@color/teal_200"
+            android:onClick="onBtnMissileTower"
+            />
 
         <ImageButton
-            android:id="@+id/btnPlasma"
+            android:id="@+id/btnPlasmaTower"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/teal_700"/>
+            android:background="@color/teal_700"
+            android:onClick="onBtnPlasmaTower"
+            />
 
     </LinearLayout>
 
