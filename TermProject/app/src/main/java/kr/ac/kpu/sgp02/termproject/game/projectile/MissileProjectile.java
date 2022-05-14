@@ -4,7 +4,7 @@ import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
-import kr.ac.kpu.sgp02.termproject.game.Monster;
+import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 
 public class MissileProjectile extends Projectile {
     private CircleCollider splash;

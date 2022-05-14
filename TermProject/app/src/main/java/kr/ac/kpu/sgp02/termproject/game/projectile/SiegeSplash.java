@@ -10,7 +10,7 @@ import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
-import kr.ac.kpu.sgp02.termproject.game.Monster;
+import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 
 public class SiegeSplash implements GameObject, Collidable, Recyclable {
     public CircleCollider collider;

@@ -18,6 +18,18 @@
     <dimen name="hp_bar_width">40dp</dimen>
     <dimen name="hp_bar_height">10dp</dimen>
 
-    <dimen name="monster_speed">50dp</dimen>
     <dimen name="monster_size">30dp</dimen>
+
+    <dimen name="walker_speed">50dp</dimen>
+    <item name="walker_hp" type="dimen" format="float">50.0</item>
+    <item name="walker_reward" type="dimen" format="float">20.0</item>
+
+    <dimen name="sprinter_speed">100dp</dimen>
+    <item name="sprinter_hp" type="dimen" format="float">50.0</item>
+    <item name="sprinter_reward" type="dimen" format="float">20.0</item>
+
+    <dimen name="armor_speed">20dp</dimen>
+    <item name="armor_hp" type="dimen" format="float">250.0</item>
+    <item name="armor_reward" type="dimen" format="float">100.0</item>
+
 </resources>

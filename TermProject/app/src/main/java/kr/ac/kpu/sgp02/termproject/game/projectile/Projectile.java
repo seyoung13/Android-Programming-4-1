@@ -2,13 +2,12 @@ package kr.ac.kpu.sgp02.termproject.game.projectile;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.util.Log;
 
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
-import kr.ac.kpu.sgp02.termproject.game.Monster;
+import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
 import kr.ac.kpu.sgp02.termproject.framework.Sprite;
@@ -43,7 +42,7 @@ public class Projectile implements GameObject, Collidable, Recyclable {
     protected Projectile(float x, float y) {
         position = new PointF(x, y);
         collider = new BoxCollider(x, y, 30, 30);
-        sprite = new Sprite(x, y, 30, R.mipmap.grid);
+        sprite = new Sprite(x, y, 30, R.mipmap.tile_grid);
         damage = 10;
     }
 

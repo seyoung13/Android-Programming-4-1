@@ -1,12 +1,11 @@
 package kr.ac.kpu.sgp02.termproject.game;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
-import kr.ac.kpu.sgp02.termproject.game.Monster;
+import kr.ac.kpu.sgp02.termproject.game.monster.Armor;
+import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 
 public class MonsterGenerator implements GameObject {
     private float delay = 1.0f;
@@ -17,7 +16,7 @@ public class MonsterGenerator implements GameObject {
         delay -= deltaSecond;
 
         if(delay <= 0) {
-            DefenseGame.getInstance().add(Monster.get(100, 750),
+            DefenseGame.getInstance().add(Armor.get(100, 750),
                     DefenseGame.Layer.monster);
             delay += maxDelay;
         }

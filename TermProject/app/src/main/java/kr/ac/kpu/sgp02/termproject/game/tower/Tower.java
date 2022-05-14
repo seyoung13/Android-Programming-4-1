@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
-import kr.ac.kpu.sgp02.termproject.game.Monster;
+import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.Sprite;

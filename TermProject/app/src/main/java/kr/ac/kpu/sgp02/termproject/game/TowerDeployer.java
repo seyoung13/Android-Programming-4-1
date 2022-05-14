@@ -32,18 +32,20 @@ public class TowerDeployer implements GameObject {
     TowerPreview selectedPreview;
     TowerType selectedType = TowerType.cannon;
 
+    
+
     protected Point tileIndex = new Point();
     protected PointF tileCenter = new PointF();
 
     public TowerDeployer() {
         previewImages.put(TowerType.cannon,
-                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.cannon_range)));
+                new TowerPreview(0,0, R.mipmap.tower_cannon, Metrics.size(R.dimen.cannon_range)));
         previewImages.put(TowerType.laser,
-                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.laser_range)));
+                new TowerPreview(0,0, R.mipmap.tower_laser, Metrics.size(R.dimen.laser_range)));
         previewImages.put(TowerType.missile,
-                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.missile_range)));
+                new TowerPreview(0,0, R.mipmap.tower_missile, Metrics.size(R.dimen.missile_range)));
         previewImages.put(TowerType.plasma,
-                new TowerPreview(0,0, R.mipmap.tower_sample, Metrics.size(R.dimen.plasma_range)));
+                new TowerPreview(0,0, R.mipmap.tower_plasma, Metrics.size(R.dimen.plasma_range)));
     }
 
     public boolean onTouchEvent(MotionEvent event) {

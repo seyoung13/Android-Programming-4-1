@@ -5,7 +5,7 @@ import android.util.Log;
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
-import kr.ac.kpu.sgp02.termproject.game.Monster;
+import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 import kr.ac.kpu.sgp02.termproject.game.projectile.LaserProjectile;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Metrics;
@@ -33,7 +33,7 @@ public class LaserTower extends Tower {
 
     @Override
     protected void setSpecification() {
-        sprite = new Sprite(position.x, position.y, Metrics.size(R.dimen.cell_size), R.mipmap.tower_sample);
+        sprite = new Sprite(position.x, position.y, Metrics.size(R.dimen.cell_size), R.mipmap.tower_laser);
 
         range = new CircleCollider(position.x, position.y, Metrics.size(R.dimen.laser_range));
 

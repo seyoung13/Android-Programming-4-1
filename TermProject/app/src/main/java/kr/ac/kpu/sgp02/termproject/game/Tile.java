@@ -40,20 +40,20 @@ public class Tile implements GameObject {
     private void selectBitmapByType(TileType type) {
         switch (type){
             case path:
-                sprite = new Sprite(position.x, position.y, size, R.mipmap.path_tile);
+                sprite = new Sprite(position.x, position.y, size, R.mipmap.tile_path);
                 break;
             case deployable:
-                sprite = new Sprite(position.x, position.y, size, R.mipmap.deployable_tile);
+                sprite = new Sprite(position.x, position.y, size, R.mipmap.tile_deployable);
                 break;
             case start:
-                sprite = new Sprite(position.x, position.y, size, R.mipmap.start_tile);
+                sprite = new Sprite(position.x, position.y, size, R.mipmap.tile_start);
                 break;
             case end:
-                sprite = new Sprite(position.x, position.y, size, R.mipmap.end_tile);
+                sprite = new Sprite(position.x, position.y, size, R.mipmap.tile_end);
                 break;
             case error:
             default:
-                sprite = new Sprite(position.x, position.y, size, R.mipmap.error_tile);
+                sprite = new Sprite(position.x, position.y, size, R.mipmap.tile_error);
                 break;
         }
     }

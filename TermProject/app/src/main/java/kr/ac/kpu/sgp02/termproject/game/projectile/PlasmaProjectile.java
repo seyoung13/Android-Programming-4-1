@@ -2,13 +2,12 @@ package kr.ac.kpu.sgp02.termproject.game.projectile;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.util.Log;
 
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
 import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
-import kr.ac.kpu.sgp02.termproject.game.Monster;
+import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 
 public class PlasmaProjectile extends Projectile {
     protected float degree;
