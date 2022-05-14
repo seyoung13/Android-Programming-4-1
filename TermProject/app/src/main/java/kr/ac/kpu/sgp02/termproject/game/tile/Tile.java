@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject.game;
+package kr.ac.kpu.sgp02.termproject.game.tile;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
@@ -7,14 +7,6 @@ import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 
-enum TileType{
-    path,
-    deployable,
-    start,
-    end,
-    deployed,
-    error,
-}
 
 public class Tile implements GameObject {
     //만들어진 비트맵 중 타일타입에 맞는 비트맵의 복사본
@@ -24,6 +16,8 @@ public class Tile implements GameObject {
     private int x, y;
     private PointF position = new PointF();
     private int size = 50;
+
+    protected boolean isDeployable = false;
 
     Tile(int x,int y, int size, TileType type) {
         this.x = x;
@@ -44,6 +38,7 @@ public class Tile implements GameObject {
                 break;
             case deployable:
                 sprite = new Sprite(position.x, position.y, size, R.mipmap.tile_deployable);
+                isDeployable = true;
                 break;
             case start:
                 sprite = new Sprite(position.x, position.y, size, R.mipmap.tile_start);
@@ -68,4 +63,7 @@ public class Tile implements GameObject {
         sprite.draw(canvas);
     }
 
+    public boolean isDeployable() {
+        return isDeployable;
+    }
 }

@@ -1,0 +1,20 @@
+{
+  "Waves" :
+  [
+    {
+      "Walker" : "10"
+    },
+    {
+      "Walker" : "10",
+      "Sprinter" : "5"
+    },
+    {
+      "Walker" : "10",
+      "Sprinter" : "10"
+    },
+    {
+      "Sprinter" : "10",
+      "Walker" : "15"
+    }
+  ]
+}

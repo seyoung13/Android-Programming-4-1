@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject.game;
+package kr.ac.kpu.sgp02.termproject.game.tile;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
