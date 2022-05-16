@@ -69,7 +69,8 @@ public class MathHelper {
     }
 
     public static PointF subtract(PointF p1, PointF p2) {
-        return new PointF(add(p1.x, -p2.x), add(p1.y, -p2.y));
+        PointF p = new PointF(add(p1.x, -p2.x), add(p1.y, -p2.y));
+        return p;
     }
 
     public static double getDegreeBetween(PointF origin, PointF target){
