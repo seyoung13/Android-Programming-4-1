@@ -56,8 +56,7 @@ public abstract class Tower implements GameObject, Collidable, Recyclable {
             if(targetList.iterator().hasNext()) {
                 fire();
                 currDelay += maxDelay;
-            }
-            else {
+            } else {
                 currDelay = 0;
             }
         }

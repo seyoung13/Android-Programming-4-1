@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameView;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
@@ -31,7 +34,6 @@ public class DefenseActivity extends AppCompatActivity {
         if(GameView.view != null){
             GameView.view.pauseGame();
         }
-
         super.onPause();
     }
 

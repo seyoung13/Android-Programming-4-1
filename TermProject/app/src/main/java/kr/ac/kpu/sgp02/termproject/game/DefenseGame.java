@@ -46,6 +46,7 @@ public class DefenseGame {
     private static DefenseGame singleton;
     private ArrayList<ArrayList<GameObject>> layeredObjects;
     private TowerDeployer towerDeployer;
+    private TileMapLoader tileMapLoader;
 
     // --------------- 생성자 ---------------
     private DefenseGame() {
@@ -77,6 +78,9 @@ public class DefenseGame {
 
         towerDeployer = new TowerDeployer();
         add(towerDeployer, Layer.controller);
+
+        tileMapLoader = new TileMapLoader();
+        tileMapLoader.loadLevelFromJson("level_info.json", 0);
 
         add(new MonsterGenerator(), Layer.controller);
 
