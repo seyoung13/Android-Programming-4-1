@@ -11,61 +11,30 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
 import kr.ac.kpu.sgp02.termproject.framework.GameView;
-import kr.ac.kpu.sgp02.termproject.game.monster.MonsterType;
 
-public class TileMapLoader{
-    class Wave {
-        HashMap<String, Queue<SubWave>> subWaves = new HashMap<>();
+public class LevelLoader {
+    private int[][] tileBlueprint;
+
+    private ArrayList<Point> startPoints;
+    private Queue<Wave> waves;
+
+    public LevelLoader(){}
+
+    public int[][] getTileBlueprint() {
+        return tileBlueprint;
     }
 
-    class SubWave {
-        String start;
-        Point startTileIndex;
-        MonsterType type;
-        int number;
-
-        SubWave(String xy, String type, int number){
-            // 4자리 문자열에서 각각 타일의 x 인덱스와 y 인덱스를 추출한다.
-            start = xy;
-            int xTens = Character.getNumericValue(start.charAt(0));
-            int xUnits = Character.getNumericValue(start.charAt(1));
-            int yTens = Character.getNumericValue(start.charAt(2));
-            int yUnits = Character.getNumericValue(start.charAt(3));
-
-            startTileIndex = new Point(xTens * 10 + xUnits, yTens * 10 + yUnits);
-
-            switch (type){
-                case "Walker":
-                    this.type = MonsterType.walker;
-                    break;
-                case "Sprinter":
-                    this.type = MonsterType.sprinter;
-                    break;
-                case "Armor":
-                    this.type = MonsterType.armor;
-                    break;
-                default:
-                    break;
-            }
-
-            this.number = number;
-        }
-
-        String getKey() {
-            return start;
-        }
+    public ArrayList<Point> getStartPoints() {
+        return startPoints;
     }
 
-    int[][] tileBlueprint;
-
-    Queue<Wave> waves = new LinkedList<>();
-
-    public TileMapLoader(){}
+    public Queue<Wave> getWaves() {
+        return waves;
+    }
 
     public void loadLevelFromJson(String fileName, int mapLevel) {
         AssetManager assets = GameView.view.getContext().getAssets();
@@ -145,10 +114,10 @@ public class TileMapLoader{
             }
 
             // 웨이브별 시작점들의 서브웨이브 정보를 읽어온다.
-            JSONArray waves = map.getJSONArray("Waves");
-            Queue<Wave> waveQueue = new LinkedList<>();
-            for (int waveIndex = 0; waveIndex < waves.length(); ++waveIndex) {
-                JSONObject waveInfo = waves.getJSONObject(waveIndex);
+            JSONArray wavesInfo = map.getJSONArray("Waves");
+            waves = new LinkedList<>();
+            for (int waveIndex = 0; waveIndex < wavesInfo.length(); ++waveIndex) {
+                JSONObject waveInfo = wavesInfo.getJSONObject(waveIndex);
 
                 Wave wave = new Wave();
                 for(String start : starts) {
@@ -165,13 +134,12 @@ public class TileMapLoader{
                         int number = subWave.getInt("Number");
 
                         wave.subWaves.get(start).offer(
-                                new SubWave(start, type, number));
+                                new Wave.SubWave(start, type, number));
                     }
                 }
 
-                waveQueue.add(wave);
+                waves.add(wave);
             }
-            waveQueue.size();
 
         } catch (JSONException e){
             Log.e("Json Load Error", "Waves Info.");

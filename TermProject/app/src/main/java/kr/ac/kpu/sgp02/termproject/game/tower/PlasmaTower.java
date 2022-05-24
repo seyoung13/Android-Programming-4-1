@@ -14,13 +14,13 @@ import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 public class PlasmaTower extends Tower{
     ArrayList<PlasmaProjectile> plasmaProjectiles = new ArrayList<>();
 
-    public static PlasmaTower get(int x, int y) {
+    public static PlasmaTower get(int tileX, int tileY) {
         PlasmaTower recyclable = (PlasmaTower) ObjectPool.get(PlasmaTower.class);
 
         if(recyclable != null)
-            recyclable.redeploy(x, y);
+            recyclable.redeploy(tileX, tileY);
         else
-            recyclable = new PlasmaTower(x, y);
+            recyclable = new PlasmaTower(tileX, tileY);
 
         return recyclable;
     }
@@ -51,6 +51,6 @@ public class PlasmaTower extends Tower{
 
     @Override
     public void redeploy(float x, float y) {
-
+        super.redeploy(x, y);
     }
 }

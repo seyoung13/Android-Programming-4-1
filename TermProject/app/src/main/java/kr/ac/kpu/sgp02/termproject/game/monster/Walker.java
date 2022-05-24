@@ -7,18 +7,18 @@ import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 
 public class Walker extends Monster{
 
-    public static Walker get(float x, float y) {
+    public static Walker get(int tileX, int tileY) {
         Walker recyclable = (Walker) ObjectPool.get(Walker.class);
 
         if(recyclable != null)
-            recyclable.redeploy(x, y);
+            recyclable.redeploy(tileX, tileY);
         else
-            recyclable = new Walker(x, y);
+            recyclable = new Walker(tileX, tileY);
 
         return recyclable;
     }
 
-    protected Walker(float x, float y) {
+    protected Walker(int x, int y) {
         super(x, y);
     }
 

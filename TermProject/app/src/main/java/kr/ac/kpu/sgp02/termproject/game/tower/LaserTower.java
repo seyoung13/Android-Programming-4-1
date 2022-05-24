@@ -16,13 +16,13 @@ public class LaserTower extends Tower {
     public boolean isLaserFiring = false;
     public LaserProjectile laser;
 
-    public static LaserTower get(int x, int y) {
+    public static LaserTower get(int tileX, int tileY) {
         LaserTower recyclable = (LaserTower) ObjectPool.get(LaserTower.class);
 
         if(recyclable != null)
-            recyclable.redeploy(x, y);
+            recyclable.redeploy(tileX, tileY);
         else
-            recyclable = new LaserTower(x, y);
+            recyclable = new LaserTower(tileX, tileY);
 
         return recyclable;
     }
@@ -73,6 +73,6 @@ public class LaserTower extends Tower {
 
     @Override
     public void redeploy(float x, float y) {
-
+        super.redeploy(x, y);
     }
 }

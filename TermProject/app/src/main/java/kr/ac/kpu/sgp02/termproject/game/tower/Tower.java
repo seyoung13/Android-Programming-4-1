@@ -31,12 +31,16 @@ public abstract class Tower implements GameObject, Collidable, Recyclable {
     protected Point tileIndex = new Point();
     protected PointF position = new PointF();
 
-    protected Tower(int x, int y) {
-        tileIndex.x = x;
-        tileIndex.y = y;
+    protected Tower(int tileX, int tileY) {
+        setTileIndex(tileX, tileY);
         setPositionByTileIndex();
 
         setSpecification();
+    }
+
+    private void setTileIndex(int x, int y) {
+        tileIndex.x = x;
+        tileIndex.y = y;
     }
 
     protected abstract void setSpecification();
@@ -99,8 +103,7 @@ public abstract class Tower implements GameObject, Collidable, Recyclable {
 
     @Override
     public void redeploy(float x, float y){
-        tileIndex.x = (int)x;
-        tileIndex.y = (int)y;
+        setTileIndex((int)x, (int)y);
 
         setPositionByTileIndex();
 

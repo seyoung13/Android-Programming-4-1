@@ -11,13 +11,13 @@ import kr.ac.kpu.sgp02.termproject.game.projectile.MissileProjectile;
 
 public class MissileTower extends Tower{
 
-    public static MissileTower get(int x, int y) {
+    public static MissileTower get(int tileX, int tileY) {
         MissileTower recyclable = (MissileTower) ObjectPool.get(MissileTower.class);
 
         if(recyclable != null)
-            recyclable.redeploy(x, y);
+            recyclable.redeploy(tileX, tileY);
         else
-            recyclable = new MissileTower(x, y);
+            recyclable = new MissileTower(tileX, tileY);
 
         return recyclable;
     }

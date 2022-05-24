@@ -1,6 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.monster;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.PointF;
 
 import kr.ac.kpu.sgp02.termproject.R;
@@ -26,21 +27,21 @@ public class Monster implements GameObject, Collidable, Recyclable {
     public ProgressBar hpBar;
     float size = Metrics.size(R.dimen.cell_size) - 10;
 
-    public static Monster get(float x, float y) {
+    public static Monster get(int tileX, int tileY) {
         Monster recyclable = (Monster) ObjectPool.get(Monster.class);
 
         if(recyclable != null)
-            recyclable.redeploy(x, y);
+            recyclable.redeploy(tileX, tileY);
         else
-            recyclable = new Monster(x, y);
+            recyclable = new Monster(tileX, tileY);
 
         return recyclable;
     }
 
-    protected Monster(float x, float y) {
-        position = new PointF(x, y);
+    protected Monster(int tileX, int tileY) {
+        position = Metrics.tileIndexToPosition(tileX, tileY);
         setSpec();
-        collider = new BoxCollider(x, y,
+        collider = new BoxCollider(position.x, position.y,
                 Metrics.size(R.dimen.monster_size)/2,
                 Metrics.size(R.dimen.monster_size)/2);
         hp = maxHp;
@@ -111,11 +112,11 @@ public class Monster implements GameObject, Collidable, Recyclable {
 
     @Override
     public void redeploy(float x, float y) {
-        position.set(x, y);
-        sprite.setPosition(x, y);
-        collider.set(x, y);
+        position = Metrics.tileIndexToPosition((int)x, (int)y);
+        sprite.setPosition(position.x, position.y);
+        collider.set(position.x, position.y);
         hp = maxHp;
         isDead = false;
-        hpBar.redeploy(x, y + size/2);
+        hpBar.redeploy(position.x, position.y + size/2);
     }
 }

@@ -1,10 +1,14 @@
 package kr.ac.kpu.sgp02.termproject.game.tile;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.PointF;
+
+import java.lang.reflect.Member;
 
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 
 
@@ -13,20 +17,17 @@ public class Tile implements GameObject {
     private Sprite sprite;
 
     //타일맵 배열 내의 인덱스
-    private int x, y;
-    private PointF position = new PointF();
+    private Point index;
+    private PointF position;
     private int size = 50;
 
     protected boolean isDeployable = false;
 
-    Tile(int x,int y, int size, TileType type) {
-        this.x = x;
-        this.y = y;
+    Tile(int x, int y, int size, TileType type) {
+        index = new Point(x, y);
+        position = Metrics.tileIndexToPosition(x, y);
 
         this.size = size;
-
-        position.x = x * size + size / 2;
-        position.y = y * size + size / 2;
 
         selectBitmapByType(type);
     }

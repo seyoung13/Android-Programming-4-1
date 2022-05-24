@@ -7,18 +7,18 @@ import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 
 public class Sprinter extends Monster{
 
-    public static Sprinter get(float x, float y) {
+    public static Sprinter get(int tileX, int tileY) {
         Sprinter recyclable = (Sprinter) ObjectPool.get(Sprinter.class);
 
         if(recyclable != null)
-            recyclable.redeploy(x, y);
+            recyclable.redeploy(tileX, tileY);
         else
-            recyclable = new Sprinter(x, y);
+            recyclable = new Sprinter(tileX, tileY);
 
         return recyclable;
     }
 
-    protected Sprinter(float x, float y) {
+    protected Sprinter(int x, int y) {
         super(x, y);
     }
 

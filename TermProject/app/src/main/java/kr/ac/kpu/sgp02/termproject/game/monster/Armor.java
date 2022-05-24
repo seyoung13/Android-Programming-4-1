@@ -7,18 +7,18 @@ import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 
 public class Armor extends Monster {
 
-    public static Armor get(float x, float y) {
+    public static Armor get(int tileX, int tileY) {
         Armor recyclable = (Armor) ObjectPool.get(Armor.class);
 
         if(recyclable != null)
-            recyclable.redeploy(x, y);
+            recyclable.redeploy(tileX, tileY);
         else
-            recyclable = new Armor(x, y);
+            recyclable = new Armor(tileX, tileY);
 
         return recyclable;
     }
 
-    protected Armor(float x, float y) {
+    protected Armor(int x, int y) {
         super(x, y);
     }
 

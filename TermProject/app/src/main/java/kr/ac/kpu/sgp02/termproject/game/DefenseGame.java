@@ -31,22 +31,10 @@ public class DefenseGame {
         COUNT,
     }
 
-    private final int[][] tileBlueprint =
-            {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3},
-                    {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                    {0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
-                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            };
-
     private static DefenseGame singleton;
     private ArrayList<ArrayList<GameObject>> layeredObjects;
     private TowerDeployer towerDeployer;
-    private TileMapLoader tileMapLoader;
+    private LevelLoader levelLoader;
 
     // --------------- 생성자 ---------------
     private DefenseGame() {
@@ -74,15 +62,16 @@ public class DefenseGame {
     public void initialize() {
         initializeLayers();
 
-        add(new TileMap(tileBlueprint), Layer.background);
+        levelLoader = new LevelLoader();
+        levelLoader.loadLevelFromJson("level_info.json", 1);
+
+        add(new TileMap(levelLoader.getTileBlueprint()), Layer.background);
 
         towerDeployer = new TowerDeployer();
         add(towerDeployer, Layer.controller);
 
-        tileMapLoader = new TileMapLoader();
-        tileMapLoader.loadLevelFromJson("level_info.json", 0);
 
-        add(new MonsterGenerator(), Layer.controller);
+        add(new MonsterGenerator(levelLoader.getWaves()), Layer.controller);
 
         add(CannonTower.get(4, 6), Layer.tower);
 

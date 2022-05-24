@@ -10,13 +10,13 @@ import kr.ac.kpu.sgp02.termproject.framework.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 
 public class CannonTower extends Tower {
-    public static CannonTower get(int x, int y) {
+    public static CannonTower get(int tileX, int tileY) {
         CannonTower recyclable = (CannonTower) ObjectPool.get(CannonTower.class);
 
         if(recyclable != null)
-            recyclable.redeploy(x, y);
+            recyclable.redeploy(tileX, tileY);
         else
-            recyclable = new CannonTower(x, y);
+            recyclable = new CannonTower(tileX, tileY);
 
         return recyclable;
     }
@@ -45,7 +45,6 @@ public class CannonTower extends Tower {
 
     @Override
     public void redeploy(float x, float y) {
-        position.set(x, y);
-        range.set(x, y);
+        super.redeploy(x, y);
     }
 }
