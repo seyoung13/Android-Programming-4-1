@@ -8,8 +8,8 @@ import android.graphics.Rect;
 import java.util.ArrayList;
 
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 
 public class TileMap implements GameObject {
     private ArrayList<ArrayList<Rect>> grid = new ArrayList<>();

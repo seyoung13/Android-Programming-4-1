@@ -1,18 +1,17 @@
 package kr.ac.kpu.sgp02.termproject.game.monster;
 
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.PointF;
 
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
-import kr.ac.kpu.sgp02.termproject.framework.ProgressBar;
-import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.Metrics;
-import kr.ac.kpu.sgp02.termproject.framework.Sprite;
+import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.objects.ProgressBar;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
-import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.Collidable;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 
 public class Monster implements GameObject, Collidable, Recyclable {

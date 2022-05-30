@@ -5,14 +5,17 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-import kr.ac.kpu.sgp02.termproject.framework.GameView;
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
-import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
+import kr.ac.kpu.sgp02.termproject.framework.view.GameView;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CollisionChecker;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 import kr.ac.kpu.sgp02.termproject.game.projectile.Projectile;
 import kr.ac.kpu.sgp02.termproject.game.projectile.SiegeSplash;
+import kr.ac.kpu.sgp02.termproject.game.system.LevelLoader;
+import kr.ac.kpu.sgp02.termproject.game.system.MonsterGenerator;
+import kr.ac.kpu.sgp02.termproject.game.system.TowerDeployer;
 import kr.ac.kpu.sgp02.termproject.game.tile.TileMap;
 import kr.ac.kpu.sgp02.termproject.game.tower.CannonTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.LaserTower;
@@ -70,16 +73,11 @@ public class DefenseGame {
         towerDeployer = new TowerDeployer();
         add(towerDeployer, Layer.controller);
 
-
-        add(new MonsterGenerator(levelLoader.getWaves()), Layer.controller);
+        add(new MonsterGenerator(levelLoader.getWaveQueue()), Layer.controller);
 
         add(CannonTower.get(4, 6), Layer.tower);
 
         add(LaserTower.get(6, 6), Layer.tower);
-//
-//        add(PlasmaTower.get(6, 5), Layer.tower);
-//
-//        add(SiegeTower.get(6, 6), Layer.tower);
     }
 
     private void initializeLayers() {
@@ -121,18 +119,21 @@ public class DefenseGame {
                     if (CollisionChecker.collides(monster.collider, projectile.collider)) {
                         if (monster.collider.overlappedColliders.contains(projectile.collider)) {
                             monster.onStayOverlap(projectile);
-                        } else {
+                        }
+                        else {
                             monster.collider.overlappedColliders.add(projectile.collider);
                             monster.onBeginOverlap(projectile);
                         }
 
                         if (projectile.collider.overlappedColliders.contains(monster.collider)) {
                             projectile.onStayOverlap(monster);
-                        } else {
+                        }
+                        else {
                             projectile.collider.overlappedColliders.add(monster.collider);
                             projectile.onBeginOverlap(monster);
                         }
-                    } else {
+                    }
+                    else {
                         if (monster.collider.overlappedColliders.contains(projectile.collider)) {
                             monster.collider.overlappedColliders.remove(projectile.collider);
                             monster.onEndOverlap(projectile);
@@ -151,18 +152,21 @@ public class DefenseGame {
                     if (CollisionChecker.collides(monster.collider, splash.collider)) {
                         if (monster.collider.overlappedColliders.contains(splash.collider)) {
                             monster.onStayOverlap(splash);
-                        } else {
+                        }
+                        else {
                             monster.collider.overlappedColliders.add(splash.collider);
                             monster.onBeginOverlap(splash);
                         }
 
                         if (splash.collider.overlappedColliders.contains(monster.collider)) {
                             splash.onStayOverlap(monster);
-                        } else {
+                        }
+                        else {
                             splash.collider.overlappedColliders.add(monster.collider);
                             splash.onBeginOverlap(monster);
                         }
-                    } else {
+                    }
+                    else {
                         if (monster.collider.overlappedColliders.contains(splash.collider)) {
                             monster.collider.overlappedColliders.remove(splash.collider);
                             monster.onEndOverlap(splash);
@@ -186,18 +190,21 @@ public class DefenseGame {
                 if (CollisionChecker.collides(monster.collider, tower.range)) {
                     if (monster.collider.overlappedColliders.contains(tower.range)) {
                         monster.onStayOverlap(tower);
-                    } else {
+                    }
+                    else {
                         monster.collider.overlappedColliders.add(tower.range);
                         monster.onBeginOverlap(tower);
                     }
 
                     if (tower.range.overlappedColliders.contains(monster.collider)) {
                         tower.onStayOverlap(monster);
-                    } else {
+                    }
+                    else {
                         tower.range.overlappedColliders.add(monster.collider);
                         tower.onBeginOverlap(monster);
                     }
-                } else {
+                }
+                else {
                     if (monster.collider.overlappedColliders.contains(tower.range)) {
                         monster.collider.overlappedColliders.remove(tower.range);
                         monster.onEndOverlap(tower);

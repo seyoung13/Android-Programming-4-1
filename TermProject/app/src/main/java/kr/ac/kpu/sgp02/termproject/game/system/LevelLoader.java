@@ -1,7 +1,6 @@
-package kr.ac.kpu.sgp02.termproject.game;
+package kr.ac.kpu.sgp02.termproject.game.system;
 
 import android.content.res.AssetManager;
-import android.graphics.Point;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -14,13 +13,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import kr.ac.kpu.sgp02.termproject.framework.GameView;
+import kr.ac.kpu.sgp02.termproject.framework.view.GameView;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.game.Wave;
 
 public class LevelLoader {
     private int[][] tileBlueprint;
 
-    private ArrayList<Point> startPoints;
-    private Queue<Wave> waves;
+    private Queue<Wave> waveQueue;
 
     public LevelLoader(){}
 
@@ -28,12 +28,8 @@ public class LevelLoader {
         return tileBlueprint;
     }
 
-    public ArrayList<Point> getStartPoints() {
-        return startPoints;
-    }
-
-    public Queue<Wave> getWaves() {
-        return waves;
+    public Queue<Wave> getWaveQueue() {
+        return waveQueue;
     }
 
     public void loadLevelFromJson(String fileName, int mapLevel) {
@@ -69,8 +65,8 @@ public class LevelLoader {
 
             loadTileMapInfo(map);
             loadWavesInfo(map);
-
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -83,11 +79,12 @@ public class LevelLoader {
             int row = map.getInt("Height");
             tileBlueprint = new int[row][col];
 
-            // 타일맵 구조 문자열에서 줄바꿈 문자를 제외한 문자를 정수로 변환해 이차원 배열에 집어 넣는다.
+            // 타일맵 구조 문자열을 가져온다.
             String tile = map.getString("Tile");
             if(tile.length() != row * col + row-1)
                 throw new JSONException("Tiles Do Not Match Rows and Columns");
 
+            // 타일맵 구조 문자열에서 줄바꿈 문자를 제외한 문자를 정수로 변환해 이차원 배열에 집어 넣는다.
             int tileIndex = 0;
             for (int i = 0; i < row; ++i) {
                 for (int j = 0; j < col; ++j) {
@@ -97,8 +94,8 @@ public class LevelLoader {
                     tileBlueprint[i][j] = Character.getNumericValue(ch);
                 }
             }
-
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             Log.e("Json Load Error", "TileMap Info.");
             e.printStackTrace();
         }
@@ -113,17 +110,19 @@ public class LevelLoader {
                 starts.add(startsInfo.getString(i));
             }
 
-            // 웨이브별 시작점들의 서브웨이브 정보를 읽어온다.
             JSONArray wavesInfo = map.getJSONArray("Waves");
-            waves = new LinkedList<>();
+            waveQueue = new LinkedList<>();
+
             for (int waveIndex = 0; waveIndex < wavesInfo.length(); ++waveIndex) {
                 JSONObject waveInfo = wavesInfo.getJSONObject(waveIndex);
 
+                // 이번 웨이브의 서브웨이브 큐 해시맵을 생성한다.
                 Wave wave = new Wave();
                 for(String start : starts) {
-                    wave.subWaves.put(start, new LinkedList<>());
+                    wave.subWaveQueues.put(Metrics.stringToTileIndex(start), new LinkedList<>());
                 }
 
+                // 각 시작점들의 서브웨이브 큐를 채운다.
                 for(String start : starts) {
                     JSONArray subWavesInfo = waveInfo.getJSONArray(start);
 
@@ -133,15 +132,16 @@ public class LevelLoader {
                         String type = subWave.getString("Type");
                         int number = subWave.getInt("Number");
 
-                        wave.subWaves.get(start).offer(
-                                new Wave.SubWave(start, type, number));
+                        wave.subWaveQueues.get(Metrics.stringToTileIndex(start)).offer(
+                                new Wave.SubWave(type, number));
                     }
                 }
 
-                waves.add(wave);
+                // 이번 웨이브를 큐에 추가하고 다음으로 넘어간다.
+                waveQueue.add(wave);
             }
-
-        } catch (JSONException e){
+        }
+        catch (JSONException e){
             Log.e("Json Load Error", "Waves Info.");
             e.printStackTrace();
         }

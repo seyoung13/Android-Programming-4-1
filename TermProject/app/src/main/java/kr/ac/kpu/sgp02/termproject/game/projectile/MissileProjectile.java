@@ -1,7 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.projectile;
 
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;

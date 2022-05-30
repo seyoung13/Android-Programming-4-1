@@ -31,6 +31,8 @@
     <dimen name="armor_speed">20dp</dimen>
     <item name="armor_hp" type="dimen" format="float">250.0</item>
     <item name="armor_reward" type="dimen" format="float">100.0</item>
+
     <item name="monster_spawn_interval" type="dimen" format="float">2.0</item>
+    <item name="wave_interval" type="dimen" format="float">5.0</item>
 
 </resources>

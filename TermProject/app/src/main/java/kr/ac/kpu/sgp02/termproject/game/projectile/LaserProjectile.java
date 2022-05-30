@@ -3,9 +3,9 @@ package kr.ac.kpu.sgp02.termproject.game.projectile;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
-import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.helper.MathHelper;
+import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 
 public class LaserProjectile extends Projectile {

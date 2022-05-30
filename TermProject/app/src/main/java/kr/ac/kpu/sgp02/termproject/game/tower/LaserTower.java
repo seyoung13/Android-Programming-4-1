@@ -3,13 +3,13 @@ package kr.ac.kpu.sgp02.termproject.game.tower;
 import android.util.Log;
 
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 import kr.ac.kpu.sgp02.termproject.game.projectile.LaserProjectile;
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.Metrics;
-import kr.ac.kpu.sgp02.termproject.framework.Sprite;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 
 public class LaserTower extends Tower {

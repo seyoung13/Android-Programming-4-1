@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject.game;
+package kr.ac.kpu.sgp02.termproject.game.system;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,8 +9,10 @@ import android.view.MotionEvent;
 import java.util.HashMap;
 
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
+import kr.ac.kpu.sgp02.termproject.game.TowerPreview;
 import kr.ac.kpu.sgp02.termproject.game.tower.CannonTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.LaserTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.PlasmaTower;

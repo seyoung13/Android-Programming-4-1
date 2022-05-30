@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject.framework;
+package kr.ac.kpu.sgp02.termproject.framework.interfaces;
 
 import android.graphics.Canvas;
 

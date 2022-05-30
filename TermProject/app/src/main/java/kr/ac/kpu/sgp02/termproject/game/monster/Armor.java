@@ -1,9 +1,9 @@
 package kr.ac.kpu.sgp02.termproject.game.monster;
 
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.framework.Metrics;
-import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
-import kr.ac.kpu.sgp02.termproject.framework.Sprite;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 
 public class Armor extends Monster {
 

@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject.framework;
+package kr.ac.kpu.sgp02.termproject.framework.objects;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -6,7 +6,10 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-public class ProgressBar implements GameObject, Recyclable{
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
+
+public class ProgressBar implements GameObject, Recyclable {
     private static Paint currPaint;
     private static Paint fullPaint;
 

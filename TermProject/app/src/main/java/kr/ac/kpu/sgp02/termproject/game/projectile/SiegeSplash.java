@@ -3,12 +3,12 @@ package kr.ac.kpu.sgp02.termproject.game.projectile;
 import android.graphics.Canvas;
 
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.Metrics;
-import kr.ac.kpu.sgp02.termproject.framework.ObjectPool;
-import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
-import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.Collidable;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 

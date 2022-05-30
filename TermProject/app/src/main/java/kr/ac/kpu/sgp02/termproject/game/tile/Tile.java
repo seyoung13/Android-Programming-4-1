@@ -4,12 +4,10 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
 
-import java.lang.reflect.Member;
-
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.Metrics;
-import kr.ac.kpu.sgp02.termproject.framework.Sprite;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 
 
 public class Tile implements GameObject {

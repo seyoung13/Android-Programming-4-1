@@ -4,4 +4,5 @@ public enum MonsterType {
     walker,
     sprinter,
     armor,
+    none,
 }

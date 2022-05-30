@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject.framework;
+package kr.ac.kpu.sgp02.termproject.framework.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,8 +9,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 
 public class GameView extends View implements Choreographer.FrameCallback {

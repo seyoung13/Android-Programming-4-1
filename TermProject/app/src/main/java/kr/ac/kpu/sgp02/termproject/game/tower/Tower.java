@@ -8,13 +8,13 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.framework.Recyclable;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.Metrics;
-import kr.ac.kpu.sgp02.termproject.framework.Sprite;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
-import kr.ac.kpu.sgp02.termproject.framework.collision.Collidable;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.Collidable;
 
 public abstract class Tower implements GameObject, Collidable, Recyclable {
     protected float currDelay = 0.0f;

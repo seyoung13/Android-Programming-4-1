@@ -1,11 +1,10 @@
 package kr.ac.kpu.sgp02.termproject.framework.collision;
 
-import android.gesture.OrientedBoundingBox;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
 
-import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
+import kr.ac.kpu.sgp02.termproject.framework.helper.MathHelper;
 
 public class BoxCollider extends Collider {
     public PointF extents;

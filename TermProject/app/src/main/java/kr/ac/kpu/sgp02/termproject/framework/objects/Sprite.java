@@ -1,9 +1,12 @@
-package kr.ac.kpu.sgp02.termproject.framework;
+package kr.ac.kpu.sgp02.termproject.framework.objects;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.RectF;
+
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.pool.BitmapPool;
 
 public class Sprite implements GameObject {
     private RectF dstRect = new RectF();

@@ -3,16 +3,13 @@ package kr.ac.kpu.sgp02.termproject.game;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.PointF;
 import android.graphics.RectF;
 
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.framework.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.Metrics;
-import kr.ac.kpu.sgp02.termproject.framework.Sprite;
+import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
-import kr.ac.kpu.sgp02.termproject.game.tower.Tower;
 
 public class TowerPreview implements GameObject {
     protected Sprite sprite;

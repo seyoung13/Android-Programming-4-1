@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
 
-import kr.ac.kpu.sgp02.termproject.framework.MathHelper;
+import kr.ac.kpu.sgp02.termproject.framework.helper.MathHelper;
 
 public class CircleCollider extends Collider {
     public float radius;
