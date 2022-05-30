@@ -28,6 +28,6 @@ public class Walker extends Monster{
 
         speed = Metrics.size(R.dimen.walker_speed);
         maxHp = Metrics.floatValue(R.dimen.walker_hp);
-        reward = Metrics.floatValue(R.dimen.walker_reward);
+        reward = Metrics.intValue(R.dimen.walker_reward);
     }
 }

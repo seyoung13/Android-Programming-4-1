@@ -18,13 +18,13 @@ public class Monster implements GameObject, Collidable, Recyclable {
     protected float hp;
     protected float maxHp;
     protected float speed;
-    protected float reward;
+    protected int reward;
     protected Sprite sprite;
     public BoxCollider collider;
     protected PointF position;
     public boolean isDead;
     public ProgressBar hpBar;
-    float size = Metrics.size(R.dimen.cell_size) - 10;
+    float size;
 
     public static Monster get(int tileX, int tileY) {
         Monster recyclable = (Monster) ObjectPool.get(Monster.class);
@@ -39,10 +39,9 @@ public class Monster implements GameObject, Collidable, Recyclable {
 
     protected Monster(int tileX, int tileY) {
         position = Metrics.tileIndexToPosition(tileX, tileY);
+        size = Metrics.size(R.dimen.monster_size);
         setSpec();
-        collider = new BoxCollider(position.x, position.y,
-                Metrics.size(R.dimen.monster_size)/2,
-                Metrics.size(R.dimen.monster_size)/2);
+        collider = new BoxCollider(position.x, position.y, size/2, size/2);
         hp = maxHp;
         isDead = false;
         hpBar = new ProgressBar(position.x, position.y + size/2,
@@ -100,13 +99,18 @@ public class Monster implements GameObject, Collidable, Recyclable {
     public void beDamaged(int damage) {
         hp -= damage;
         if(hp <= 0)
-            isDead = true;
+            onDead();
 
         hpBar.setProgress(hp);
     }
 
     public PointF getPosition() {
         return position;
+    }
+
+    public void onDead() {
+        isDead = true;
+        DefenseGame.getInstance().storeMineral(reward);
     }
 
     @Override

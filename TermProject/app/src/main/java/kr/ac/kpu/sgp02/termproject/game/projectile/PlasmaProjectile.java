@@ -12,7 +12,7 @@ import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 public class PlasmaProjectile extends Projectile {
     protected float degree;
     protected float lifetime = 0.5f;
-    private int damage = 5;
+    private int damage = 20;
 
     public static PlasmaProjectile get(float x, float y) {
         PlasmaProjectile recyclable = (PlasmaProjectile) ObjectPool.get(PlasmaProjectile.class);

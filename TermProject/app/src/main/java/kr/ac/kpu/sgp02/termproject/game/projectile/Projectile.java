@@ -43,7 +43,7 @@ public class Projectile implements GameObject, Collidable, Recyclable {
         position = new PointF(x, y);
         collider = new BoxCollider(x, y, 30, 30);
         sprite = new Sprite(x, y, 30, R.mipmap.tile_grid);
-        damage = 10;
+        damage = 30;
     }
 
 

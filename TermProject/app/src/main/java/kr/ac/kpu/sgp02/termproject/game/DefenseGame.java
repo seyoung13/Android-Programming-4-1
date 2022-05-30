@@ -38,6 +38,7 @@ public class DefenseGame {
     private ArrayList<ArrayList<GameObject>> layeredObjects;
     private TowerDeployer towerDeployer;
     private LevelLoader levelLoader;
+    private Mineral mineral;
 
     // --------------- 생성자 ---------------
     private DefenseGame() {
@@ -75,9 +76,12 @@ public class DefenseGame {
 
         add(new MonsterGenerator(levelLoader.getWaveQueue()), Layer.controller);
 
-        add(CannonTower.get(4, 6), Layer.tower);
+        mineral = new Mineral(200);
+        add(mineral, Layer.ui);
 
-        add(LaserTower.get(6, 6), Layer.tower);
+        //add(CannonTower.get(4, 3), Layer.tower);
+
+        add(LaserTower.get(6, 3), Layer.tower);
     }
 
     private void initializeLayers() {
@@ -220,6 +224,13 @@ public class DefenseGame {
 
     }
 
+    public void storeMineral(int reward) {
+        mineral.addAmount(reward);
+    }
+
+    public void useMineral(int reward) {
+        mineral.subAmount(reward);
+    }
 
     public void onDraw(Canvas canvas) {
         for(ArrayList<GameObject> objects : layeredObjects) {

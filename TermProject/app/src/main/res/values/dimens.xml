@@ -2,6 +2,11 @@
 <resources>
     <dimen name="cell_size">50dp</dimen>
 
+    <item name="cannon_tower_price" type="dimen" format="integer">50</item>
+    <item name="laser_tower_price" type="dimen" format="integer">100</item>
+    <item name="plasma_tower_price" type="dimen" format="integer">100</item>
+    <item name="missile_tower_price" type="dimen" format="integer">150</item>
+
     <item name="cannon_delay" type="dimen" format="float">1.5</item>
     <item name="laser_delay" type="dimen" format="float">0.25</item>
     <item name="plasma_delay" type="dimen" format="float">1.5</item>
@@ -18,19 +23,23 @@
     <dimen name="hp_bar_width">40dp</dimen>
     <dimen name="hp_bar_height">10dp</dimen>
 
+    <dimen name="mineral_digit_width">20dp</dimen>
+    <dimen name="mineral_digit_height">40dp</dimen>
+    <dimen name="mineral_digit_margin_top">10dp</dimen>
+
     <dimen name="monster_size">30dp</dimen>
 
     <dimen name="walker_speed">50dp</dimen>
-    <item name="walker_hp" type="dimen" format="float">50.0</item>
-    <item name="walker_reward" type="dimen" format="float">20.0</item>
+    <item name="walker_hp" type="dimen" format="float">100.0</item>
+    <item name="walker_reward" type="dimen" format="integer">20</item>
 
     <dimen name="sprinter_speed">100dp</dimen>
-    <item name="sprinter_hp" type="dimen" format="float">50.0</item>
-    <item name="sprinter_reward" type="dimen" format="float">20.0</item>
+    <item name="sprinter_hp" type="dimen" format="float">75.0</item>
+    <item name="sprinter_reward" type="dimen" format="integer">30</item>
 
     <dimen name="armor_speed">20dp</dimen>
-    <item name="armor_hp" type="dimen" format="float">250.0</item>
-    <item name="armor_reward" type="dimen" format="float">100.0</item>
+    <item name="armor_hp" type="dimen" format="float">300.0</item>
+    <item name="armor_reward" type="dimen" format="integer">100</item>
 
     <item name="monster_spawn_interval" type="dimen" format="float">2.0</item>
     <item name="wave_interval" type="dimen" format="float">5.0</item>

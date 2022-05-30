@@ -27,6 +27,6 @@ public class Sprinter extends Monster{
 
         speed = Metrics.size(R.dimen.sprinter_speed);
         maxHp = Metrics.floatValue(R.dimen.sprinter_hp);
-        reward = Metrics.floatValue(R.dimen.sprinter_reward);
+        reward = Metrics.intValue(R.dimen.sprinter_reward);
     }
 }

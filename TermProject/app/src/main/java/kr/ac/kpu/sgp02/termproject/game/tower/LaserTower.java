@@ -42,8 +42,8 @@ public class LaserTower extends Tower {
 
     @Override
     protected void fire() {
-        if(target != null)
-            return;
+//        if(target != null)
+//            return;
 
         isLaserFiring = true;
         laser = LaserProjectile.get(position.x, position.y);
@@ -62,10 +62,6 @@ public class LaserTower extends Tower {
             DefenseGame.getInstance().remove(laser);
             laser.setTarget(null);
             target = null;
-            if(target == null)
-                Log.d("Tower", "target set null");
-            else
-                Log.d("Tower", "target set not null");
         }
 
         targetList.remove((Monster) object);

@@ -27,6 +27,6 @@ public class Armor extends Monster {
 
         speed = Metrics.size(R.dimen.armor_speed);
         maxHp = Metrics.floatValue(R.dimen.armor_hp);
-        reward = Metrics.floatValue(R.dimen.armor_reward);
+        reward = Metrics.intValue(R.dimen.armor_reward);
     }
 }

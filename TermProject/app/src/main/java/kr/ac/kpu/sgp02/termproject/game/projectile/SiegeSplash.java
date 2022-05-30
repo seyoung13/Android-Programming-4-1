@@ -15,7 +15,7 @@ import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 public class SiegeSplash implements GameObject, Collidable, Recyclable {
     public CircleCollider collider;
     public float lifetime = 0.5f;
-    private int damage = 20;
+    private int damage = 40;
 
     public static SiegeSplash get(float x, float y) {
         SiegeSplash recyclable = (SiegeSplash) ObjectPool.get(SiegeSplash.class);

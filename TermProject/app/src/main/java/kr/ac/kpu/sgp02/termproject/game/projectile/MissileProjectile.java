@@ -7,7 +7,6 @@ import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 
 public class MissileProjectile extends Projectile {
-    private CircleCollider splash;
 
     public static MissileProjectile get(float x, float y) {
         MissileProjectile recyclable = (MissileProjectile) ObjectPool.get(MissileProjectile.class);

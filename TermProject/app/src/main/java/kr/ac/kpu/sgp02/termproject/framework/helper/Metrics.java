@@ -28,6 +28,12 @@ public class Metrics {
         return outValue.getFloat();
     }
 
+    public static int intValue(int dimenResId) {
+        Resources res = GameView.view.getResources();
+
+        return res.getInteger(dimenResId);
+    }
+
     /**
      * 타일 인덱스에 해당하는 타일의 중앙 좌표를 반환하는 함수.
      */

@@ -12,7 +12,7 @@ public class LaserProjectile extends Projectile {
     protected float degree;
     protected float currDelay = 0.0f;
     protected float maxDelay = 0.5f;
-    private int damage = 5;
+    private int damage = 2;
 
     public static LaserProjectile get(float x, float y) {
         LaserProjectile recyclable = (LaserProjectile) ObjectPool.get(LaserProjectile.class);

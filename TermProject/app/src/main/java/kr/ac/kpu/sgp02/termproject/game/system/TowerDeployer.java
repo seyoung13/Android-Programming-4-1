@@ -34,8 +34,6 @@ public class TowerDeployer implements GameObject {
     TowerPreview selectedPreview;
     TowerType selectedType = TowerType.cannon;
 
-    
-
     protected Point tileIndex = new Point();
     protected PointF tileCenter = new PointF();
 
@@ -97,15 +95,19 @@ public class TowerDeployer implements GameObject {
         switch (selectedType) {
             case cannon:
                 DefenseGame.getInstance().add(CannonTower.get(index.x, index.y), DefenseGame.Layer.tower);
+                DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.cannon_tower_price));
                 break;
             case laser:
                 DefenseGame.getInstance().add(LaserTower.get(index.x, index.y), DefenseGame.Layer.tower);
+                DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.laser_tower_price));
                 break;
             case missile:
                 DefenseGame.getInstance().add(MissileTower.get(index.x, index.y), DefenseGame.Layer.tower);
+                DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.missile_tower_price));
                 break;
             case plasma:
                 DefenseGame.getInstance().add(PlasmaTower.get(index.x, index.y), DefenseGame.Layer.tower);
+                DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.plasma_tower_price));
                 break;
             default:
                 break;
