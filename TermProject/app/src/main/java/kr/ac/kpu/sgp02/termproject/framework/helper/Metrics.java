@@ -66,6 +66,6 @@ public class Metrics {
         int yTens = Character.getNumericValue(xy.charAt(2));
         int yUnits = Character.getNumericValue(xy.charAt(3));
 
-        return new Point(xTens * 10 + xUnits, yTens * 10 + yUnits);
+        return new Point(10 * xTens + xUnits, 10 * yTens + yUnits);
     }
 }

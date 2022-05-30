@@ -52,13 +52,18 @@ public class CircleCollider extends Collider {
     }
 
     @Override
-    public boolean intersects(BoxCollider box) {
+    protected boolean intersects(BoxCollider box) {
         return box.intersects(this);
     }
 
     @Override
-    public boolean intersects(CircleCollider circle) {
+    protected boolean intersects(CircleCollider circle) {
         return MathHelper.getDistanceSquared(center, circle.center) <= (radiusSquared + circle.radiusSquared);
+    }
+
+    @Override
+    public boolean intersects(Collider collider) {
+        return collider.intersects(this);
     }
 
     @Override

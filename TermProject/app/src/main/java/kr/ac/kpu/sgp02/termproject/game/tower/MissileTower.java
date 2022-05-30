@@ -1,6 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.tower;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
@@ -47,5 +48,10 @@ public class MissileTower extends Tower{
     @Override
     public void redeploy(float x, float y) {
         super.redeploy(x, y);
+    }
+
+    @Override
+    public <T extends Collider> T getCollider(Class<T> type) {
+        return type.cast(range);
     }
 }

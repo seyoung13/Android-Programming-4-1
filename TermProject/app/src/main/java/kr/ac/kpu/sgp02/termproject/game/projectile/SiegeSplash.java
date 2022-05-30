@@ -3,6 +3,7 @@ package kr.ac.kpu.sgp02.termproject.game.projectile;
 import android.graphics.Canvas;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
@@ -47,6 +48,10 @@ public class SiegeSplash implements GameObject, Collidable, Recyclable {
         collider.draw(canvas);
     }
 
+    @Override
+    public <T extends Collider> T getCollider(Class<T> type) {
+        return type.cast(collider);
+    }
 
     @Override
     public void onBeginOverlap(GameObject object) {

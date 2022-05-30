@@ -3,6 +3,7 @@ package kr.ac.kpu.sgp02.termproject.game.tower;
 import java.util.ArrayList;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
@@ -52,5 +53,10 @@ public class PlasmaTower extends Tower{
     @Override
     public void redeploy(float x, float y) {
         super.redeploy(x, y);
+    }
+
+    @Override
+    public <T extends Collider> T getCollider(Class<T> type) {
+        return type.cast(range);
     }
 }

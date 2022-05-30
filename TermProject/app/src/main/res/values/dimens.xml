@@ -3,18 +3,19 @@
     <dimen name="cell_size">50dp</dimen>
 
     <item name="cannon_tower_price" type="dimen" format="integer">50</item>
-    <item name="laser_tower_price" type="dimen" format="integer">100</item>
-    <item name="plasma_tower_price" type="dimen" format="integer">100</item>
-    <item name="missile_tower_price" type="dimen" format="integer">150</item>
-
     <item name="cannon_delay" type="dimen" format="float">1.5</item>
-    <item name="laser_delay" type="dimen" format="float">0.25</item>
-    <item name="plasma_delay" type="dimen" format="float">1.5</item>
-    <item name="missile_delay" type="dimen" format="float">3.0</item>
-
     <dimen name="cannon_range">150dp</dimen>
+
+    <item name="laser_tower_price" type="dimen" format="integer">100</item>
+    <item name="laser_delay" type="dimen" format="float">0.25</item>
     <dimen name="laser_range">200dp</dimen>
+
+    <item name="plasma_tower_price" type="dimen" format="integer">100</item>
+    <item name="plasma_delay" type="dimen" format="float">1.5</item>
     <dimen name="plasma_range">100dp</dimen>
+
+    <item name="missile_tower_price" type="dimen" format="integer">150</item>
+    <item name="missile_delay" type="dimen" format="float">3.0</item>
     <dimen name="missile_range">200dp</dimen>
 
     <dimen name="collider_line_width">3dp</dimen>

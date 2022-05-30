@@ -15,8 +15,8 @@ public abstract class Collider implements GameObject {
     public PointF center;
     public boolean isVisible = true;
 
-    protected static Paint paint;
-    public HashSet<Collider> overlappedColliders;
+    protected static final Paint paint;
+    protected HashSet<Collider> overlappedColliders;
 
     // --------------- 생성자 ---------------
 
@@ -32,6 +32,13 @@ public abstract class Collider implements GameObject {
         initialize(x, y);
     }
 
+    static {
+        paint = new Paint();
+        paint.setColor(Color.RED);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(Metrics.size(R.dimen.collider_line_width));
+    }
+
     // --------------- 메소드 ---------------
 
     public void offset(float dx, float dy) {
@@ -45,26 +52,16 @@ public abstract class Collider implements GameObject {
 
     private void initialize(float x, float y) {
         center = new PointF(x, y);
-        overlappedColliders = new HashSet<>(32);
-        setPaint();
-    }
-
-    private void setPaint() {
-        if(paint != null)
-            return;
-
-        paint = new Paint();
-        paint.setColor(Color.RED);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(Metrics.size(R.dimen.collider_line_width));
+        overlappedColliders = new HashSet<>(16);
     }
 
     // --------------- 인터페이스 ---------------
 
     public abstract boolean contains(Point point);
     public abstract boolean contains(PointF point);
-    public abstract boolean intersects(BoxCollider box);
-    public abstract boolean intersects(CircleCollider circle);
+    protected abstract boolean intersects(BoxCollider box);
+    protected abstract boolean intersects(CircleCollider circle);
+    public abstract boolean intersects(Collider collider);
 }
 
 

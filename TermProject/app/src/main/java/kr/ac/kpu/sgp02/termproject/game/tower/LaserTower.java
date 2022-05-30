@@ -3,6 +3,7 @@ package kr.ac.kpu.sgp02.termproject.game.tower;
 import android.util.Log;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
@@ -42,14 +43,19 @@ public class LaserTower extends Tower {
 
     @Override
     protected void fire() {
-//        if(target != null)
-//            return;
+        if(target != null)
+            return;
 
         isLaserFiring = true;
         laser = LaserProjectile.get(position.x, position.y);
         DefenseGame.getInstance().add(laser, DefenseGame.Layer.image);
         target = targetList.iterator().next();
         laser.setTarget(target);
+    }
+
+    @Override
+    public <T extends Collider> T getCollider(Class<T> type) {
+        return type.cast(range);
     }
 
     @Override

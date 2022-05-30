@@ -1,4 +1,4 @@
-package kr.ac.kpu.sgp02.termproject.game;
+package kr.ac.kpu.sgp02.termproject.game.player;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -43,8 +43,8 @@ public class Mineral implements GameObject {
     }
 
     /**
-     * 저장 중인 광물량을 감소하는 함수.
-     * @param number 소모하려는 광물량
+     * 저장 중인 자원량을 감소시키는 함수.
+     * @param number 소모하려는 자원량
      * @return 소모량이 저장량보다 많으면 true, 적으면 false
      */
     public boolean subAmount(int number) {
@@ -65,10 +65,12 @@ public class Mineral implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        int value = amount;
+        // 표시할 자릿수 0050
+        float fullDigit = 4;
 
         float x = right;
-        while (value > 0) {
+        int value = amount;
+        while (fullDigit-- > 0) {
             int digit = value % 10;
             srcRect.set(digit * srcCharWidth, 0, (digit + 1) * srcCharWidth, srcCharHeight);
             x -= dstCharWidth;

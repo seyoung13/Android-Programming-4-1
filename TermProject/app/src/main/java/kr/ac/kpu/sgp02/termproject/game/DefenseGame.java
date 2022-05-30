@@ -5,21 +5,17 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import kr.ac.kpu.sgp02.termproject.framework.collision.CollisionChecker;
 import kr.ac.kpu.sgp02.termproject.framework.view.GameView;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
-import kr.ac.kpu.sgp02.termproject.framework.collision.CollisionChecker;
-import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
-import kr.ac.kpu.sgp02.termproject.game.projectile.Projectile;
-import kr.ac.kpu.sgp02.termproject.game.projectile.SiegeSplash;
+import kr.ac.kpu.sgp02.termproject.game.player.Mineral;
 import kr.ac.kpu.sgp02.termproject.game.system.LevelLoader;
 import kr.ac.kpu.sgp02.termproject.game.system.MonsterGenerator;
-import kr.ac.kpu.sgp02.termproject.game.system.TowerDeployer;
+import kr.ac.kpu.sgp02.termproject.game.player.TowerDeployer;
+import kr.ac.kpu.sgp02.termproject.game.tile.Tile;
 import kr.ac.kpu.sgp02.termproject.game.tile.TileMap;
-import kr.ac.kpu.sgp02.termproject.game.tower.CannonTower;
-import kr.ac.kpu.sgp02.termproject.game.tower.LaserTower;
-import kr.ac.kpu.sgp02.termproject.game.tower.Tower;
 
 public class DefenseGame {
 
@@ -36,6 +32,7 @@ public class DefenseGame {
 
     private static DefenseGame singleton;
     private ArrayList<ArrayList<GameObject>> layeredObjects;
+    private TileMap tileMap;
     private TowerDeployer towerDeployer;
     private LevelLoader levelLoader;
     private Mineral mineral;
@@ -69,19 +66,18 @@ public class DefenseGame {
         levelLoader = new LevelLoader();
         levelLoader.loadLevelFromJson("level_info.json", 1);
 
-        add(new TileMap(levelLoader.getTileBlueprint()), Layer.background);
+        tileMap = new TileMap(levelLoader.getTileBlueprint());
+        add(tileMap, Layer.background);
 
         towerDeployer = new TowerDeployer();
         add(towerDeployer, Layer.controller);
 
         add(new MonsterGenerator(levelLoader.getWaveQueue()), Layer.controller);
 
+        add(new CollisionChecker(), Layer.controller);
+
         mineral = new Mineral(200);
         add(mineral, Layer.ui);
-
-        //add(CannonTower.get(4, 3), Layer.tower);
-
-        add(LaserTower.get(6, 3), Layer.tower);
     }
 
     private void initializeLayers() {
@@ -98,138 +94,22 @@ public class DefenseGame {
                 object.update(deltaSecond);
             }
         }
-
-        checkCollision();
     }
 
     public ArrayList<GameObject> getObjectsAt(Layer layer) {
         return layeredObjects.get(layer.ordinal());
     }
 
-    private void checkCollision() {
-        for (GameObject o1 : getObjectsAt(Layer.monster)) {
-            if(!(o1 instanceof Monster))
-                continue;
-
-            Monster monster = (Monster) o1;
-
-            for(GameObject o2 : getObjectsAt(Layer.damageCauser)) {
-
-                if(o2 instanceof Projectile){
-                    Projectile projectile = (Projectile) o2;
-
-                    // 해쉬셋을 이용해 계속 충돌중이었는지 확인하는 작업
-                    // 일반화할 필요가 있음
-                    if (CollisionChecker.collides(monster.collider, projectile.collider)) {
-                        if (monster.collider.overlappedColliders.contains(projectile.collider)) {
-                            monster.onStayOverlap(projectile);
-                        }
-                        else {
-                            monster.collider.overlappedColliders.add(projectile.collider);
-                            monster.onBeginOverlap(projectile);
-                        }
-
-                        if (projectile.collider.overlappedColliders.contains(monster.collider)) {
-                            projectile.onStayOverlap(monster);
-                        }
-                        else {
-                            projectile.collider.overlappedColliders.add(monster.collider);
-                            projectile.onBeginOverlap(monster);
-                        }
-                    }
-                    else {
-                        if (monster.collider.overlappedColliders.contains(projectile.collider)) {
-                            monster.collider.overlappedColliders.remove(projectile.collider);
-                            monster.onEndOverlap(projectile);
-                        }
-
-                        if (projectile.collider.overlappedColliders.contains(monster.collider)) {
-                            projectile.collider.overlappedColliders.remove(monster.collider);
-                            projectile.onEndOverlap(monster);
-                        }
-                    }
-                }
-
-                if(o2 instanceof SiegeSplash) {
-                    SiegeSplash splash = (SiegeSplash) o2;
-
-                    if (CollisionChecker.collides(monster.collider, splash.collider)) {
-                        if (monster.collider.overlappedColliders.contains(splash.collider)) {
-                            monster.onStayOverlap(splash);
-                        }
-                        else {
-                            monster.collider.overlappedColliders.add(splash.collider);
-                            monster.onBeginOverlap(splash);
-                        }
-
-                        if (splash.collider.overlappedColliders.contains(monster.collider)) {
-                            splash.onStayOverlap(monster);
-                        }
-                        else {
-                            splash.collider.overlappedColliders.add(monster.collider);
-                            splash.onBeginOverlap(monster);
-                        }
-                    }
-                    else {
-                        if (monster.collider.overlappedColliders.contains(splash.collider)) {
-                            monster.collider.overlappedColliders.remove(splash.collider);
-                            monster.onEndOverlap(splash);
-                        }
-
-                        if (splash.collider.overlappedColliders.contains(monster.collider)) {
-                            splash.collider.overlappedColliders.remove(monster.collider);
-                            splash.onEndOverlap(monster);
-                        }
-                    }
-                }
-            }
-
-            // 타워 사거리 내 몬스터가 있는지 확인
-            for(GameObject o2 : getObjectsAt(Layer.tower)) {
-                if(!(o2 instanceof Tower))
-                    continue;
-
-                Tower tower = (Tower) o2;
-
-                if (CollisionChecker.collides(monster.collider, tower.range)) {
-                    if (monster.collider.overlappedColliders.contains(tower.range)) {
-                        monster.onStayOverlap(tower);
-                    }
-                    else {
-                        monster.collider.overlappedColliders.add(tower.range);
-                        monster.onBeginOverlap(tower);
-                    }
-
-                    if (tower.range.overlappedColliders.contains(monster.collider)) {
-                        tower.onStayOverlap(monster);
-                    }
-                    else {
-                        tower.range.overlappedColliders.add(monster.collider);
-                        tower.onBeginOverlap(monster);
-                    }
-                }
-                else {
-                    if (monster.collider.overlappedColliders.contains(tower.range)) {
-                        monster.collider.overlappedColliders.remove(tower.range);
-                        monster.onEndOverlap(tower);
-                    }
-
-                    if (tower.range.overlappedColliders.contains(monster.collider)) {
-                        tower.range.overlappedColliders.remove(monster.collider);
-                        tower.onEndOverlap(monster);
-                    }
-                }
-            }
-        }
-
-    }
-
     public void storeMineral(int reward) {
         mineral.addAmount(reward);
     }
 
-    public void useMineral(int reward) {
-        mineral.subAmount(reward);
+    public boolean useMineral(int reward) {
+        return mineral.subAmount(reward);
+    }
+
+    public Tile getTileAt(int tileX, int tileY) {
+        return tileMap.getTileAt(tileX, tileY);
     }
 
     public void onDraw(Canvas canvas) {

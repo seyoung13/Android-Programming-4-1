@@ -100,4 +100,7 @@ public class TileMap implements GameObject {
         }
     }
 
+    public Tile getTileAt(int tileX, int tileY) {
+        return tiles.get(tileY).get(tileX);
+    }
 }

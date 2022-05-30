@@ -8,7 +8,7 @@ import android.view.View;
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.view.GameView;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
-import kr.ac.kpu.sgp02.termproject.game.system.TowerDeployer;
+import kr.ac.kpu.sgp02.termproject.game.player.TowerDeployer;
 
 public class DefenseActivity extends AppCompatActivity {
     @Override

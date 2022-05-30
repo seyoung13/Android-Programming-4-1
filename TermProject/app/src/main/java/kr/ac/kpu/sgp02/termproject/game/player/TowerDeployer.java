@@ -1,7 +1,6 @@
-package kr.ac.kpu.sgp02.termproject.game.system;
+package kr.ac.kpu.sgp02.termproject.game.player;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.view.MotionEvent;
@@ -12,7 +11,7 @@ import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
-import kr.ac.kpu.sgp02.termproject.game.TowerPreview;
+import kr.ac.kpu.sgp02.termproject.game.tile.Tile;
 import kr.ac.kpu.sgp02.termproject.game.tower.CannonTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.LaserTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.PlasmaTower;
@@ -24,6 +23,7 @@ public class TowerDeployer implements GameObject {
         laser,
         missile,
         plasma,
+        destroy,
     }
 
     boolean isActivated = false;
@@ -33,6 +33,7 @@ public class TowerDeployer implements GameObject {
     HashMap<TowerType, TowerPreview> previewImages = new HashMap<>(4);
     TowerPreview selectedPreview;
     TowerType selectedType = TowerType.cannon;
+    DefenseGame.Layer towerLayer = DefenseGame.Layer.tower;
 
     protected Point tileIndex = new Point();
     protected PointF tileCenter = new PointF();
@@ -86,28 +87,41 @@ public class TowerDeployer implements GameObject {
             return;
 
         deploy(x, y);
-        selectedPreview.setLocationColor(Color.RED);
+        //selectedPreview.setLocationColor(Color.RED);
     }
 
     private void deploy(float x, float y) {
         Point index = Metrics.positionToTileIndex(x, y);
+        Tile tile = DefenseGame.getInstance().getTileAt(index.x, index.y);
+        if(!tile.isDeployable()) {
+            isActivated = false;
+            return;
+        }
 
         switch (selectedType) {
             case cannon:
-                DefenseGame.getInstance().add(CannonTower.get(index.x, index.y), DefenseGame.Layer.tower);
-                DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.cannon_tower_price));
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.cannon_tower_price))) {
+                    DefenseGame.getInstance().add(CannonTower.get(index.x, index.y), towerLayer);
+                    tile.onTowerDeployed();
+                }
                 break;
             case laser:
-                DefenseGame.getInstance().add(LaserTower.get(index.x, index.y), DefenseGame.Layer.tower);
-                DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.laser_tower_price));
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.laser_tower_price))) {
+                    DefenseGame.getInstance().add(LaserTower.get(index.x, index.y), towerLayer);
+                    tile.onTowerDeployed();
+                }
                 break;
             case missile:
-                DefenseGame.getInstance().add(MissileTower.get(index.x, index.y), DefenseGame.Layer.tower);
-                DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.missile_tower_price));
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.missile_tower_price))) {
+                    DefenseGame.getInstance().add(MissileTower.get(index.x, index.y), towerLayer);
+                    tile.onTowerDeployed();
+                }
                 break;
             case plasma:
-                DefenseGame.getInstance().add(PlasmaTower.get(index.x, index.y), DefenseGame.Layer.tower);
-                DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.plasma_tower_price));
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.plasma_tower_price))) {
+                    DefenseGame.getInstance().add(PlasmaTower.get(index.x, index.y), towerLayer);
+                    tile.onTowerDeployed();
+                }
                 break;
             default:
                 break;

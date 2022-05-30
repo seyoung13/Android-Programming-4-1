@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.objects.ProgressBar;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
@@ -80,6 +81,11 @@ public class Monster implements GameObject, Collidable, Recyclable {
         sprite.draw(canvas);
         collider.draw(canvas);
         hpBar.draw(canvas);
+    }
+
+    @Override
+    public <T extends Collider> T getCollider(Class<T> type) {
+        return type.cast(collider);
     }
 
     @Override

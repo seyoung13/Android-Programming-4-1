@@ -17,7 +17,7 @@ public class Tile implements GameObject {
     //타일맵 배열 내의 인덱스
     private Point index;
     private PointF position;
-    private int size = 50;
+    private int size;
 
     protected boolean isDeployable = false;
 
@@ -65,4 +65,6 @@ public class Tile implements GameObject {
     public boolean isDeployable() {
         return isDeployable;
     }
+
+    public void onTowerDeployed() {isDeployable = false;}
 }

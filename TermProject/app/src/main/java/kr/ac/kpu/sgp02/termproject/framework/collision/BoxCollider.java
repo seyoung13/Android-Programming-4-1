@@ -103,7 +103,7 @@ public class BoxCollider extends Collider {
     }
 
     @Override
-    public boolean intersects(BoxCollider box) {
+    protected boolean intersects(BoxCollider box) {
         if (box.right < left)
             return false;
         if (right < box.left)
@@ -117,13 +117,18 @@ public class BoxCollider extends Collider {
     }
 
     @Override
-    public boolean intersects(CircleCollider circle) {
+    protected boolean intersects(CircleCollider circle) {
         float x = Math.max(left, Math.min(circle.center.x, right));
         float y = Math.max(top, Math.min(circle.center.y, bottom));
 
         float distance = MathHelper.getDistanceSquared(x, y, circle.center.x, circle.center.y);
 
         return distance <= circle.radiusSquared;
+    }
+
+    @Override
+    public boolean intersects(Collider collider) {
+        return collider.intersects(this);
     }
 
     @Override
