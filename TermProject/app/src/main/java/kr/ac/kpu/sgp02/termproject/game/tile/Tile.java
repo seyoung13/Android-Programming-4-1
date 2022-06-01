@@ -17,20 +17,27 @@ public class Tile implements GameObject {
     //타일맵 배열 내의 인덱스
     private Point index;
     private PointF position;
-    private int size;
+    private static float size;
+
+    private TileType type;
 
     protected boolean isDeployable = false;
 
-    Tile(int x, int y, int size, TileType type) {
-        index = new Point(x, y);
-        position = Metrics.tileIndexToPosition(x, y);
+    protected boolean isVisited = false;
 
-        this.size = size;
-
-        selectBitmapByType(type);
+    static {
+        size = Metrics.size(R.dimen.cell_size);
     }
 
-    private void selectBitmapByType(TileType type) {
+    Tile(int x, int y, TileType type) {
+        index = new Point(x, y);
+        position = Metrics.tileIndexToPosition(x, y);
+        this.type = type;
+
+        selectBitmapByType();
+    }
+
+    private void selectBitmapByType() {
         switch (type){
             case path:
                 sprite = new Sprite(position.x, position.y, size, R.mipmap.tile_path);
@@ -52,6 +59,10 @@ public class Tile implements GameObject {
         }
     }
 
+    public TileType getType() {
+        return type;
+    }
+
     @Override
     public void update(float deltaSecond) {
 
@@ -67,4 +78,8 @@ public class Tile implements GameObject {
     }
 
     public void onTowerDeployed() {isDeployable = false;}
+
+    public Point getIndex() {
+        return index;
+    }
 }

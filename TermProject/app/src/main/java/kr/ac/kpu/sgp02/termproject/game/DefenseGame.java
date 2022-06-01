@@ -25,7 +25,7 @@ public class DefenseGame {
         monster,
         damageCauser,
         image,
-        controller,
+        system,
         ui,
         COUNT,
     }
@@ -43,14 +43,14 @@ public class DefenseGame {
         // 통해서만 싱글톤이 생성되게 한다.
     }
 
-    // --------------- 메소드 ---------------
-
     public static DefenseGame getInstance() {
         if(singleton == null)
             singleton = new DefenseGame();
 
         return singleton;
     }
+
+    // --------------- 메소드 ---------------
 
     public static void clear() {
         singleton = null;
@@ -66,15 +66,15 @@ public class DefenseGame {
         levelLoader = new LevelLoader();
         levelLoader.loadLevelFromJson("level_info.json", 1);
 
-        tileMap = new TileMap(levelLoader.getTileBlueprint());
+        tileMap = new TileMap(levelLoader.getTileBlueprint(), levelLoader.getStartPoints());
         add(tileMap, Layer.background);
 
         towerDeployer = new TowerDeployer();
-        add(towerDeployer, Layer.controller);
+        add(towerDeployer, Layer.system);
 
-        add(new MonsterGenerator(levelLoader.getWaveQueue()), Layer.controller);
+        add(new MonsterGenerator(levelLoader.getWaveQueue()), Layer.system);
 
-        add(new CollisionChecker(), Layer.controller);
+        add(new CollisionChecker(), Layer.system);
 
         mineral = new Mineral(200);
         add(mineral, Layer.ui);

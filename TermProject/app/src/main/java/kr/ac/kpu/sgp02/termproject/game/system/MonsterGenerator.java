@@ -1,8 +1,10 @@
 package kr.ac.kpu.sgp02.termproject.game.system;
 
 import android.graphics.Canvas;
+import android.graphics.Path;
 import android.graphics.Point;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Queue;
 
@@ -40,8 +42,6 @@ public class MonsterGenerator implements GameObject {
     }
     private void init() {
         goNextWave();
-
-
     }
 
     private void goNextWave() {

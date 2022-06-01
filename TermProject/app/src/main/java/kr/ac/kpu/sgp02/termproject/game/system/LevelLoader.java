@@ -1,6 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.system;
 
 import android.content.res.AssetManager;
+import android.graphics.Point;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -18,11 +19,15 @@ import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.game.Wave;
 
 public class LevelLoader {
+    private ArrayList<Point> startPoints;
+
     private int[][] tileBlueprint;
 
     private Queue<Wave> waveQueue;
 
     public LevelLoader(){}
+
+    public ArrayList<Point> getStartPoints() { return startPoints;}
 
     public int[][] getTileBlueprint() {
         return tileBlueprint;
@@ -106,8 +111,12 @@ public class LevelLoader {
             // 웨이브가 시작될 시작점들을 저장한다.
             JSONArray startsInfo = map.getJSONArray("Starts");
             ArrayList<String> starts = new ArrayList<>(startsInfo.length());
+            startPoints = new ArrayList<>(startsInfo.length());
+
             for (int i = 0; i < startsInfo.length(); ++i) {
-                starts.add(startsInfo.getString(i));
+                String start = startsInfo.getString(i);
+                starts.add(start);
+                startPoints.add(Metrics.stringToTileIndex(start));
             }
 
             JSONArray wavesInfo = map.getJSONArray("Waves");
