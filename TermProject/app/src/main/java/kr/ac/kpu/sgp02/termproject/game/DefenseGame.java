@@ -72,7 +72,7 @@ public class DefenseGame {
         towerDeployer = new TowerDeployer();
         add(towerDeployer, Layer.system);
 
-        add(new MonsterGenerator(levelLoader.getWaveQueue()), Layer.system);
+        add(new MonsterGenerator(levelLoader.getWaveQueue(), tileMap.getPaths()), Layer.system);
 
         add(new CollisionChecker(), Layer.system);
 

@@ -1,6 +1,9 @@
 package kr.ac.kpu.sgp02.termproject.game.monster;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.graphics.PointF;
 
 import kr.ac.kpu.sgp02.termproject.R;
@@ -20,20 +23,29 @@ public class Monster implements GameObject, Collidable, Recyclable {
     protected float maxHp;
     protected float speed;
     protected int reward;
+
     protected Sprite sprite;
-    public BoxCollider collider;
+    protected BoxCollider collider;
     protected PointF position;
+    protected float size;
+
+    private PathMeasure pathMeasure;
+    protected float distance;
+    private float[] measuredPosition = new float[2];
+    private float[] measuredTangent = new float[2];
+
     public boolean isDead;
     public ProgressBar hpBar;
-    float size;
 
-    public static Monster get(int tileX, int tileY) {
+    public static Monster get(int tileX, int tileY, Path path) {
         Monster recyclable = (Monster) ObjectPool.get(Monster.class);
 
         if(recyclable != null)
             recyclable.redeploy(tileX, tileY);
         else
             recyclable = new Monster(tileX, tileY);
+
+        recyclable.setPath(path);
 
         return recyclable;
     }
@@ -47,6 +59,7 @@ public class Monster implements GameObject, Collidable, Recyclable {
         isDead = false;
         hpBar = new ProgressBar(position.x, position.y + size/2,
                 Metrics.size(R.dimen.hp_bar_width), Metrics.size(R.dimen.hp_bar_height), hp);
+        distance = 0;
     }
 
     protected void setSpec() {
@@ -60,17 +73,19 @@ public class Monster implements GameObject, Collidable, Recyclable {
 
     @Override
     public void update(float deltaSecond) {
-        if(isDead || position.x > Metrics.width + size) {
+        distance += speed * deltaSecond;
+
+        if(isDead || distance > pathMeasure.getLength()) {
             DefenseGame.getInstance().remove(this);
             return;
         }
 
-        float dist = speed * deltaSecond;
+        pathMeasure.getPosTan(distance, measuredPosition, measuredTangent);
 
-        position.offset(dist, 0);
-        sprite.offset(dist, 0);
-        collider.offset(dist, 0);
-        hpBar.offset(dist, 0);
+        position.set(measuredPosition[0], measuredPosition[1]);
+        sprite.setPosition(measuredPosition[0], measuredPosition[1]);
+        collider.set(measuredPosition[0], measuredPosition[1]);
+        hpBar.setPosition(measuredPosition[0], measuredPosition[1] + size/2);
     }
 
     @Override
@@ -127,5 +142,10 @@ public class Monster implements GameObject, Collidable, Recyclable {
         hp = maxHp;
         isDead = false;
         hpBar.redeploy(position.x, position.y + size/2);
+        distance = 0;
+    }
+
+    public void setPath(Path path) {
+        pathMeasure = new PathMeasure(path, false);
     }
 }

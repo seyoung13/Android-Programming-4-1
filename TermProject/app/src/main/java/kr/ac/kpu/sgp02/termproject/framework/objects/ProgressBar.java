@@ -97,4 +97,9 @@ public class ProgressBar implements GameObject, Recyclable {
         setProgress(fullProgress);
         setRects();
     }
+
+    public void setPosition(float x, float y) {
+        position.set(x, y);
+        setRects();
+    }
 }

@@ -1,5 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.monster;
 
+import android.graphics.Path;
+
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
@@ -7,13 +9,15 @@ import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 
 public class Sprinter extends Monster{
 
-    public static Sprinter get(int tileX, int tileY) {
+    public static Sprinter get(int tileX, int tileY, Path path) {
         Sprinter recyclable = (Sprinter) ObjectPool.get(Sprinter.class);
 
         if(recyclable != null)
             recyclable.redeploy(tileX, tileY);
         else
             recyclable = new Sprinter(tileX, tileY);
+
+        recyclable.setPath(path);
 
         return recyclable;
     }

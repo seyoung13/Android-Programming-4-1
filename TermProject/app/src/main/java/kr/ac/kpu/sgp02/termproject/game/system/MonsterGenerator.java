@@ -24,15 +24,18 @@ public class MonsterGenerator implements GameObject {
     private float waveInterval;
 
     private Queue<Wave> waveQueue;
+    private HashMap<Point, Path> paths;
 
     private Wave currWave;
     private HashMap<Point, Wave.SubWave> currSubWaves = new HashMap<>();
 
+
     private boolean isAllWavesCleared = false;
     private boolean isCurrWaveCleared = false;
 
-    public MonsterGenerator(Queue<Wave> waveQueue) {
+    public MonsterGenerator(Queue<Wave> waveQueue, HashMap<Point, Path> paths) {
         this.waveQueue = waveQueue;
+        this.paths = paths;
         init();
 
         spawnInterval = Metrics.floatValue(R.dimen.monster_spawn_interval);
@@ -90,13 +93,13 @@ public class MonsterGenerator implements GameObject {
     private void generateMonster(MonsterType type, Point tileIndex) {
         switch (type) {
             case walker:
-                DefenseGame.getInstance().add(Walker.get(tileIndex.x, tileIndex.y), DefenseGame.Layer.monster);
+                DefenseGame.getInstance().add(Walker.get(tileIndex.x, tileIndex.y, paths.get(tileIndex)), DefenseGame.Layer.monster);
                 break;
             case sprinter:
-                DefenseGame.getInstance().add(Sprinter.get(tileIndex.x, tileIndex.y), DefenseGame.Layer.monster);
+                DefenseGame.getInstance().add(Sprinter.get(tileIndex.x, tileIndex.y, paths.get(tileIndex)), DefenseGame.Layer.monster);
                 break;
             case armor:
-                DefenseGame.getInstance().add(Armor.get(tileIndex.x, tileIndex.y), DefenseGame.Layer.monster);
+                DefenseGame.getInstance().add(Armor.get(tileIndex.x, tileIndex.y, paths.get(tileIndex)), DefenseGame.Layer.monster);
                 break;
             case none:
                 break;

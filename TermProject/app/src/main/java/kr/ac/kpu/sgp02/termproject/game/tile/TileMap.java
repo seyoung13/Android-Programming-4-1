@@ -5,8 +5,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,14 +19,12 @@ public class TileMap implements GameObject {
     private ArrayList<ArrayList<Rect>> grid = new ArrayList<>();
     private ArrayList<ArrayList<Tile>> tiles = new ArrayList<>();
 
-    private HashMap<Point, Path> paths;
-
-    private HashMap<Point, ArrayList<Tile>> tilePathMap = new HashMap<>();
+    private HashMap<Point, ArrayList<Tile>> pathTileLists = new HashMap<>();
+    private HashMap<Point, Path> paths = new HashMap<>();
 
     private Paint gridPaint = new Paint();
 
     private int cellSize = (int)Metrics.size(R.dimen.cell_size);
-    private boolean[][] visited;
 
     public TileMap(int[][] blueprint, ArrayList<Point> startPoints){
         setGridPaint();
@@ -35,16 +33,18 @@ public class TileMap implements GameObject {
 
         buildTilesByArray(blueprint);
 
-        for(Point point : startPoints){
-            maze(getTileAt(point.x, point.y), point);
+        buildPaths(startPoints);
+    }
 
-            for(ArrayList<Tile> rows : tiles)
-                for(Tile tile : rows) {
-                    tile.isVisited = false;
-                }
-        }
+    public Tile getTileAt(int tileX, int tileY) {
+        if(tileX < 0 || tileX >= tiles.get(0).size() || tileY < 0 || tileY >= tiles.size())
+            return new Tile(-99, -99, TileType.error);
 
-        Tile t = getTileAt(0,0);
+        return tiles.get(tileY).get(tileX);
+    }
+
+    public HashMap<Point, Path> getPaths() {
+        return paths;
     }
 
     private void setGridPaint() {
@@ -96,11 +96,48 @@ public class TileMap implements GameObject {
         }
     }
 
-    private boolean maze(Tile tile, Point start) {
-        //타일 확인해서 들어왔을테니까 path 임.
+    private void buildPaths(ArrayList<Point> startPoints) {
+
+        for(Point start : startPoints){
+            // 경로 탐색을 위해 타일 방문 변수를 초기화한다.
+            for(ArrayList<Tile> rows : tiles) {
+                for (Tile tile : rows) {
+                    tile.isVisited = false;
+                }
+            }
+
+            // 타일맵을 탐색해 경로 리스트를 만든다.
+            searchAdjacentTiles(getTileAt(start.x, start.y), start);
+
+            // 경로 리스트를 이용해 Path 객체를 생성한다.
+            buildPathByPathTileList(start);
+        }
+    }
+
+    private void buildPathByPathTileList(Point start) {
+        Path path = new Path();
+        ArrayList<Tile> pathTiles = pathTileLists.get(start);
+
+        if(pathTiles.size() < 2)
+            return;
+
+        Point pathTileIndex = pathTiles.get(pathTiles.size()-1).getIndex();
+        PointF pathTilePosition = Metrics.tileIndexToPosition(pathTileIndex.x, pathTileIndex.y);
+        path.moveTo(pathTilePosition.x, pathTilePosition.y);
+
+        for(int i = pathTileLists.get(start).size()-2; i>=0; --i){
+            pathTileIndex = pathTiles.get(i).getIndex();
+            pathTilePosition = Metrics.tileIndexToPosition(pathTileIndex.x, pathTileIndex.y);
+            path.lineTo(pathTilePosition.x, pathTilePosition.y);
+        }
+
+        paths.put(start, path);
+    }
+
+    private boolean searchAdjacentTiles(Tile tile, Point tileIndex) {
+        // 방문한 노드라고 표시한다.
         tile.isVisited = true;
 
-        // 인접 정점들을 확인한다.
         ArrayList<Tile> adjacentTiles = new ArrayList<>(4);
 
         adjacentTiles.add(getTileAt(tile.getIndex().x+1, tile.getIndex().y));
@@ -108,9 +145,11 @@ public class TileMap implements GameObject {
         adjacentTiles.add(getTileAt(tile.getIndex().x, tile.getIndex().y-1));
         adjacentTiles.add(getTileAt(tile.getIndex().x-1, tile.getIndex().y));
 
+        // 인접한 정점들을 확인한다.
         for(Tile adjacentTile : adjacentTiles) {
-            if(searchTile(adjacentTile, start)) {
-                tilePathMap.get(start).add(tile);
+            // 종료지점을 발견했으면 경로 타일 리스트에 추가한다.
+            if(searchTile(adjacentTile, tileIndex)) {
+                pathTileLists.get(tileIndex).add(tile);
                 return true;
             }
         }
@@ -118,20 +157,24 @@ public class TileMap implements GameObject {
         return false;
     }
 
-    private boolean searchTile(Tile tile, Point start) {
+    private boolean searchTile(Tile tile, Point tileIndex) {
+        // 이미 방문한 노드는 무시한다.
         if (tile.isVisited)
             return false;
 
         switch (tile.getType()) {
             case path:
-                return maze(tile, start);
+                // 노드가 경로의 일부면 계속 탐색한다.
+                return searchAdjacentTiles(tile, tileIndex);
             case end:
-                tilePathMap.put(start, new ArrayList<>());
-                tilePathMap.get(start).add(tile);
+                // 탐색이 종료지점에 도달했으면 끝에서부터 역으로 잇는다.
+                pathTileLists.put(tileIndex, new ArrayList<>());
+                pathTileLists.get(tileIndex).add(tile);
                 return true;
             case deployable:
             case start:
             case error:
+                // 노드의 끝이 종료지점이 아니면 분기로 돌아간다.
                 return false;
         }
 
@@ -160,12 +203,15 @@ public class TileMap implements GameObject {
                 canvas.drawRect(cell, gridPaint);
             }
         }
-    }
 
-    public Tile getTileAt(int tileX, int tileY) {
-        if(tileX < 0 || tileX >= tiles.get(0).size() || tileY < 0 || tileY >= tiles.size())
-            return new Tile(-99, -99, TileType.error);
+        for(Point start : paths.keySet()) {
+            canvas.drawPath(paths.get(start), gridPaint);
+        }
 
-        return tiles.get(tileY).get(tileX);
+//        ArrayList<Point> points = new ArrayList<>();
+//        for(Point start : paths.keySet())
+//            points.add(start);
+//
+//        canvas.drawPath(paths.get(points.get(0)), gridPaint);
     }
 }
