@@ -24,9 +24,13 @@
     <dimen name="hp_bar_width">40dp</dimen>
     <dimen name="hp_bar_height">10dp</dimen>
 
-    <dimen name="mineral_digit_width">20dp</dimen>
-    <dimen name="mineral_digit_height">40dp</dimen>
-    <dimen name="mineral_digit_margin_top">10dp</dimen>
+    <item name="max_mineral" type="dimen" format="integer">9999</item>
+    <dimen name="mineral_digit_width">25dp</dimen>
+    <dimen name="ui_margin_left_top">15dp</dimen>
+
+    <item name="max_life" type="dimen" format="integer">20</item>
+    <dimen name="life_size">40dp</dimen>
+    <dimen name="life_digit_width">25dp</dimen>
 
     <dimen name="monster_size">30dp</dimen>
 
@@ -39,6 +43,7 @@
     <item name="sprinter_reward" type="dimen" format="integer">30</item>
 
     <dimen name="armor_speed">20dp</dimen>
+    <dimen name="wave_text_size">30dp</dimen>
     <item name="armor_hp" type="dimen" format="float">300.0</item>
     <item name="armor_reward" type="dimen" format="integer">100</item>
 

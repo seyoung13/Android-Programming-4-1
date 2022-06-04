@@ -15,17 +15,17 @@
         >
 
         <ImageButton
-            style="@style/stageBtn"
+            style="@style/btnStage"
             android:onClick="onBtnStageSelect"
             />
 
         <ImageButton
-            style="@style/stageBtn"
+            style="@style/btnStage"
             />
 
         <ImageButton
             android:id="@+id/level3"
-            style="@style/stageBtn"
+            style="@style/btnStage"
             />
 
     </LinearLayout>

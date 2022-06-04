@@ -77,6 +77,7 @@ public class Monster implements GameObject, Collidable, Recyclable {
 
         if(isDead || distance > pathMeasure.getLength()) {
             DefenseGame.getInstance().remove(this);
+            isDead = true;
             return;
         }
 

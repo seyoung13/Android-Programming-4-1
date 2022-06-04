@@ -1,6 +1,8 @@
 package kr.ac.kpu.sgp02.termproject.game.system;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
@@ -33,6 +35,11 @@ public class MonsterGenerator implements GameObject {
     private boolean isAllWavesCleared = false;
     private boolean isCurrWaveCleared = false;
 
+    private Paint textPaint;
+    private String wavesText = "Wave: 1 / 5";
+    private int currWaveCount = 0;
+    private int totalWaveCount = 0;
+
     public MonsterGenerator(Queue<Wave> waveQueue, HashMap<Point, Path> paths) {
         this.waveQueue = waveQueue;
         this.paths = paths;
@@ -44,7 +51,27 @@ public class MonsterGenerator implements GameObject {
         waveInterval = Metrics.floatValue(R.dimen.wave_interval);
     }
     private void init() {
+        setTextPaint();
+
+        totalWaveCount = waveQueue.size();
+        setWaveText();
+
         goNextWave();
+    }
+
+    private void increaseWaveText() {
+        currWaveCount++;
+        setWaveText();
+    }
+
+    private void setWaveText() {
+        wavesText = "Wave: " + currWaveCount + " / " + totalWaveCount;
+    }
+
+    private void setTextPaint() {
+        textPaint = new Paint();
+        textPaint.setColor(Color.BLACK);
+        textPaint.setTextSize(Metrics.size(R.dimen.wave_text_size));
     }
 
     private void goNextWave() {
@@ -53,6 +80,7 @@ public class MonsterGenerator implements GameObject {
             return;
         }
         else {
+            increaseWaveText();
             isCurrWaveCleared = false;
         }
 
@@ -134,6 +162,6 @@ public class MonsterGenerator implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-
+        canvas.drawText(wavesText, Metrics.width/2, 100, textPaint);
     }
 }

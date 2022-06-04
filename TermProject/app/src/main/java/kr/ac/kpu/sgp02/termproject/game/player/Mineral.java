@@ -1,51 +1,46 @@
 package kr.ac.kpu.sgp02.termproject.game.player;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.RectF;
+import android.graphics.PointF;
 
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
-import kr.ac.kpu.sgp02.termproject.framework.pool.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.pool.Sound;
+import kr.ac.kpu.sgp02.termproject.game.system.NumberDisplay;
 
 public class Mineral implements GameObject {
-    private Bitmap bitmap;
-    private Rect srcRect = new Rect();
-    private RectF dstRect = new RectF();
     private int amount;
+    private int maxAmount;
 
-    private int srcCharWidth, srcCharHeight;
-    private float dstCharWidth, dstCharHeight;
-    private float top, right;
+    private PointF position;
+    private NumberDisplay numberDisplay;
 
     public Mineral(int amount) {
         this.amount = amount;
+        maxAmount = Metrics.intValue(R.dimen.max_mineral);
 
-        bitmap = BitmapPool.getBitmap(R.mipmap.numbers_24x32);
-        srcCharWidth = bitmap.getWidth()/10;
-        srcCharHeight = bitmap.getHeight();
+        float size = Metrics.size(R.dimen.mineral_digit_width);
+        float marginLeftTop = Metrics.size(R.dimen.ui_margin_left_top);
 
-        dstCharWidth = Metrics.size(R.dimen.mineral_digit_width);
-        dstCharHeight = Metrics.size(R.dimen.mineral_digit_height);
+        position = new PointF(size/2 + marginLeftTop, size/2 + marginLeftTop);
 
-        top = Metrics.size(R.dimen.mineral_digit_margin_top);
-        right = dstCharWidth * 5;
+        numberDisplay = new NumberDisplay(amount, 4, position.x, position.y, size);
     }
 
     public void addAmount(int number) {
         Sound.playSfx(R.raw.jelly_coin);
 
         amount += number;
-        amount = Math.min(amount, 9999);
+        amount = Math.min(amount, maxAmount);
+
+        numberDisplay.setNumber(amount);
     }
 
     /**
      * 저장 중인 자원량을 감소시키는 함수.
-     * @param number 소모하려는 자원량
-     * @return 소모량이 저장량보다 많으면 true, 적으면 false
+     * @param number 소모하려는 자원량.
+     * @return 저장량이 소모량보다 많아 뺄 수 있으면 true, 아니면 false.
      */
     public boolean subAmount(int number) {
         if(amount - number < 0) {
@@ -54,6 +49,7 @@ public class Mineral implements GameObject {
         }
         else {
             amount -= number;
+            numberDisplay.subNumber(number);
             return true;
         }
     }
@@ -65,18 +61,6 @@ public class Mineral implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        // 표시할 자릿수 0050
-        float fullDigit = 4;
-
-        float x = right;
-        int value = amount;
-        while (fullDigit-- > 0) {
-            int digit = value % 10;
-            srcRect.set(digit * srcCharWidth, 0, (digit + 1) * srcCharWidth, srcCharHeight);
-            x -= dstCharWidth;
-            dstRect.set(x, top, x + dstCharWidth, top + dstCharHeight);
-            canvas.drawBitmap(bitmap, srcRect, dstRect, null);
-            value /= 10;
-        }
+        numberDisplay.draw(canvas);
     }
 }

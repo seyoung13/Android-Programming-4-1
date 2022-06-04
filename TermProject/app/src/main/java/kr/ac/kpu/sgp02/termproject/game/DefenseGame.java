@@ -5,11 +5,14 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CollisionChecker;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.view.GameView;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
+import kr.ac.kpu.sgp02.termproject.game.player.LifePoint;
 import kr.ac.kpu.sgp02.termproject.game.player.Mineral;
 import kr.ac.kpu.sgp02.termproject.game.system.LevelLoader;
 import kr.ac.kpu.sgp02.termproject.game.system.MonsterGenerator;
@@ -36,6 +39,7 @@ public class DefenseGame {
     private TowerDeployer towerDeployer;
     private LevelLoader levelLoader;
     private Mineral mineral;
+    private LifePoint lifePoint;
 
     // --------------- 생성자 ---------------
     private DefenseGame() {
@@ -78,6 +82,9 @@ public class DefenseGame {
 
         mineral = new Mineral(200);
         add(mineral, Layer.ui);
+
+        lifePoint = new LifePoint();
+        add(lifePoint, Layer.ui);
     }
 
     private void initializeLayers() {
@@ -110,6 +117,19 @@ public class DefenseGame {
 
     public Tile getTileAt(int tileX, int tileY) {
         return tileMap.getTileAt(tileX, tileY);
+    }
+
+    public void restoreLife(int number) {
+        lifePoint.restore(number);
+    }
+
+    public void gotHurtLife(int damage) {
+        if(lifePoint.decrease(damage))
+            onGameOver();
+    }
+
+    private void onGameOver() {
+
     }
 
     public void onDraw(Canvas canvas) {
