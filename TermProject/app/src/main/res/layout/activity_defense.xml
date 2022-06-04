@@ -30,7 +30,7 @@
                 android:layout_height="30dp"
                 android:text="100gold"
                 android:textStyle="bold"
-                android:background="@mipmap/life_point"
+                android:background="@mipmap/life"
                 />
 
             <ImageButton

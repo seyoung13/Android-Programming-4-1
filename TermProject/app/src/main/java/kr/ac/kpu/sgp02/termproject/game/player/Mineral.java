@@ -25,7 +25,7 @@ public class Mineral implements GameObject {
 
         position = new PointF(size/2 + marginLeftTop, size/2 + marginLeftTop);
 
-        numberDisplay = new NumberDisplay(amount, 4, position.x, position.y, size);
+        numberDisplay = new NumberDisplay(amount, 4, position.x, position.y, size, true);
     }
 
     public void addAmount(int number) {
@@ -56,7 +56,7 @@ public class Mineral implements GameObject {
 
     @Override
     public void update(float deltaSecond) {
-
+        numberDisplay.update(deltaSecond);
     }
 
     @Override

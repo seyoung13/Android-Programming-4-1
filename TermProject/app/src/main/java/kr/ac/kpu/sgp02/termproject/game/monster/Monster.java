@@ -17,6 +17,7 @@ import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.Collidable;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
+import kr.ac.kpu.sgp02.termproject.game.system.FloatingNumberDisplay;
 
 public class Monster implements GameObject, Collidable, Recyclable {
     protected float hp;
@@ -75,8 +76,15 @@ public class Monster implements GameObject, Collidable, Recyclable {
     public void update(float deltaSecond) {
         distance += speed * deltaSecond;
 
-        if(isDead || distance > pathMeasure.getLength()) {
+        if(isDead) {
             DefenseGame.getInstance().remove(this);
+            DefenseGame.getInstance().add(FloatingNumberDisplay.get(reward, 2, position.x, position.y), DefenseGame.Layer.ui);
+            return;
+        }
+
+        if(distance > pathMeasure.getLength()){
+            DefenseGame.getInstance().remove(this);
+            DefenseGame.getInstance().gotHurtLife(1);
             isDead = true;
             return;
         }

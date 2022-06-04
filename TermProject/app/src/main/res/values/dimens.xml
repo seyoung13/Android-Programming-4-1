@@ -44,6 +44,8 @@
 
     <dimen name="armor_speed">20dp</dimen>
     <dimen name="wave_text_size">30dp</dimen>
+    <dimen name="number_floating_speed">10dp</dimen>
+    <dimen name="floating_number_size">20dp</dimen>
     <item name="armor_hp" type="dimen" format="float">300.0</item>
     <item name="armor_reward" type="dimen" format="integer">100</item>
 

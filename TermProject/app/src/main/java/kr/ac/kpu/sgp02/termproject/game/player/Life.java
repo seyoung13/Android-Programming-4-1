@@ -1,6 +1,5 @@
 package kr.ac.kpu.sgp02.termproject.game.player;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 
@@ -8,11 +7,10 @@ import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
-import kr.ac.kpu.sgp02.termproject.framework.pool.BitmapPool;
 import kr.ac.kpu.sgp02.termproject.framework.pool.Sound;
 import kr.ac.kpu.sgp02.termproject.game.system.NumberDisplay;
 
-public class LifePoint implements GameObject {
+public class Life implements GameObject {
     private Sprite sprite;
     private int life;
     private int maxLife;
@@ -20,19 +18,19 @@ public class LifePoint implements GameObject {
 
     private NumberDisplay numberDisplay;
 
-    public LifePoint() {
+    public Life() {
         this.life = Metrics.intValue(R.dimen.max_life);
         maxLife = life;
 
-        float life_size = Metrics.size(R.dimen.life_size);
+        float lifeSize = Metrics.size(R.dimen.life_size);
         float marginLeftTop = Metrics.size(R.dimen.ui_margin_left_top);
-        float number_size = Metrics.size(R.dimen.life_digit_width);
+        float numberSize = Metrics.size(R.dimen.life_digit_width);
 
-        position = new PointF(Metrics.width - life_size - marginLeftTop - number_size * 2, number_size/2 + marginLeftTop);
+        position = new PointF(Metrics.width - lifeSize - marginLeftTop - numberSize * 2, numberSize/2 + marginLeftTop);
 
-        sprite = new Sprite(position.x, position.y, life_size, R.mipmap.life_point);
+        sprite = new Sprite(position.x, position.y, lifeSize, R.mipmap.life);
 
-        numberDisplay = new NumberDisplay(maxLife, 2, position.x + life_size, position.y, number_size);
+        numberDisplay = new NumberDisplay(maxLife, 2, position.x + lifeSize, position.y, numberSize, true);
     }
 
     public void restore(int number) {
@@ -64,7 +62,7 @@ public class LifePoint implements GameObject {
 
     @Override
     public void update(float deltaSecond) {
-
+        numberDisplay.update(deltaSecond);
     }
 
     @Override
