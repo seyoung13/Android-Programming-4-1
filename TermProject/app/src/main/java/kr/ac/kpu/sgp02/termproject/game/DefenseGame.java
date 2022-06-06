@@ -74,15 +74,16 @@ public class DefenseGame {
         towerDeployer = new TowerDeployer();
         add(towerDeployer, Layer.system);
 
-        add(new MonsterGenerator(levelLoader.getWaveQueue(), tileMap.getPaths()), Layer.system);
-
-        add(new CollisionChecker(), Layer.system);
-
         mineral = new Mineral(200);
         add(mineral, Layer.ui);
 
         life = new Life();
         add(life, Layer.ui);
+
+        add(new MonsterGenerator(levelLoader.getWaveQueue(), tileMap.getPaths()), Layer.system);
+
+        add(new CollisionChecker(), Layer.system);
+
     }
 
     private void initializeLayers() {

@@ -6,6 +6,7 @@ import android.graphics.PointF;
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
@@ -17,13 +18,13 @@ import kr.ac.kpu.sgp02.termproject.framework.collision.BoxCollider;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.Collidable;
 
 public class Projectile implements GameObject, Collidable, Recyclable {
-    private int damage;
+    protected int damage;
     protected Monster target;
-    public CircleCollider collider;
+    protected CircleCollider collider;
     protected Sprite sprite;
     protected PointF position;
     protected PointF deltaPosition = new PointF();
-    protected float speed = 3000;
+    protected float speed;
 
     public static Projectile get(float x, float y) {
         Projectile recyclable = (Projectile) ObjectPool.get(Projectile.class);
@@ -40,14 +41,15 @@ public class Projectile implements GameObject, Collidable, Recyclable {
         position.set(x, y);
     }
 
-
     protected Projectile(float x, float y) {
         position = new PointF(x, y);
-        collider = new CircleCollider(x, y, 30);
-        sprite = new Sprite(x, y, 30, R.mipmap.tile_grid);
-        damage = 30;
-    }
+        collider = new CircleCollider(x, y, Metrics.size(R.dimen.cannon_projectile_size));
+        collider.isVisible = false;
 
+        sprite = new Sprite(x, y, Metrics.size(R.dimen.cannon_projectile_size), R.mipmap.cannon_projectile);
+        damage = Metrics.intValue(R.dimen.cannon_damage);
+        speed = Metrics.size(R.dimen.cannon_projectile_speed);
+    }
 
     @Override
     public void update(float deltaSecond) {

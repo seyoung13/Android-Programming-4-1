@@ -59,51 +59,51 @@
         {
           "0001":
           [
-            {"Type" : "Walker", "Number" : 2},
-            {"Type" : "Sprinter", "Number" : 2}
+            {"Type" : "Walker", "Number" : 10},
+            {"Type" : "Sprinter", "Number" : 10}
           ],
           "0207":
           [
-            {"Type" : "Walker", "Number" : 1},
-            {"Type" : "Sprinter", "Number" : 1}
+            {"Type" : "Walker", "Number" : 5},
+            {"Type" : "Sprinter", "Number" : 5}
           ]
         },
         {
           "0001":
           [
-            {"Type" : "Sprinter", "Number" : 1},
-            {"Type" : "Walker", "Number" : 2},
-            {"Type" : "Sprinter", "Number" : 2}
+            {"Type" : "Sprinter", "Number" : 5},
+            {"Type" : "Walker", "Number" : 10},
+            {"Type" : "Sprinter", "Number" : 10}
           ],
           "0207":
           [
-            {"Type" : "Walker", "Number" : 1},
-            {"Type" : "Sprinter", "Number" : 1},
-            {"Type" : "Walker", "Number" : 1}
+            {"Type" : "Walker", "Number" : 10},
+            {"Type" : "Sprinter", "Number" : 5},
+            {"Type" : "Walker", "Number" : 5}
           ]
         },
         {
           "0001":
           [
-            {"Type" : "Sprinter", "Number" : 1},
-            {"Type" : "Walker", "Number" : 1}
+            {"Type" : "Sprinter", "Number" : 5},
+            {"Type" : "Walker", "Number" : 5}
           ],
           "0207":
           [
-            {"Type" : "Walker", "Number" : 1},
-            {"Type" : "Sprinter", "Number" : 1}
+            {"Type" : "Walker", "Number" : 5},
+            {"Type" : "Sprinter", "Number" : 5}
           ]
         },
         {
           "0001":
           [
-            {"Type" : "Walker", "Number" : 1},
-            {"Type" : "Sprinter", "Number" : 1},
-            {"Type" : "Walker", "Number" : 1}
+            {"Type" : "Walker", "Number" : 10},
+            {"Type" : "Sprinter", "Number" : 10},
+            {"Type" : "Walker", "Number" : 10}
           ],
           "0207":
           [
-            {"Type" : "None", "Number" : 1}
+            {"Type" : "Armor", "Number" : 10}
           ]
         }
       ]

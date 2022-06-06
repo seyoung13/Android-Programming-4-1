@@ -1,6 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.player;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PointF;
 
 import kr.ac.kpu.sgp02.termproject.R;
@@ -25,7 +26,7 @@ public class Mineral implements GameObject {
 
         position = new PointF(size/2 + marginLeftTop, size/2 + marginLeftTop);
 
-        numberDisplay = new NumberDisplay(amount, 4, position.x, position.y, size, true);
+        numberDisplay = new NumberDisplay(amount, 4, position.x, position.y, size, Color.YELLOW, true);
     }
 
     public void addAmount(int number) {

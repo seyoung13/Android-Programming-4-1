@@ -1,7 +1,5 @@
 package kr.ac.kpu.sgp02.termproject.game.tower;
 
-import android.util.Log;
-
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
@@ -34,7 +32,7 @@ public class LaserTower extends Tower {
 
     @Override
     protected void setSpecification() {
-        sprite = new Sprite(position.x, position.y, Metrics.size(R.dimen.cell_size), R.mipmap.tower_laser);
+        towerHead = new Sprite(position.x, position.y, Metrics.size(R.dimen.tower_head_size), R.mipmap.laser_head);
 
         range = new CircleCollider(position.x, position.y, Metrics.size(R.dimen.laser_range));
 

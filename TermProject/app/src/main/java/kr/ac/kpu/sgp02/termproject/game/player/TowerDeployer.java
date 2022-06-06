@@ -40,13 +40,13 @@ public class TowerDeployer implements GameObject {
 
     public TowerDeployer() {
         previewImages.put(TowerType.cannon,
-                new TowerPreview(0,0, R.mipmap.tower_cannon, Metrics.size(R.dimen.cannon_range)));
+                new TowerPreview(0,0, R.mipmap.cannon_head, Metrics.size(R.dimen.cannon_range)));
         previewImages.put(TowerType.laser,
-                new TowerPreview(0,0, R.mipmap.tower_laser, Metrics.size(R.dimen.laser_range)));
+                new TowerPreview(0,0, R.mipmap.laser_head, Metrics.size(R.dimen.laser_range)));
         previewImages.put(TowerType.missile,
-                new TowerPreview(0,0, R.mipmap.tower_missile, Metrics.size(R.dimen.missile_range)));
+                new TowerPreview(0,0, R.mipmap.missile_head, Metrics.size(R.dimen.missile_range)));
         previewImages.put(TowerType.plasma,
-                new TowerPreview(0,0, R.mipmap.tower_plasma, Metrics.size(R.dimen.plasma_range)));
+                new TowerPreview(0,0, R.mipmap.plasma_head, Metrics.size(R.dimen.plasma_range)));
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -100,25 +100,25 @@ public class TowerDeployer implements GameObject {
 
         switch (selectedType) {
             case cannon:
-                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.cannon_tower_price))) {
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.cannon_price))) {
                     DefenseGame.getInstance().add(CannonTower.get(index.x, index.y), towerLayer);
                     tile.onTowerDeployed();
                 }
                 break;
             case laser:
-                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.laser_tower_price))) {
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.laser_price))) {
                     DefenseGame.getInstance().add(LaserTower.get(index.x, index.y), towerLayer);
                     tile.onTowerDeployed();
                 }
                 break;
             case missile:
-                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.missile_tower_price))) {
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.missile_price))) {
                     DefenseGame.getInstance().add(MissileTower.get(index.x, index.y), towerLayer);
                     tile.onTowerDeployed();
                 }
                 break;
             case plasma:
-                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.plasma_tower_price))) {
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.plasma_price))) {
                     DefenseGame.getInstance().add(PlasmaTower.get(index.x, index.y), towerLayer);
                     tile.onTowerDeployed();
                 }

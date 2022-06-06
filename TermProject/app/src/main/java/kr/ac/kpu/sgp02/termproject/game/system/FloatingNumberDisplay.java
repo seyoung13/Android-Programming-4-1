@@ -1,7 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.system;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.graphics.Color;
 import android.graphics.PointF;
 
 import kr.ac.kpu.sgp02.termproject.R;
@@ -9,29 +9,27 @@ import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
-import kr.ac.kpu.sgp02.termproject.game.projectile.LaserProjectile;
 
 public class FloatingNumberDisplay extends NumberDisplay implements Recyclable {
-    private Paint paint;
     private float opacityPercent;
 
-    public static FloatingNumberDisplay get(int number, int digitCount, float x, float y){
+    public static FloatingNumberDisplay get(int number, int digitCount, float x, float y, int color){
         FloatingNumberDisplay recyclable = (FloatingNumberDisplay) ObjectPool.get(FloatingNumberDisplay.class);
 
         if(recyclable != null) {
             recyclable.redeploy(x, y);
             recyclable.setNumber(number);
             recyclable.setDigitCount(digitCount);
+            recyclable.setColor(color);
         }
         else
-            recyclable = new FloatingNumberDisplay(number, digitCount, x, y);
+            recyclable = new FloatingNumberDisplay(number, digitCount, x, y, color);
 
         return recyclable;
     }
 
-    public FloatingNumberDisplay(int number, int digitCount, float x, float y) {
-        super(number, digitCount, x, y, Metrics.size(R.dimen.floating_number_size), false);
-        paint = new Paint();
+    public FloatingNumberDisplay(int number, int digitCount, float x, float y, int color) {
+        super(number, digitCount, x, y, Metrics.size(R.dimen.floating_number_size), color, false);
         opacityPercent = 100;
         setOpacity(opacityPercent);
     }

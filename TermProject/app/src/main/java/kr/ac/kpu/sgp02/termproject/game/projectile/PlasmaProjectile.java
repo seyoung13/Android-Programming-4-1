@@ -3,8 +3,11 @@ package kr.ac.kpu.sgp02.termproject.game.projectile;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 
+import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.helper.MathHelper;
+import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
@@ -12,7 +15,6 @@ import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 public class PlasmaProjectile extends Projectile {
     protected float degree;
     protected float lifetime = 0.5f;
-    private int damage = 20;
 
     public static PlasmaProjectile get(float x, float y) {
         PlasmaProjectile recyclable = (PlasmaProjectile) ObjectPool.get(PlasmaProjectile.class);
@@ -27,6 +29,8 @@ public class PlasmaProjectile extends Projectile {
 
     protected PlasmaProjectile(float x, float y) {
         super(x, y);
+        sprite = new Sprite(x, y, 1, R.mipmap.laser_beam);
+        damage = Metrics.intValue(R.dimen.plasma_damage);
     }
 
     @Override
@@ -50,7 +54,7 @@ public class PlasmaProjectile extends Projectile {
                 deltaPosition.y * deltaPosition.y);
 
         sprite.setPositionLeftTop(position.x, position.y,
-                distance, 10);
+                distance, Metrics.size(R.dimen.plasma_beam_width));
     }
 
     public void draw(Canvas canvas) {

@@ -73,7 +73,12 @@ public class MathHelper {
         return p;
     }
 
-    public static double getDegreeBetween(PointF origin, PointF target){
+    public static double getRadian(PointF target, PointF origin) {
+        PointF deltaPosition = subtract(target, origin);
+        return Math.atan2(deltaPosition.y, deltaPosition.x);
+    }
+
+    public static double getDegree(PointF target, PointF origin){
         PointF deltaPosition = subtract(target, origin);
         double radian = Math.atan2(deltaPosition.y, deltaPosition.x);
 

@@ -91,6 +91,8 @@ public class MonsterGenerator implements GameObject {
 
             currSubWaves.put(start, subWaveQueue.poll());
         }
+
+        DefenseGame.getInstance().restoreLife(Metrics.intValue(R.dimen.life_recovery));
     }
 
     /**

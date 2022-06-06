@@ -1,7 +1,12 @@
 package kr.ac.kpu.sgp02.termproject.game.system;
 
 import android.graphics.Bitmap;
+import android.graphics.BlendMode;
+import android.graphics.BlendModeColorFilter;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -16,6 +21,7 @@ public class NumberDisplay implements GameObject {
     protected int number;
     protected int digitCount;
     protected static Bitmap bitmap;
+    protected Paint paint;
 
     protected PointF position = new PointF();
     private PointF inset = new PointF();
@@ -34,9 +40,12 @@ public class NumberDisplay implements GameObject {
         bitmap = BitmapPool.getBitmap(R.mipmap.numbers_24x32);
     }
 
-    public NumberDisplay(int number, int digitCount, float x, float y, float size, boolean isScalable) {
+    public NumberDisplay(int number, int digitCount, float x, float y, float size, int color, boolean isScalable) {
         this.number = number;
         this.digitCount = digitCount;
+
+        paint = new Paint();
+        setColor(color);
 
         srcCharWidth = bitmap.getWidth()/10;
         srcCharHeight = bitmap.getHeight();
@@ -70,6 +79,10 @@ public class NumberDisplay implements GameObject {
 
     public void offset(float dx, float dy) {
         position.offset(dx, dy);
+    }
+
+    public void setColor(int color){
+        paint.setColorFilter(new LightingColorFilter(color, 0));
     }
 
     private void scaleUpInset() {
@@ -109,7 +122,7 @@ public class NumberDisplay implements GameObject {
             dstRect.set(x - dstCharWidth/2, position.y - dstCharHeight/2,
                     x + dstCharWidth/2, position.y + dstCharHeight/2);
             dstRect.inset(inset.x, inset.y);
-            canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+            canvas.drawBitmap(bitmap, srcRect, dstRect, paint);
             value /= 10;
         }
     }

@@ -1,6 +1,9 @@
 package kr.ac.kpu.sgp02.termproject.game.projectile;
 
+import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
+import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
@@ -21,6 +24,9 @@ public class MissileProjectile extends Projectile {
 
     protected MissileProjectile(float x, float y) {
         super(x, y);
+        sprite = new Sprite(x, y, Metrics.size(R.dimen.missile_projectile_size), R.mipmap.missile_projectile);
+        damage = Metrics.intValue(R.dimen.cannon_damage);
+        speed = Metrics.size(R.dimen.missile_projectile_speed);
     }
 
     @Override

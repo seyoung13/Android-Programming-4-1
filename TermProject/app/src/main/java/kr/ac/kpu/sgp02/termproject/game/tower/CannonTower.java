@@ -11,6 +11,7 @@ import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CircleCollider;
 
 public class CannonTower extends Tower {
+
     public static CannonTower get(int tileX, int tileY) {
         CannonTower recyclable = (CannonTower) ObjectPool.get(CannonTower.class);
 
@@ -28,7 +29,7 @@ public class CannonTower extends Tower {
 
     @Override
     protected void setSpecification() {
-        sprite = new Sprite(position.x, position.y, Metrics.size(R.dimen.cell_size), R.mipmap.tower_cannon);
+        towerHead = new Sprite(position.x, position.y, Metrics.size(R.dimen.tower_head_size), R.mipmap.cannon_head);
 
         range = new CircleCollider(position.x, position.y,  Metrics.size(R.dimen.cannon_range));
 

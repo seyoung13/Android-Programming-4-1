@@ -1,6 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.monster;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
@@ -78,7 +79,7 @@ public class Monster implements GameObject, Collidable, Recyclable {
 
         if(isDead) {
             DefenseGame.getInstance().remove(this);
-            DefenseGame.getInstance().add(FloatingNumberDisplay.get(reward, 2, position.x, position.y), DefenseGame.Layer.ui);
+            DefenseGame.getInstance().add(FloatingNumberDisplay.get(reward, 2, position.x, position.y, Color.YELLOW), DefenseGame.Layer.ui);
             return;
         }
 

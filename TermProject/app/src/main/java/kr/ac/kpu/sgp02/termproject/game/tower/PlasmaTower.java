@@ -32,7 +32,7 @@ public class PlasmaTower extends Tower{
 
     @Override
     protected void setSpecification() {
-        sprite = new Sprite(position.x, position.y, Metrics.size(R.dimen.cell_size), R.mipmap.tower_plasma);
+        towerHead = new Sprite(position.x, position.y, Metrics.size(R.dimen.tower_head_size), R.mipmap.plasma_head);
 
         range = new CircleCollider(position.x, position.y, Metrics.size(R.dimen.plasma_range));
 

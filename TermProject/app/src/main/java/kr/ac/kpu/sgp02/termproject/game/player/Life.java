@@ -1,6 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.player;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PointF;
 
 import kr.ac.kpu.sgp02.termproject.R;
@@ -30,12 +31,16 @@ public class Life implements GameObject {
 
         sprite = new Sprite(position.x, position.y, lifeSize, R.mipmap.life);
 
-        numberDisplay = new NumberDisplay(maxLife, 2, position.x + lifeSize, position.y, numberSize, true);
+        numberDisplay = new NumberDisplay(maxLife, 2, position.x + lifeSize, position.y, numberSize, Color.GREEN, true);
     }
 
     public void restore(int number) {
         life += number;
         life = Math.min(life, maxLife);
+
+        if(life > maxLife/2)
+            numberDisplay.setColor(Color.GREEN);
+
         Sound.playSfx(R.raw.jelly);
 
         numberDisplay.setNumber(life);
@@ -49,6 +54,9 @@ public class Life implements GameObject {
     public boolean decrease(int number) {
         life -= number;
         Sound.playSfx(R.raw.jelly_alphabet);
+
+        if(life <= maxLife/2)
+            numberDisplay.setColor(Color.RED);
 
         if(life > 0) {
             numberDisplay.subNumber(number);

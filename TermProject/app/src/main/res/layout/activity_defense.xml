@@ -26,45 +26,79 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:text="100gold"
-                android:textStyle="bold"
-                android:background="@mipmap/life"
+                android:id="@+id/textCannonPrice"
+                style="@style/textPrice"
+                android:text="100"
+                android:background="@mipmap/price"
                 />
 
             <ImageButton
-                android:id="@+id/btnCannonTower"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:id="@+id/btnCannon"
+                style="@style/btnTower"
                 android:background="@drawable/selector_cannon"
-                android:onClick="onBtnCannonTower"
+                android:onClick="onBtnCannon"
                 />
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btnLaserTower"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@color/teal_700"
-            android:onClick="onBtnLaserTower"
-            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/btnMissileTower"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@color/teal_200"
-            android:onClick="onBtnMissileTower"
-            />
+            <TextView
+                android:id="@+id/textLaserPrice"
+                style="@style/textPrice"
+                android:text="100"
+                android:background="@mipmap/price"
+                />
 
-        <ImageButton
-            android:id="@+id/btnPlasmaTower"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@color/teal_700"
-            android:onClick="onBtnPlasmaTower"
-            />
+            <ImageButton
+                android:id="@+id/btnLaser"
+                style="@style/btnTower"
+                android:background="@drawable/selector_cannon"
+                android:onClick="onBtnLaser"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textMissilePrice"
+                style="@style/textPrice"
+                android:text="100"
+                android:background="@mipmap/price"
+                />
+
+            <ImageButton
+                android:id="@+id/btnMissile"
+                style="@style/btnTower"
+                android:background="@drawable/selector_cannon"
+                android:onClick="onBtnMissile"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textPlasmaPrice"
+                style="@style/textPrice"
+                android:text="100"
+                android:background="@mipmap/price"
+                />
+
+            <ImageButton
+                android:id="@+id/btnPlasma"
+                style="@style/btnTower"
+                android:background="@drawable/selector_cannon"
+                android:onClick="onBtnPlasma"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 

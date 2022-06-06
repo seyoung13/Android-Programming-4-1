@@ -29,7 +29,7 @@ public class MissileTower extends Tower{
 
     @Override
     protected void setSpecification() {
-        sprite = new Sprite(position.x, position.y, Metrics.size(R.dimen.cell_size), R.mipmap.tower_missile);
+        towerHead = new Sprite(position.x, position.y, Metrics.size(R.dimen.tower_head_size), R.mipmap.missile_head);
 
         range = new CircleCollider(position.x, position.y,  Metrics.size(R.dimen.missile_range));
 

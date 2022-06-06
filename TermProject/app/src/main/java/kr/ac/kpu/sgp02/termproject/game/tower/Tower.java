@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.framework.helper.MathHelper;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
@@ -20,16 +21,16 @@ public abstract class Tower implements GameObject, Collidable, Recyclable {
     protected float currDelay = 0.0f;
     protected Monster target;
 
-    //생성 후 바뀌지 않는 멤버.
-    protected Sprite sprite;
+    protected Sprite towerBase;
+    protected Sprite towerHead;
     protected float maxDelay = Metrics.floatValue(R.dimen.cannon_delay);
-    public CircleCollider range;
+    protected CircleCollider range;
 
     protected LinkedHashSet<Monster> targetList = new LinkedHashSet<>();
 
-    //타일맵 배열내 인덱스
     protected Point tileIndex = new Point();
     protected PointF position = new PointF();
+    protected float degree = 0;
 
     protected Tower(int tileX, int tileY) {
         setTileIndex(tileX, tileY);
@@ -47,6 +48,7 @@ public abstract class Tower implements GameObject, Collidable, Recyclable {
 
     protected void setPositionByTileIndex() {
         position = Metrics.tileIndexToPosition(tileIndex.x, tileIndex.y);
+        towerBase = new Sprite(position.x, position.y, Metrics.size(R.dimen.tower_base_size), R.mipmap.tower_base);
     }
 
     protected abstract void fire();
@@ -54,6 +56,10 @@ public abstract class Tower implements GameObject, Collidable, Recyclable {
     @Override
     public void update(float deltaSecond) {
         exceptDeadTarget();
+
+        if(targetList.iterator().hasNext()) {
+            degree = (float) MathHelper.getDegree(targetList.iterator().next().getPosition(), position);
+        }
 
         currDelay -= deltaSecond;
         if(currDelay <= 0) {
@@ -77,7 +83,12 @@ public abstract class Tower implements GameObject, Collidable, Recyclable {
     @Override
     public void draw(Canvas canvas) {
         range.draw(canvas);
-        sprite.draw(canvas);
+        towerBase.draw(canvas);
+
+        canvas.save();
+        canvas.rotate(degree, position.x, position.y);
+        towerHead.draw(canvas);
+        canvas.restore();
     }
 
     @Override

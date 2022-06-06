@@ -2,21 +2,35 @@
 <resources>
     <dimen name="cell_size">50dp</dimen>
 
-    <item name="cannon_tower_price" type="dimen" format="integer">50</item>
+    <dimen name="tower_base_size">50dp</dimen>
+    <dimen name="tower_head_size">45dp</dimen>
+
+    <item name="cannon_price" type="dimen" format="integer">50</item>
+    <item name="cannon_damage" type="dimen" format="integer">50</item>
     <item name="cannon_delay" type="dimen" format="float">1.5</item>
     <dimen name="cannon_range">150dp</dimen>
+    <dimen name="cannon_projectile_size">10dp</dimen>
+    <dimen name="cannon_projectile_speed">300dp</dimen>
 
-    <item name="laser_tower_price" type="dimen" format="integer">100</item>
+    <item name="laser_price" type="dimen" format="integer">100</item>
+    <item name="laser_damage" type="dimen" format="integer">20</item>
     <item name="laser_delay" type="dimen" format="float">0.25</item>
     <dimen name="laser_range">200dp</dimen>
+    <dimen name="laser_beam_width">6dp</dimen>
 
-    <item name="plasma_tower_price" type="dimen" format="integer">100</item>
+    <item name="plasma_price" type="dimen" format="integer">100</item>
+    <item name="plasma_damage" type="dimen" format="integer">40</item>
     <item name="plasma_delay" type="dimen" format="float">1.5</item>
     <dimen name="plasma_range">100dp</dimen>
+    <dimen name="plasma_beam_width">3dp</dimen>
 
-    <item name="missile_tower_price" type="dimen" format="integer">150</item>
+    <item name="missile_price" type="dimen" format="integer">150</item>
+    <item name="missile_damage" type="dimen" format="integer">75</item>
     <item name="missile_delay" type="dimen" format="float">3.0</item>
     <dimen name="missile_range">200dp</dimen>
+    <dimen name="missile_projectile_size">15dp</dimen>
+    <dimen name="missile_projectile_speed">200dp</dimen>
+    <item name="missile_splash_lifetime" type="dimen" format="float">0.5</item>
 
     <dimen name="collider_line_width">3dp</dimen>
     <dimen name="missile_splash_range">50dp</dimen>
@@ -29,6 +43,7 @@
     <dimen name="ui_margin_left_top">15dp</dimen>
 
     <item name="max_life" type="dimen" format="integer">20</item>
+    <item name="life_recovery" type="dimen" format="integer">3</item>
     <dimen name="life_size">40dp</dimen>
     <dimen name="life_digit_width">25dp</dimen>
 
@@ -42,12 +57,13 @@
     <item name="sprinter_hp" type="dimen" format="float">75.0</item>
     <item name="sprinter_reward" type="dimen" format="integer">30</item>
 
-    <dimen name="armor_speed">20dp</dimen>
     <dimen name="wave_text_size">30dp</dimen>
     <dimen name="number_floating_speed">10dp</dimen>
     <dimen name="floating_number_size">20dp</dimen>
+
     <item name="armor_hp" type="dimen" format="float">300.0</item>
     <item name="armor_reward" type="dimen" format="integer">100</item>
+    <dimen name="armor_speed">20dp</dimen>
 
     <item name="monster_spawn_interval" type="dimen" format="float">2.0</item>
     <item name="wave_interval" type="dimen" format="float">5.0</item>
