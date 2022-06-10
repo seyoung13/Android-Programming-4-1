@@ -18,8 +18,8 @@ public class TowerPreview implements GameObject {
     protected float size = Metrics.size(R.dimen.cell_size);
     protected static Paint paint;
 
-    public TowerPreview(float x, float y, int bitmapResId, float radius) {
-        sprite = new Sprite(x, y, Metrics.size(R.dimen.tower_head_size), bitmapResId);
+    public TowerPreview(float x, float y, int bitmapId, float radius) {
+        sprite = new Sprite(x, y, Metrics.size(R.dimen.tower_head_size), bitmapId);
         location = new RectF(x - size/2, y - size/2, x + size/2, y + size/2);
         range = new CircleCollider(x, y, radius);
 
@@ -40,13 +40,11 @@ public class TowerPreview implements GameObject {
 
         paint = new Paint();
         paint.setColor(Color.GREEN);
-        paint.setAntiAlias(true);
-        // 0 ~ 255
-        paint.setAlpha(150);
     }
 
     public void setLocationColor(int color) {
-        paint.setColor(color);
+        if(paint.getColor() != color)
+            paint.setColor(color);
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 
 public class StageSelectionActivity extends AppCompatActivity {
     LinearLayout stageBoard;
@@ -23,7 +24,7 @@ public class StageSelectionActivity extends AppCompatActivity {
         setStagesImageLevel();
 
         //빠른 실행
-        startActivity(new Intent(StageSelectionActivity.this, DefenseActivity.class));
+        //startActivity(new Intent(this, DefenseActivity.class));
     }
 
     private void setStagesImageLevel() {
@@ -34,8 +35,10 @@ public class StageSelectionActivity extends AppCompatActivity {
         }
     }
 
-    public void onBtnStageSelect(View veiw){
-        startActivity(new Intent(StageSelectionActivity.this, DefenseActivity.class));
+    public void onBtnStageSelect(View view){
+        Intent intent = new Intent(this, DefenseActivity.class);
+        intent.putExtra(DefenseGame.LEVEL_INDEX, view.getBackground().getLevel()-1);
+        startActivity(intent);
     }
 
 }

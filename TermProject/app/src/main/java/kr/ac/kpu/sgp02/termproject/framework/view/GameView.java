@@ -9,6 +9,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import kr.ac.kpu.sgp02.termproject.app.DefenseActivity;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 
@@ -20,18 +21,6 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     private boolean isInitialized = false;
     private boolean isRunning = false;
-
-    private final int[][] tileBlueprint =
-            {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3},
-                    {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                    {0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
-                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            };
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -103,5 +92,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public DefenseGame get()
     {
         return DefenseGame.getInstance();
+    }
+
+    public static DefenseActivity getDefenseActivity(){
+        return (DefenseActivity) view.getContext();
     }
 }

@@ -12,6 +12,7 @@ import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
 import kr.ac.kpu.sgp02.termproject.game.player.Life;
 import kr.ac.kpu.sgp02.termproject.game.player.Mineral;
+import kr.ac.kpu.sgp02.termproject.game.player.PlayerLogger;
 import kr.ac.kpu.sgp02.termproject.game.system.LevelLoader;
 import kr.ac.kpu.sgp02.termproject.game.system.MonsterGenerator;
 import kr.ac.kpu.sgp02.termproject.game.player.TowerDeployer;
@@ -19,7 +20,6 @@ import kr.ac.kpu.sgp02.termproject.game.tile.Tile;
 import kr.ac.kpu.sgp02.termproject.game.tile.TileMap;
 
 public class DefenseGame {
-
     public enum Layer {
         background,
         tower,
@@ -31,13 +31,19 @@ public class DefenseGame {
         COUNT,
     }
 
+    public static final String LEVEL_INDEX = "Level Index";
+
+    private int mapLevel;
+
     private static DefenseGame singleton;
+
     private ArrayList<ArrayList<GameObject>> layeredObjects;
     private TileMap tileMap;
-    private TowerDeployer towerDeployer;
+    public TowerDeployer towerDeployer;
     private LevelLoader levelLoader;
     private Mineral mineral;
     private Life life;
+    private PlayerLogger playerLogger;
 
     // --------------- 생성자 ---------------
     private DefenseGame() {
@@ -58,7 +64,11 @@ public class DefenseGame {
         singleton = null;
     }
 
-    public void deployTower(TowerDeployer.TowerType type) {
+    public void setMapLevel(int levelIndex){
+        mapLevel = levelIndex;
+    }
+
+    public void activateDeployer(TowerDeployer.TowerType type) {
         towerDeployer.activateDeployer(type);
     }
 
@@ -66,7 +76,7 @@ public class DefenseGame {
         initializeLayers();
 
         levelLoader = new LevelLoader();
-        levelLoader.loadLevelFromJson("level_info.json", 1);
+        levelLoader.loadLevelFromJson("level_info.json", mapLevel);
 
         tileMap = new TileMap(levelLoader.getTileBlueprint(), levelLoader.getStartPoints());
         add(tileMap, Layer.background);
@@ -84,6 +94,8 @@ public class DefenseGame {
 
         add(new CollisionChecker(), Layer.system);
 
+        playerLogger = new PlayerLogger();
+        add(playerLogger, Layer.system);
     }
 
     private void initializeLayers() {
@@ -106,12 +118,17 @@ public class DefenseGame {
         return layeredObjects.get(layer.ordinal());
     }
 
-    public void storeMineral(int reward) {
-        mineral.addAmount(reward);
+    public void storeMineral(int amount) {
+        mineral.addAmount(amount);
     }
 
-    public boolean useMineral(int reward) {
-        return mineral.subAmount(reward);
+    public boolean useMineral(int amount) {
+        if (mineral.subAmount(amount)) {
+            playerLogger.addUsedMinerals(amount);
+            return true;
+        }
+        else
+            return false;
     }
 
     public Tile getTileAt(int tileX, int tileY) {
@@ -125,6 +142,22 @@ public class DefenseGame {
     public void gotHurtLife(int damage) {
         if(life.decrease(damage))
             onGameOver();
+    }
+
+    public void addKillScore() {
+        playerLogger.addKillScore();
+    }
+
+    public void addLoseScore() {
+        playerLogger.addLoseScore();
+    }
+
+    public void addUsedMinerals(int amount) {
+        playerLogger.addUsedMinerals(amount);
+    }
+
+    public ArrayList<Integer> getPlayerLog() {
+        return playerLogger.getLog();
     }
 
     private void onGameOver() {

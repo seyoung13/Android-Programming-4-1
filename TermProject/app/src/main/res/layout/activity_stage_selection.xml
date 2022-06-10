@@ -16,7 +16,6 @@
 
         <ImageButton
             style="@style/btnStage"
-            android:onClick="onBtnStageSelect"
             />
 
         <ImageButton
@@ -24,7 +23,6 @@
             />
 
         <ImageButton
-            android:id="@+id/level3"
             style="@style/btnStage"
             />
 

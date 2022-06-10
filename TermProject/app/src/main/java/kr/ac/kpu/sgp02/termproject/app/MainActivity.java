@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         hideOptions();
 
         //빠른 실행
-        startActivity(new Intent(MainActivity.this, StageSelectionActivity.class));
+        //startActivity(new Intent(this, StageSelectionActivity.class));
     }
 
     public void onBtnStart(View view){

@@ -2,7 +2,6 @@ package kr.ac.kpu.sgp02.termproject.game.monster;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.PointF;
@@ -86,6 +85,7 @@ public class Monster implements GameObject, Collidable, Recyclable {
         if(distance > pathMeasure.getLength()){
             DefenseGame.getInstance().remove(this);
             DefenseGame.getInstance().gotHurtLife(1);
+            DefenseGame.getInstance().addLoseScore();
             isDead = true;
             return;
         }
@@ -142,6 +142,7 @@ public class Monster implements GameObject, Collidable, Recyclable {
     public void onDead() {
         isDead = true;
         DefenseGame.getInstance().storeMineral(reward);
+        DefenseGame.getInstance().addKillScore();
     }
 
     @Override

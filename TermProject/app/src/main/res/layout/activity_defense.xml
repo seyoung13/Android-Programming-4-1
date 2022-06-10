@@ -26,10 +26,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textCannonPrice"
-                style="@style/textPrice"
+                android:id="@+id/txtCannonCost"
+                style="@style/txtPrice"
                 android:text="100"
-                android:background="@mipmap/price"
+                android:background="@mipmap/cost"
                 />
 
             <ImageButton
@@ -46,16 +46,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textLaserPrice"
-                style="@style/textPrice"
+                android:id="@+id/txtLaserCost"
+                style="@style/txtPrice"
                 android:text="100"
-                android:background="@mipmap/price"
+                android:background="@mipmap/cost"
                 />
 
             <ImageButton
                 android:id="@+id/btnLaser"
                 style="@style/btnTower"
-                android:background="@drawable/selector_cannon"
+                android:background="@drawable/selector_laser"
                 android:onClick="onBtnLaser"
                 />
         </LinearLayout>
@@ -66,16 +66,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textMissilePrice"
-                style="@style/textPrice"
+                android:id="@+id/txtMissileCost"
+                style="@style/txtPrice"
                 android:text="100"
-                android:background="@mipmap/price"
+                android:background="@mipmap/cost"
                 />
 
             <ImageButton
                 android:id="@+id/btnMissile"
                 style="@style/btnTower"
-                android:background="@drawable/selector_cannon"
+                android:background="@drawable/selector_missile"
                 android:onClick="onBtnMissile"
                 />
         </LinearLayout>
@@ -86,20 +86,91 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textPlasmaPrice"
-                style="@style/textPrice"
+                android:id="@+id/txtPlasmaCost"
+                style="@style/txtPrice"
                 android:text="100"
-                android:background="@mipmap/price"
+                android:background="@mipmap/cost"
                 />
 
             <ImageButton
                 android:id="@+id/btnPlasma"
                 style="@style/btnTower"
-                android:background="@drawable/selector_cannon"
+                android:background="@drawable/selector_plasma"
                 android:onClick="onBtnPlasma"
                 />
         </LinearLayout>
-
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/resultWindow"
+        android:layout_width="500dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:background="@mipmap/window"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:layout_marginTop="25dp"
+            >
+
+            <TextView
+                android:id="@+id/txtResultMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="CLEAR"
+                android:textSize="35sp"
+                android:textStyle="bold|italic"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <TextView
+                android:id="@+id/txtKills"
+                android:layout_marginTop="10dp"
+                style="@style/txtPlayerLog"
+                android:text="@string/kills"
+                />
+
+            <TextView
+                android:id="@+id/txtLoses"
+                style="@style/txtPlayerLog"
+                android:text="@string/loses"
+                />
+
+            <TextView
+                android:id="@+id/txtUsedMinerals"
+                style="@style/txtPlayerLog"
+                android:text="@string/used_minerals"
+                />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btnRestart"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:text="restart"
+            android:textSize="15sp"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="100dp"
+            android:layout_marginBottom="20dp"
+            />
+
+        <Button
+            android:id="@+id/btnToTitle"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:text="to title"
+            android:textSize="15sp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="20dp"
+            android:onClick="onBtnToTitle"
+            />
+    </FrameLayout>
 
 </FrameLayout>

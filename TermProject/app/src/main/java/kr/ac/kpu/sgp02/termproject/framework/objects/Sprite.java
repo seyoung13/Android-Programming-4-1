@@ -14,20 +14,20 @@ public class Sprite implements GameObject {
     private PointF position = new PointF();
     private float width, height;
 
-    public Sprite(float x, float y, float size, int bitmapResId) {
+    public Sprite(float x, float y, float size, int bitmapId) {
         setPosition(x, y, size, size);
-        bitmap = BitmapPool.getBitmap(bitmapResId);
+        bitmap = BitmapPool.getBitmap(bitmapId);
 
         width = size;
         height = size;
     }
 
-    public Sprite(float x, float y, float width, float height, int bitmapResId) {
+    public Sprite(float x, float y, float width, float height, int bitmapId) {
         this.width = width;
         this.height = height;
 
         setPosition(x, y, width, height);
-        bitmap = BitmapPool.getBitmap(bitmapResId);
+        bitmap = BitmapPool.getBitmap(bitmapId);
     }
 
     public void setPosition(float x, float y) {
@@ -50,6 +50,10 @@ public class Sprite implements GameObject {
     public void offset(float dx, float dy) {
         position.offset(dx, dy);
         dstRect.offset(dx, dy);
+    }
+
+    public void setBitmap(int bitmapId) {
+        bitmap = BitmapPool.getBitmap(bitmapId);
     }
 
     @Override

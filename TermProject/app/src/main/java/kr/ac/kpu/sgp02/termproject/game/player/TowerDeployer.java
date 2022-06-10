@@ -1,6 +1,7 @@
 package kr.ac.kpu.sgp02.termproject.game.player;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.view.MotionEvent;
@@ -8,8 +9,10 @@ import android.view.MotionEvent;
 import java.util.HashMap;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.app.DefenseActivity;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.view.GameView;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.tile.Tile;
 import kr.ac.kpu.sgp02.termproject.game.tower.CannonTower;
@@ -18,25 +21,22 @@ import kr.ac.kpu.sgp02.termproject.game.tower.PlasmaTower;
 import kr.ac.kpu.sgp02.termproject.game.tower.MissileTower;
 
 public class TowerDeployer implements GameObject {
+
     public enum TowerType {
         cannon,
         laser,
         missile,
         plasma,
-        destroy,
     }
 
-    boolean isActivated = false;
+    protected boolean isActivated = false;
+    protected HashMap<TowerType, TowerPreview> previewImages = new HashMap<>(4);
+    protected TowerPreview selectedPreview;
+    protected TowerType selectedType = TowerType.cannon;
+    protected DefenseGame.Layer towerLayer = DefenseGame.Layer.tower;
 
-    //타워 배치하고 나면 V, X로 확인하기
-    boolean isSelectedDeployed = false;
-    HashMap<TowerType, TowerPreview> previewImages = new HashMap<>(4);
-    TowerPreview selectedPreview;
-    TowerType selectedType = TowerType.cannon;
-    DefenseGame.Layer towerLayer = DefenseGame.Layer.tower;
-
-    protected Point tileIndex = new Point();
-    protected PointF tileCenter = new PointF();
+    protected Point selectedTileIndex = new Point();
+    protected PointF tilePosition = new PointF();
 
     public TowerDeployer() {
         previewImages.put(TowerType.cannon,
@@ -50,17 +50,23 @@ public class TowerDeployer implements GameObject {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
+        if(!isActivated)
+            return false;
+
         int action = event.getAction();
         float x = event.getX();
         float y = event.getY();
 
+        Point tileIndex = Metrics.positionToTileIndex(x, y);
+        Tile tile = DefenseGame.getInstance().getTileAt(tileIndex.x,tileIndex.y);
+
         switch (action) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                onActionMove(x, y);
+                onActionMove(tile);
                 return true;
             case MotionEvent.ACTION_UP:
-                onActionUp(x, y);
+                onActionUp(tile);
                 return true;
             default:
                 break;
@@ -69,56 +75,52 @@ public class TowerDeployer implements GameObject {
         return false;
     }
 
-    private void onActionDown(float x, float y){
+    private void onActionMove(Tile tile) {
+        Point tileIndex = tile.getIndex();
+        tilePosition = Metrics.tileIndexToPosition(tileIndex.x, tileIndex.y);
+        selectedPreview.setPosition(tilePosition.x, tilePosition.y);
+
+        if(tile.isDeployable())
+            selectedPreview.setLocationColor(Color.GREEN);
+        else
+            selectedPreview.setLocationColor(Color.RED);
 
     }
 
-    private void onActionMove(float x, float y) {
-        if(!isActivated)
-            return;
-
-        tileIndex = Metrics.positionToTileIndex(x, y);
-        tileCenter = Metrics.tileIndexToPosition(tileIndex.x, tileIndex.y);
-        selectedPreview.setPosition(tileCenter.x, tileCenter.y);
+    private void onActionUp(Tile tile) {
+        deploy(tile);
     }
 
-    private void onActionUp(float x, float y) {
-        if(!isActivated)
-            return;
+    private void deploy(Tile tile) {
+        Point index = tile.getIndex();
 
-        deploy(x, y);
-        //selectedPreview.setLocationColor(Color.RED);
-    }
-
-    private void deploy(float x, float y) {
-        Point index = Metrics.positionToTileIndex(x, y);
-        Tile tile = DefenseGame.getInstance().getTileAt(index.x, index.y);
         if(!tile.isDeployable()) {
             isActivated = false;
+            GameView.getDefenseActivity().resetButtonsSelected();
             return;
         }
 
         switch (selectedType) {
             case cannon:
-                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.cannon_price))) {
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.cannon_cost))) {
                     DefenseGame.getInstance().add(CannonTower.get(index.x, index.y), towerLayer);
                     tile.onTowerDeployed();
                 }
                 break;
             case laser:
-                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.laser_price))) {
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.laser_cost))) {
                     DefenseGame.getInstance().add(LaserTower.get(index.x, index.y), towerLayer);
                     tile.onTowerDeployed();
                 }
                 break;
             case missile:
-                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.missile_price))) {
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.missile_cost))) {
                     DefenseGame.getInstance().add(MissileTower.get(index.x, index.y), towerLayer);
                     tile.onTowerDeployed();
                 }
                 break;
             case plasma:
-                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.plasma_price))) {
+                if(DefenseGame.getInstance().useMineral(Metrics.intValue(R.dimen.plasma_cost))) {
                     DefenseGame.getInstance().add(PlasmaTower.get(index.x, index.y), towerLayer);
                     tile.onTowerDeployed();
                 }
@@ -128,11 +130,13 @@ public class TowerDeployer implements GameObject {
         }
 
         isActivated = false;
+        GameView.getDefenseActivity().resetButtonsSelected();
     }
 
     public void activateDeployer(TowerType type) {
         isActivated = true;
         selectedPreview = previewImages.get(type);
+        selectedPreview.setPosition(-9999,-9999);
         selectedType = type;
     }
 

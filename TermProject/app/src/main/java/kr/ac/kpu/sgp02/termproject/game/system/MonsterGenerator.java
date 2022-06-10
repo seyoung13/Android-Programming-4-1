@@ -5,17 +5,20 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Queue;
 
 import kr.ac.kpu.sgp02.termproject.R;
+import kr.ac.kpu.sgp02.termproject.app.DefenseActivity;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.view.GameView;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.Wave;
 import kr.ac.kpu.sgp02.termproject.game.monster.Armor;
+import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 import kr.ac.kpu.sgp02.termproject.game.monster.MonsterType;
 import kr.ac.kpu.sgp02.termproject.game.monster.Sprinter;
 import kr.ac.kpu.sgp02.termproject.game.monster.Walker;
@@ -31,14 +34,18 @@ public class MonsterGenerator implements GameObject {
     private Wave currWave;
     private HashMap<Point, Wave.SubWave> currSubWaves = new HashMap<>();
 
-
     private boolean isAllWavesCleared = false;
     private boolean isCurrWaveCleared = false;
 
     private Paint textPaint;
     private String wavesText = "Wave: 1 / 5";
+    private PointF textPosition;
+    private float textSize;
+
     private int currWaveCount = 0;
     private int totalWaveCount = 0;
+
+    private Monster lastMonster;
 
     public MonsterGenerator(Queue<Wave> waveQueue, HashMap<Point, Path> paths) {
         this.waveQueue = waveQueue;
@@ -65,18 +72,24 @@ public class MonsterGenerator implements GameObject {
     }
 
     private void setWaveText() {
-        wavesText = "Wave: " + currWaveCount + " / " + totalWaveCount;
+        wavesText = "Wave : " + currWaveCount + " / " + totalWaveCount;
     }
 
     private void setTextPaint() {
         textPaint = new Paint();
         textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(Metrics.size(R.dimen.wave_text_size));
+        textSize = Metrics.size(R.dimen.wave_text_size);
+        textPaint.setTextSize(textSize);
+
+        textPosition = new PointF(Metrics.width/2 - textSize/2 * wavesText.length()/2,
+                textSize/2 + Metrics.size(R.dimen.ui_margin_left_top));
     }
 
     private void goNextWave() {
         if(waveQueue.isEmpty()) {
             isAllWavesCleared = true;
+            DefenseActivity defenseActivity = GameView.getDefenseActivity();
+            defenseActivity.onStageEnd(true);
             return;
         }
         else {
@@ -164,6 +177,14 @@ public class MonsterGenerator implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawText(wavesText, Metrics.width/2, 100, textPaint);
-    }
+        // 외곽선 그리기
+        textPaint.setStyle(Paint.Style.STROKE);
+        textPaint.setColor(Color.BLACK);
+        textPaint.setStrokeWidth(Metrics.size(R.dimen.wave_text_outline_width));
+        canvas.drawText(wavesText, textPosition.x, textPosition.y, textPaint);
+
+        // 내부 그리기
+        textPaint.setStyle(Paint.Style.FILL);
+        textPaint.setColor(Color.BLUE);
+        canvas.drawText(wavesText, textPosition.x, textPosition.y, textPaint);}
 }

@@ -12,7 +12,7 @@ public class Sound {
     private static MediaPlayer mediaPlayer;
     private static SoundPool soundPool;
 
-    public static void playMusic(int redId) {
+    public static void playBgm(int redId) {
         if(mediaPlayer != null)
             mediaPlayer.stop();
 

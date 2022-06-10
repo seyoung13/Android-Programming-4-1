@@ -11,13 +11,13 @@ import kr.ac.kpu.sgp02.termproject.framework.view.GameView;
 public class BitmapPool {
     private static HashMap<Integer, Bitmap> bitmapPool = new HashMap<>();
 
-    public static Bitmap getBitmap(int mipmapResId) {
-        Bitmap bitmap = bitmapPool.get(mipmapResId);
+    public static Bitmap getBitmap(int bitmapId) {
+        Bitmap bitmap = bitmapPool.get(bitmapId);
 
         if(bitmap == null) {
             Resources resources = GameView.view.getResources();
-            bitmap = BitmapFactory.decodeResource(resources, mipmapResId);
-            bitmapPool.put(mipmapResId, bitmap);
+            bitmap = BitmapFactory.decodeResource(resources, bitmapId);
+            bitmapPool.put(bitmapId, bitmap);
         }
 
         return bitmap;
