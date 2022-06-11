@@ -30,13 +30,13 @@ public class Monster implements GameObject, Collidable, Recyclable {
     protected PointF position;
     protected float size;
 
-    private PathMeasure pathMeasure;
     protected float distance;
+    private PathMeasure pathMeasure;
     private float[] measuredPosition = new float[2];
     private float[] measuredTangent = new float[2];
 
-    public boolean isDead;
-    public ProgressBar hpBar;
+    protected boolean isDead;
+    protected ProgressBar hpBar;
 
     public static Monster get(int tileX, int tileY, Path path) {
         Monster recyclable = (Monster) ObjectPool.get(Monster.class);
@@ -158,5 +158,9 @@ public class Monster implements GameObject, Collidable, Recyclable {
 
     public void setPath(Path path) {
         pathMeasure = new PathMeasure(path, false);
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 }

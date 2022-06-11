@@ -39,7 +39,7 @@ public class PlasmaProjectile extends Projectile {
         if(lifetime < 0)
             DefenseGame.getInstance().remove(this);
 
-        if(target.isDead)
+        if(target.isDead())
         {
             DefenseGame.getInstance().remove(this);
             return;

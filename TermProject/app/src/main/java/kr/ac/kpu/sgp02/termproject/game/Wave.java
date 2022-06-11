@@ -13,7 +13,6 @@ public class Wave {
     public static class SubWave {
         protected final MonsterType type;
         protected int number;
-        protected boolean isEnd = false;
 
         public SubWave(String type, int number){
             switch (type){
@@ -52,18 +51,5 @@ public class Wave {
 
     public Wave() {
         subWaveQueues = new HashMap<>();
-    }
-
-    public boolean IsEnd() {
-        for(Point start : subWaveQueues.keySet()) {
-            Queue<SubWave> subWaveQueue = subWaveQueues.get(start);
-
-            for(SubWave subWave : subWaveQueue) {
-                if (!subWave.isEnd)
-                    return false;
-            }
-        }
-
-        return true;
     }
 }

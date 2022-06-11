@@ -75,7 +75,7 @@ public abstract class Tower implements GameObject, Collidable, Recyclable {
     private void exceptDeadTarget() {
         Iterator<Monster> iterator = targetList.iterator();
         while(iterator.hasNext()) {
-            if(iterator.next().isDead)
+            if(iterator.next().isDead())
                 iterator.remove();
         }
     }

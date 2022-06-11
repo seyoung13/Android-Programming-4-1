@@ -44,7 +44,7 @@ public class LaserProjectile extends Projectile {
         if(target == null)
             return;
 
-        if(target.isDead)
+        if(target.isDead())
         {
             DefenseGame.getInstance().remove(this);
             return;

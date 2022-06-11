@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Queue;
 
 import kr.ac.kpu.sgp02.termproject.R;
-import kr.ac.kpu.sgp02.termproject.app.DefenseActivity;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 import kr.ac.kpu.sgp02.termproject.framework.view.GameView;
@@ -33,6 +32,7 @@ public class MonsterGenerator implements GameObject {
 
     private Wave currWave;
     private HashMap<Point, Wave.SubWave> currSubWaves = new HashMap<>();
+    private HashMap<Point, Monster> lastSpawnedMonsters = new HashMap<>();
 
     private boolean isAllWavesCleared = false;
     private boolean isCurrWaveCleared = false;
@@ -41,11 +41,8 @@ public class MonsterGenerator implements GameObject {
     private String wavesText = "Wave: 1 / 5";
     private PointF textPosition;
     private float textSize;
-
     private int currWaveCount = 0;
     private int totalWaveCount = 0;
-
-    private Monster lastMonster;
 
     public MonsterGenerator(Queue<Wave> waveQueue, HashMap<Point, Path> paths) {
         this.waveQueue = waveQueue;
@@ -88,8 +85,6 @@ public class MonsterGenerator implements GameObject {
     private void goNextWave() {
         if(waveQueue.isEmpty()) {
             isAllWavesCleared = true;
-            DefenseActivity defenseActivity = GameView.getDefenseActivity();
-            defenseActivity.onStageEnd(true);
             return;
         }
         else {
@@ -136,13 +131,16 @@ public class MonsterGenerator implements GameObject {
     private void generateMonster(MonsterType type, Point tileIndex) {
         switch (type) {
             case walker:
-                DefenseGame.getInstance().add(Walker.get(tileIndex.x, tileIndex.y, paths.get(tileIndex)), DefenseGame.Layer.monster);
+                lastSpawnedMonsters.put(tileIndex, Walker.get(tileIndex.x, tileIndex.y, paths.get(tileIndex)));
+                DefenseGame.getInstance().add((Walker) lastSpawnedMonsters.get(tileIndex), DefenseGame.Layer.monster);
                 break;
             case sprinter:
-                DefenseGame.getInstance().add(Sprinter.get(tileIndex.x, tileIndex.y, paths.get(tileIndex)), DefenseGame.Layer.monster);
+                lastSpawnedMonsters.put(tileIndex, Sprinter.get(tileIndex.x, tileIndex.y, paths.get(tileIndex)));
+                DefenseGame.getInstance().add((Sprinter) lastSpawnedMonsters.get(tileIndex), DefenseGame.Layer.monster);
                 break;
             case armor:
-                DefenseGame.getInstance().add(Armor.get(tileIndex.x, tileIndex.y, paths.get(tileIndex)), DefenseGame.Layer.monster);
+                lastSpawnedMonsters.put(tileIndex, Armor.get(tileIndex.x, tileIndex.y, paths.get(tileIndex)));
+                DefenseGame.getInstance().add((Armor) lastSpawnedMonsters.get(tileIndex), DefenseGame.Layer.monster);
                 break;
             case none:
                 break;
@@ -151,8 +149,17 @@ public class MonsterGenerator implements GameObject {
 
     @Override
     public void update(float deltaSecond) {
-        if(isAllWavesCleared)
+        if(isAllWavesCleared) {
+            boolean isAllMonsterKilled = true;
+            for(Point start : lastSpawnedMonsters.keySet()) {
+                if (!lastSpawnedMonsters.get(start).isDead())
+                    isAllMonsterKilled = false;
+            }
+            if(isAllMonsterKilled)
+                GameView.getDefenseActivity().onStageEnd(true);
+
             return;
+        }
 
         spawnRemainingTime -= deltaSecond;
 

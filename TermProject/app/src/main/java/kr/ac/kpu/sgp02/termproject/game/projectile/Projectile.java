@@ -59,7 +59,7 @@ public class Projectile implements GameObject, Collidable, Recyclable {
             return;
         }
 
-        if(target.isDead)
+        if(target.isDead())
         {
             DefenseGame.getInstance().remove(this);
             return;
