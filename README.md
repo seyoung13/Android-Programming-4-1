@@ -4,7 +4,7 @@
 
 ## 게임 컨셉
 
-<img src="/PlanImages/pt3/gameply.png" width="300px" height="200px"></img>
+<img src="/PlanImages/pt3/gameplay.png" width="300px" height="200px"></img>
 
 타일맵 기반의 타워 디펜스
 
