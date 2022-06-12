@@ -26,11 +26,28 @@ public class Button implements GameObject, Touchable {
     private int pressedBitmapId;
     private int normalBitmapId;
 
-    public Button(float x, float y, float width, float height, int bitmapId, Callback callback) {
+    private boolean isActivated;
+
+    public Button(float x, float y, float width, float height, int normalBitmapId, int pressedBitmapId, Callback callback) {
         position = new PointF(x, y);
-        sprite = new Sprite(x, y, width, height, bitmapId);
-        collider = new BoxCollider(x, y, width, height);
+
+        isActivated = true;
+        this.normalBitmapId = normalBitmapId;
+        this.pressedBitmapId = pressedBitmapId;
+        sprite = new Sprite(x, y, width, height, normalBitmapId);
+
+        collider = new BoxCollider(x, y, width/2, height/2);
         this.callback = callback;
+    }
+
+    public void setPosition(float x, float y) {
+        position.set(x, y);
+        sprite.setPosition(x, y);
+        collider.set(x, y);
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
     }
 
     @Override
@@ -39,11 +56,18 @@ public class Button implements GameObject, Touchable {
 
     @Override
     public void draw(Canvas canvas) {
+        if(!isActivated)
+            return;
+
         sprite.draw(canvas);
+        collider.draw(canvas);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if(!isActivated)
+            return false;
+
         PointF touchedPosition = new PointF(event.getX(), event.getY());
 
         if (collider.contains(touchedPosition)){

@@ -41,9 +41,11 @@ public class Tile implements GameObject {
         switch (type){
             case path:
                 sprite = new Sprite(position.x, position.y, size, R.mipmap.tile_path);
+                sprite.setOpacity(50);
                 break;
             case deployable:
                 sprite = new Sprite(position.x, position.y, size, R.mipmap.tile_deployable);
+                sprite.setOpacity(50);
                 isDeployable = true;
                 break;
             case start:
@@ -63,6 +65,18 @@ public class Tile implements GameObject {
         return type;
     }
 
+    public boolean isDeployable() {
+        return isDeployable;
+    }
+
+    public void onTowerDeployed() {isDeployable = false;}
+
+    public void onTowerUninstalled() {isDeployable = true;}
+
+    public Point getIndex() {
+        return index;
+    }
+
     @Override
     public void update(float deltaSecond) {
 
@@ -71,15 +85,5 @@ public class Tile implements GameObject {
     @Override
     public void draw(Canvas canvas) {
         sprite.draw(canvas);
-    }
-
-    public boolean isDeployable() {
-        return isDeployable;
-    }
-
-    public void onTowerDeployed() {isDeployable = false;}
-
-    public Point getIndex() {
-        return index;
     }
 }

@@ -35,7 +35,6 @@ public class TowerDeployer implements GameObject {
     protected TowerType selectedType = TowerType.cannon;
     protected DefenseGame.Layer towerLayer = DefenseGame.Layer.tower;
 
-    protected Point selectedTileIndex = new Point();
     protected PointF tilePosition = new PointF();
 
     public TowerDeployer() {
@@ -76,8 +75,7 @@ public class TowerDeployer implements GameObject {
     }
 
     private void onActionMove(Tile tile) {
-        Point tileIndex = tile.getIndex();
-        tilePosition = Metrics.tileIndexToPosition(tileIndex.x, tileIndex.y);
+        tilePosition = Metrics.tileIndexToPosition(tile.getIndex().x, tile.getIndex().y);
         selectedPreview.setPosition(tilePosition.x, tilePosition.y);
 
         if(tile.isDeployable())

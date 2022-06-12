@@ -13,7 +13,7 @@ import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
 
 public abstract class Collider implements GameObject {
     public PointF center;
-    public boolean isVisible = true;
+    public boolean isVisible = false;
 
     protected static final Paint paint;
     protected HashSet<Collider> overlappedColliders;

@@ -85,7 +85,7 @@ public class Monster implements GameObject, Collidable, Recyclable {
         if(distance > pathMeasure.getLength()){
             DefenseGame.getInstance().remove(this);
             DefenseGame.getInstance().gotHurtLife(1);
-            DefenseGame.getInstance().addLoseScore();
+            DefenseGame.getInstance().onMissMonster();
             isDead = true;
             return;
         }
@@ -142,7 +142,7 @@ public class Monster implements GameObject, Collidable, Recyclable {
     public void onDead() {
         isDead = true;
         DefenseGame.getInstance().storeMineral(reward);
-        DefenseGame.getInstance().addKillScore();
+        DefenseGame.getInstance().onKillMonster();
     }
 
     @Override

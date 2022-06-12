@@ -5,7 +5,11 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.collision.CollisionChecker;
+import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.objects.Button;
+import kr.ac.kpu.sgp02.termproject.framework.pool.Sound;
 import kr.ac.kpu.sgp02.termproject.framework.view.GameView;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
@@ -13,11 +17,13 @@ import kr.ac.kpu.sgp02.termproject.framework.interfaces.Recyclable;
 import kr.ac.kpu.sgp02.termproject.game.player.Life;
 import kr.ac.kpu.sgp02.termproject.game.player.Mineral;
 import kr.ac.kpu.sgp02.termproject.game.player.PlayerLogger;
+import kr.ac.kpu.sgp02.termproject.game.player.TowerSelector;
 import kr.ac.kpu.sgp02.termproject.game.system.LevelLoader;
 import kr.ac.kpu.sgp02.termproject.game.system.MonsterGenerator;
 import kr.ac.kpu.sgp02.termproject.game.player.TowerDeployer;
 import kr.ac.kpu.sgp02.termproject.game.tile.Tile;
 import kr.ac.kpu.sgp02.termproject.game.tile.TileMap;
+import kr.ac.kpu.sgp02.termproject.game.tower.Tower;
 
 public class DefenseGame {
     public enum Layer {
@@ -44,6 +50,7 @@ public class DefenseGame {
     private Mineral mineral;
     private Life life;
     private PlayerLogger playerLogger;
+    private TowerSelector towerSelector;
 
     // --------------- 생성자 ---------------
     private DefenseGame() {
@@ -84,7 +91,10 @@ public class DefenseGame {
         towerDeployer = new TowerDeployer();
         add(towerDeployer, Layer.system);
 
-        mineral = new Mineral(200);
+        towerSelector = new TowerSelector();
+        add(towerSelector, Layer.system);
+
+        mineral = new Mineral(Metrics.intValue(R.dimen.initial_mineral));
         add(mineral, Layer.ui);
 
         life = new Life();
@@ -125,6 +135,7 @@ public class DefenseGame {
     public boolean useMineral(int amount) {
         if (mineral.subAmount(amount)) {
             playerLogger.addUsedMinerals(amount);
+            Sound.playSfx(R.raw.flicks);
             return true;
         }
         else
@@ -144,16 +155,12 @@ public class DefenseGame {
             onGameOver();
     }
 
-    public void addKillScore() {
+    public void onKillMonster() {
         playerLogger.addKillScore();
     }
 
-    public void addLoseScore() {
-        playerLogger.addLoseScore();
-    }
-
-    public void addUsedMinerals(int amount) {
-        playerLogger.addUsedMinerals(amount);
+    public void onMissMonster() {
+        playerLogger.addMissScore();
     }
 
     public ArrayList<Integer> getPlayerLog() {
@@ -161,7 +168,7 @@ public class DefenseGame {
     }
 
     private void onGameOver() {
-
+        GameView.getDefenseActivity().onStageEnd(false);
     }
 
     public void onDraw(Canvas canvas) {
@@ -173,11 +180,35 @@ public class DefenseGame {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        boolean eventResult;
+        if(towerDeployer.onTouchEvent(event)){
+            towerSelector.release();
+            return true;
+        }
 
-        eventResult = towerDeployer.onTouchEvent(event);
+        for(GameObject object : getObjectsAt(Layer.ui)) {
+            if(object instanceof Button){
+                Button button = (Button) object;
+                if(button.onTouchEvent(event)) {
+                    towerSelector.release();
+                    return true;
+                }
+            }
+        }
 
-        return eventResult;
+        for(GameObject object : getObjectsAt(Layer.tower)){
+            Tower tower = (Tower) object;
+            if(tower.onTouchEvent(event)) {
+                if(tower != towerSelector.getSelected()) {
+                    towerSelector.release();
+                    towerSelector.select(tower);
+                    towerSelector.setPosition(event.getX(), event.getY());
+                }
+                return true;
+            }
+        }
+
+        towerSelector.release();
+        return false;
     }
 
     public void add(GameObject object, Layer layer) {

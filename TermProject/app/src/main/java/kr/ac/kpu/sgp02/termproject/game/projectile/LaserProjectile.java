@@ -10,11 +10,11 @@ import kr.ac.kpu.sgp02.termproject.framework.helper.MathHelper;
 import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
+import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 
 public class LaserProjectile extends Projectile {
     protected float degree;
-    protected float currDelay = 0.0f;
-    protected float maxDelay = 0.5f;
+    protected float lifetime;
 
     public static LaserProjectile get(float x, float y) {
         LaserProjectile recyclable = (LaserProjectile) ObjectPool.get(LaserProjectile.class);
@@ -31,18 +31,23 @@ public class LaserProjectile extends Projectile {
         super(x, y);
         sprite = new Sprite(x, y, 1, R.mipmap.laser_beam);
         damage = Metrics.intValue(R.dimen.laser_damage);
+        lifetime = Metrics.floatValue(R.dimen.laser_delay);
     }
 
     @Override
     public void update(float deltaSecond) {
-        currDelay -= deltaSecond;
-        if(currDelay < 0) {
-            target.beDamaged(damage);
-            currDelay += maxDelay;
+        lifetime -= deltaSecond;
+
+        if(lifetime < 0) {
+            DefenseGame.getInstance().remove(this);
+            return;
         }
 
         if(target == null)
+        {
+            DefenseGame.getInstance().remove(this);
             return;
+        }
 
         if(target.isDead())
         {
@@ -74,12 +79,14 @@ public class LaserProjectile extends Projectile {
     }
 
     @Override
-    public void onBeginOverlap(GameObject object) {
+    public void setTarget(Monster monster) {
+        super.setTarget(monster);
+        monster.beDamaged(damage);
     }
-
 
     @Override
     public void redeploy(float x, float y) {
         super.redeploy(x, y);
+        lifetime = Metrics.floatValue(R.dimen.laser_delay);
     }
 }

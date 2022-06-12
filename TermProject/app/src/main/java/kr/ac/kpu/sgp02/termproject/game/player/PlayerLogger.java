@@ -8,21 +8,21 @@ import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 
 public class PlayerLogger implements GameObject {
     public enum PlayerLog {
-        kills,
-        loses,
+        kill,
+        miss,
         usedMinerals,
     }
 
     private int killScore;
-    private int loseScore;
+    private int missScore;
     private int usedMinerals;
 
     public void addKillScore(){
         killScore++;
     }
 
-    public void addLoseScore(){
-        loseScore++;
+    public void addMissScore(){
+        missScore++;
     }
 
     public void addUsedMinerals(int used) {
@@ -31,8 +31,8 @@ public class PlayerLogger implements GameObject {
 
     public ArrayList<Integer> getLog() {
         ArrayList<Integer> log = new ArrayList<>();
-        log.add(PlayerLog.kills.ordinal(), killScore);
-        log.add(PlayerLog.loses.ordinal(), loseScore);
+        log.add(PlayerLog.kill.ordinal(), killScore);
+        log.add(PlayerLog.miss.ordinal(), missScore);
         log.add(PlayerLog.usedMinerals.ordinal(), usedMinerals);
 
         return log;

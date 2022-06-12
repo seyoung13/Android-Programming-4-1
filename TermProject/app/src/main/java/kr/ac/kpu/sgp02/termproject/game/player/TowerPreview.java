@@ -22,6 +22,7 @@ public class TowerPreview implements GameObject {
         sprite = new Sprite(x, y, Metrics.size(R.dimen.tower_head_size), bitmapId);
         location = new RectF(x - size/2, y - size/2, x + size/2, y + size/2);
         range = new CircleCollider(x, y, radius);
+        range.isVisible = true;
 
         setPosition(x, y);
 

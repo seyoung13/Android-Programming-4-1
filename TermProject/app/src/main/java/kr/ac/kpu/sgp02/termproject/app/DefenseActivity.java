@@ -21,6 +21,7 @@ import kr.ac.kpu.sgp02.termproject.game.player.TowerDeployer;
 public class DefenseActivity extends AppCompatActivity {
     protected HashMap<Integer, ImageButton> towerButtons = new HashMap<>(4);
     protected FrameLayout resultWindow;
+    protected int levelIndex;
 
     // Build - Generate Signed Bundle / APK
     // APK- Create New... - Key store password - Key pasword - Remember - Release - Finish
@@ -31,7 +32,7 @@ public class DefenseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        int levelIndex = intent.getExtras().getInt(DefenseGame.LEVEL_INDEX);
+        levelIndex = intent.getExtras().getInt(DefenseGame.LEVEL_INDEX);
         DefenseGame.getInstance().setMapLevel(levelIndex);
         setContentView(R.layout.activity_defense);
 
@@ -144,21 +145,20 @@ public class DefenseActivity extends AppCompatActivity {
         else
             resultMessage.setText("FAILED!");
 
-        int i = PlayerLogger.PlayerLog.kills.ordinal();
-        int d = log.get(i);
+        TextView killScore = findViewById(R.id.txtKill);
+        killScore.setText(getString(R.string.kill) + log.get(PlayerLogger.PlayerLog.kill.ordinal()));
 
-        TextView killScore = findViewById(R.id.txtKills);
-        killScore.setText(getString(R.string.kills) + log.get(PlayerLogger.PlayerLog.kills.ordinal()));
-
-        TextView loseScore = findViewById(R.id.txtLoses);
-        loseScore.setText(getString(R.string.loses) + log.get(PlayerLogger.PlayerLog.loses.ordinal()));
+        TextView loseScore = findViewById(R.id.txtMiss);
+        loseScore.setText(getString(R.string.miss) + log.get(PlayerLogger.PlayerLog.miss.ordinal()));
 
         TextView usedMinerals = findViewById(R.id.txtUsedMinerals);
         usedMinerals.setText(getString(R.string.used_minerals) + log.get(PlayerLogger.PlayerLog.usedMinerals.ordinal()));
+
+        GameView.view.pauseGame();
     }
 
-    public void onBtnRestart(View view){
-
+    public void onBtnToStageSelect(View view){
+        startActivity(new Intent(this, StageSelectionActivity.class));
     }
 
     public void onBtnToTitle(View view){

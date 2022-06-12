@@ -14,8 +14,11 @@ import java.util.HashMap;
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.interfaces.GameObject;
 import kr.ac.kpu.sgp02.termproject.framework.helper.Metrics;
+import kr.ac.kpu.sgp02.termproject.framework.objects.Sprite;
 
 public class TileMap implements GameObject {
+    private Sprite background;
+
     private ArrayList<ArrayList<Rect>> grid = new ArrayList<>();
     private ArrayList<ArrayList<Tile>> tiles = new ArrayList<>();
 
@@ -28,6 +31,9 @@ public class TileMap implements GameObject {
 
     public TileMap(int[][] blueprint, ArrayList<Point> startPoints){
         setGridPaint();
+
+        background = new Sprite(Metrics.width/2, Metrics.height/2,
+                Metrics.width * 2, Metrics.height * 2, R.mipmap.background);
 
         buildGridByArray(blueprint);
 
@@ -192,6 +198,8 @@ public class TileMap implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
+        background.draw(canvas);
+
         for(ArrayList<Tile> row : tiles) {
             for(Tile tile : row) {
                 tile.draw(canvas);
@@ -204,9 +212,9 @@ public class TileMap implements GameObject {
             }
         }
 
-        for(Point start : paths.keySet()) {
-            canvas.drawPath(paths.get(start), gridPaint);
-        }
+//        for(Point start : paths.keySet()) {
+//            canvas.drawPath(paths.get(start), gridPaint);
+//        }
 
 //        ArrayList<Point> points = new ArrayList<>();
 //        for(Point start : paths.keySet())

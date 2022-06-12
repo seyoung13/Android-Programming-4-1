@@ -2,6 +2,7 @@ package kr.ac.kpu.sgp02.termproject.framework.objects;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
@@ -13,10 +14,13 @@ public class Sprite implements GameObject {
     private Bitmap bitmap;
     private PointF position = new PointF();
     private float width, height;
+    private Paint alphaPaint;
 
     public Sprite(float x, float y, float size, int bitmapId) {
         setPosition(x, y, size, size);
         bitmap = BitmapPool.getBitmap(bitmapId);
+
+        alphaPaint = new Paint();
 
         width = size;
         height = size;
@@ -52,6 +56,12 @@ public class Sprite implements GameObject {
         dstRect.offset(dx, dy);
     }
 
+    public void setOpacity(float percent) {
+        int opacity = (int)(percent/100 * 255);
+
+        alphaPaint.setAlpha(opacity);
+    }
+
     public void setBitmap(int bitmapId) {
         bitmap = BitmapPool.getBitmap(bitmapId);
     }
@@ -63,6 +73,6 @@ public class Sprite implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, null, dstRect, null);
+        canvas.drawBitmap(bitmap, null, dstRect, alphaPaint);
     }
 }

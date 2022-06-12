@@ -3,6 +3,7 @@ package kr.ac.kpu.sgp02.termproject.game.tower;
 import kr.ac.kpu.sgp02.termproject.R;
 import kr.ac.kpu.sgp02.termproject.framework.collision.Collider;
 import kr.ac.kpu.sgp02.termproject.framework.pool.ObjectPool;
+import kr.ac.kpu.sgp02.termproject.framework.pool.Sound;
 import kr.ac.kpu.sgp02.termproject.game.DefenseGame;
 import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 import kr.ac.kpu.sgp02.termproject.game.projectile.Projectile;
@@ -30,16 +31,16 @@ public class CannonTower extends Tower {
     @Override
     protected void setSpecification() {
         towerHead = new Sprite(position.x, position.y, Metrics.size(R.dimen.tower_head_size), R.mipmap.cannon_head);
-
         range = new CircleCollider(position.x, position.y,  Metrics.size(R.dimen.cannon_range));
-
         maxDelay = Metrics.floatValue(R.dimen.cannon_delay);
+        cost = Metrics.intValue(R.dimen.cannon_cost);
     }
 
     @Override
     protected void fire()  {
         Projectile cannonball = Projectile.get(position.x, position.y);
         DefenseGame.getInstance().add(cannonball, DefenseGame.Layer.damageCauser);
+        Sound.playSfx(R.raw.bullet);
 
         Monster monster = targetList.iterator().next();
         cannonball.setTarget(monster);
@@ -48,6 +49,10 @@ public class CannonTower extends Tower {
     @Override
     public void redeploy(float x, float y) {
         super.redeploy(x, y);
+        towerHead.setPosition(position.x, position.y);
+        range.set(position.x, position.y);
+        range.radius = Metrics.size(R.dimen.cannon_range);
+        maxDelay = Metrics.floatValue(R.dimen.cannon_delay);
     }
 
     @Override

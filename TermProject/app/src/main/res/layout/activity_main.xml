@@ -10,8 +10,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_launcher_background"
-        android:visibility="invisible"
+        android:background="@mipmap/title"
+        android:visibility="visible"
         />
 
     <FrameLayout
@@ -57,33 +57,15 @@
 
         <Button
             android:id="@+id/btnStart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="200dp"
-            android:layout_marginBottom="100dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginEnd="400dp"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center"
 
             android:text="Start"
             android:textSize="30sp"
 
             android:onClick="onBtnStart"
-            />
-
-        <Button
-            android:id="@+id/btnOption"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:layout_marginTop="200dp"
-            android:layout_marginBottom="100dp"
-            android:layout_marginStart="400dp"
-            android:layout_marginEnd="100dp"
-
-            android:text="Option"
-            android:textSize="30sp"
-
-            android:onClick="onBtnOption"
             />
 
     </FrameLayout>

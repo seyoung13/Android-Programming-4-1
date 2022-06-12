@@ -14,7 +14,7 @@ import kr.ac.kpu.sgp02.termproject.game.monster.Monster;
 
 public class PlasmaProjectile extends Projectile {
     protected float degree;
-    protected float lifetime = 0.5f;
+    protected float lifetime;
 
     public static PlasmaProjectile get(float x, float y) {
         PlasmaProjectile recyclable = (PlasmaProjectile) ObjectPool.get(PlasmaProjectile.class);
@@ -31,6 +31,7 @@ public class PlasmaProjectile extends Projectile {
         super(x, y);
         sprite = new Sprite(x, y, 1, R.mipmap.laser_beam);
         damage = Metrics.intValue(R.dimen.plasma_damage);
+        lifetime = Metrics.floatValue(R.dimen.plasma_delay)/2;
     }
 
     @Override
@@ -74,7 +75,7 @@ public class PlasmaProjectile extends Projectile {
     @Override
     public void redeploy(float x, float y) {
         super.redeploy(x, y);
-        lifetime = 0.5f;
+        lifetime = Metrics.floatValue(R.dimen.plasma_delay)/2;
     }
 
     @Override

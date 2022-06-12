@@ -22,9 +22,6 @@ public class StageSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stage_selection);
 
         setStagesImageLevel();
-
-        //빠른 실행
-        //startActivity(new Intent(this, DefenseActivity.class));
     }
 
     private void setStagesImageLevel() {

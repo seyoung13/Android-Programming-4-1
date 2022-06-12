@@ -35,6 +35,7 @@ public class NumberDisplay implements GameObject {
     protected float dstCharHeight;
 
     private boolean isScalable;
+    private boolean isActivated;
 
     static {
         bitmap = BitmapPool.getBitmap(R.mipmap.numbers_24x32);
@@ -43,6 +44,7 @@ public class NumberDisplay implements GameObject {
     public NumberDisplay(int number, int digitCount, float x, float y, float size, int color, boolean isScalable) {
         this.number = number;
         this.digitCount = digitCount;
+        isActivated = true;
 
         paint = new Paint();
         setColor(color);
@@ -73,6 +75,10 @@ public class NumberDisplay implements GameObject {
         this.number -= number;
     }
 
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+
     public void setPosition(float x, float y){
         position.set(x, y);
     }
@@ -95,7 +101,7 @@ public class NumberDisplay implements GameObject {
 
     @Override
     public void update(float deltaSecond) {
-        if(!isScalable)
+        if(!isScalable || !isActivated)
             return;
 
         if(inset.x < 0) {
@@ -111,6 +117,9 @@ public class NumberDisplay implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
+        if(!isActivated)
+            return;
+
         float x = position.x + dstCharWidth * digitCount;
         int value = number;
         int displayedDigitCount = digitCount;
