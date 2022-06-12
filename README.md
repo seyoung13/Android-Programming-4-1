@@ -1,5 +1,84 @@
 # Android-Programming-4-1
 
+# 최종 발표
+
+## 게임 컨셉
+
+<img src="/PlanImages/pt3/gameply.png" width="300px" height="200px"></img>
+
+타일맵 기반의 타워 디펜스
+
+
+## 커밋 히스토리
+
+<img src="/PlanImages/pt3/commit_history.png" width="300px" height="200px"></img>
+
+
+## 진행률
+
+<img src="/PlanImages/pt3/progress.png" width="300px" height="200px"></img>
+
+
+## 구현 내용
+
+<img src="/PlanImages/pt3/path_example.png" width="300px" height="200px"></img>
+
+* JSON 파일을 로드해서 타일맵을 생성하는 기능
+
+* 백트래킹 알고리즘을 사용해 시작지점별 경로를 생성하는 기능
+
+
+<img src="/PlanImages/pt3/result_example.png" width="300px" height="200px"></img>
+
+* 플레이어의 점수를 수집하고 출력하는 기능
+
+* 레이어를 이용한 발사체별 충돌 및 데미지 처리
+
+
+## 수업내용에서 차용한 내용
+
+*버튼을 이용한 타워 업그레이드 및 철거 기능
+
+* PathMeasure 를 이용한 몬스터 이동
+
+* 숫자를 화면에 표시하는 기능
+
+
+## 구현하기 어려웠던 부분
+
+* json 파일의 웨이브 정보를 적절한 구조로 저장하기
+
+* 저장한 웨이브 큐를 이용해 몬스터를 생성하기
+
+
+## 해결하지 못한 버그
+
+<img src="/PlanImages/pt3/bug_example.png" width="300px" height="200px"></img>
+
+* 타워가 공격 대상을 찾지 못하는 버그
+
+* 발사체가 충돌처리를 하지 못하고 몬스터에 붙어 있는 버그
+
+## 구현하고 싶었으나 구현하지 못한 부분
+
+* 화면을 드래그해서 맵을 스크롤하는 기능
+
+* 화면을 확대/축소하는 기능
+
+* 사운드 매니저 클래스에 큐를 만들어서 효과음이 많이 겹치는 상황을 방지하는 기능
+
+## 수업에 관해
+
+* 얻은 것
+  - 자바의 클래스, 인터페이스, 상속 활용법
+  - 안드로이드 콜백 기능 사용법
+  - 커스텀 뷰 설계와 애니메이터 기능
+
+* 얻지 못한 것
+  - 세세한 자바 문법
+
+
+
 # 2차 발표
 
 ## 게임 컨셉
@@ -60,6 +139,7 @@
 ## 커밋 히스토리
 
 <img src="/PlanImages/pt2/commit_history.png" width="300px" height="200px"></img>
+
 
 
 # 1차 발표
